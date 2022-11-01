@@ -17,10 +17,11 @@ public final class HikeTable {
     public static final String COLUMN_HIKE_DATE = "hike_date";
     public static final String COLUMN_PARKING_AVAILABLE = "parking_available";
     public static final String COLUMN_LENGTH = "length";
-    public static final String COLUMN_DIFFICULTY_ID = "difficulty_id";
-    public static final String COLUMN_DESCRIPTION= "description";
-    public static final String COLUMN_DURATION= "duration";
-    public static final String COLUMN_SAFETY_INFORMATION = "safety_information";
+    public static final String COLUMN_DIFFICULTY = "difficulty";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_DURATION = "duration";
+    public static final String COLUMN_FACILITY = "facilities";
+
 
 
 }

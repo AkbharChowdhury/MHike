@@ -15,20 +15,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "MHike.db";
 
-    public static final String ID_COLUMN = "person_id";
     public static final String NAME_COLUMN = "name";
     public static final String DOB_COLUMN = "dob";
     public static final String EMAIL_COLUMN = "email";
 
-    private SQLiteDatabase database;
+    private final SQLiteDatabase database;
 
-    private static final String DATABASE_CREATE = String.format(
-            "CREATE TABLE %s (" +
-                    "   %s INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "   %s TEXT, " +
-                    "   %s TEXT, " +
-                    "   %s TEXT)",
-            DATABASE_NAME, ID_COLUMN, NAME_COLUMN, DOB_COLUMN, EMAIL_COLUMN);
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -103,25 +95,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private void createHikeTable(SQLiteDatabase db) {
-        String b = "Liner";
-        String i = "id";
         String COLUMN_USER_ID = UserTable.COLUMN_ID;
 
 
-        db.execSQL("CREATE TABLE " + b + " ("
+        db.execSQL("CREATE TABLE " + HikeTable.TABLE_NAME + " ("
                 + HikeTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + HikeTable.COLUMN_USER_ID + " INTEGER NOT NULL,"
                 + HikeTable.COLUMN_Hike_NAME + " TEXT NOT NULL,"
-                + HikeTable.COLUMN_LOCATION + " TEXT NOT NULL UNIQUE,"
+                + HikeTable.COLUMN_LOCATION + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_HIKE_DATE + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_PARKING_AVAILABLE + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_LENGTH + " NUMERIC NOT NULL,"
-                + HikeTable.COLUMN_LENGTH + " TEXT NOT NULL,"
-
-
+                + HikeTable.COLUMN_DIFFICULTY + " TEXT NOT NULL,"
+                + HikeTable.COLUMN_DESCRIPTION + " TEXT,"
+                + HikeTable.COLUMN_DURATION + " TEXT NOT NULL,"
+                + HikeTable.COLUMN_FACILITY + " TEXT NOT NULL,"
                 +"FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_USER_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
-
-
                 ")"
         );
 
