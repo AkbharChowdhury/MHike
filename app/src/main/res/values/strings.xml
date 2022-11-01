@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">M-Hike</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_hikes">Hikes</string>
+    <string name="nav_sights">Sights</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_profile">Profile</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="search_fragment">Search Fragment</string>
+    <string name="sights_fragment">Sights Fragment</string>
+    <string name="hikes_fragment">Hikes Fragment</string>
+
+    <string name="title_login">M-Hike Login</string>
+    <string name="title_register">M-Hike Register</string>
+
+    <string name="hint_email">Enter email</string>
+    <string name="hint_password">Enter password</string>
+    <string name="btn_login">Login</string>
+    <string name="tv_no_account">Don\'t have an account?</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_logout">Logout</string>
+    <string name="hint_lastname">Enter Lastname</string>
+    <string name="hint_firstname">Enter firstname</string>
+    <string name="register">Register</string>
+
+    <!-- error messages -->
+    <string name="required_name_error">%s cannot contain numbers or spaces</string>
+    <string name="required_field_error">%s is required</string>
+    <string name="email_exists_error">This email is taken, Please choose a different email</string>
+    <string name="invalid_email_error">Please enter a valid email!</string>
+    <string name="password_min_error">%s password must be at least %d characters long</string>
+    <string name="profile_fragment">Profile Fragment</string>
+    <string name="nav_logout">Logout</string>
+
+</resources>
