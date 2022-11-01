@@ -35,5 +35,6 @@
     <string name="profile_fragment">Profile Fragment</string>
     <string name="nav_logout">Logout</string>
     <string name="login_error">Incorrect login/password combination. Please try again</string>
+    <string name="add_hike">Add Hike</string>
 
 </resources>

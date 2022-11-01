@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         context = getApplicationContext();
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         CheckIsUserLoggedIn();
-        setTitle(getString(R.string.nav_hikes));
+        setTitle(getString(R.string.nav_home));
 
 
     }
@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.nav_logout){
             AccountPreferences.logout(context);
-
-//            AccountPreferences.logout(context);
-
+        }
+        if(item.getItemId() == R.id.nav_hikes){
+            startActivity(new Intent(context, HikesActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

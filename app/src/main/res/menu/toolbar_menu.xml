@@ -5,4 +5,11 @@
         android:id="@+id/nav_logout"
         android:title="@string/btn_logout"
         app:showAsAction="never" />
+
+
+
+    <item
+        android:id="@+id/nav_hikes"
+        android:title="@string/nav_hikes"
+        app:showAsAction="never" />
 </menu>
