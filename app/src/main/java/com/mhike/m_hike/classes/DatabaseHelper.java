@@ -1,5 +1,6 @@
 package com.mhike.m_hike.classes;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,6 +13,8 @@ import com.mhike.m_hike.classes.tables.HikePhoto;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.ObservationTable;
 import com.mhike.m_hike.classes.tables.UserTable;
+
+import java.time.LocalDate;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -41,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         createAllTables(db);
-        
+
     }
 
 
@@ -83,6 +86,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+    /************************************************** Create table statements ****************************************/
     private void createAllTables(SQLiteDatabase db) {
         createUserTable(db);
         createHikeTable(db);
@@ -151,6 +156,101 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ")"
         );
 
+    }
+
+
+    /************************************************** Create Login/ register ****************************************/
+
+    public boolean emailExists(String email) {
+        String[] columns = {UserTable.COLUMN_EMAIL};
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = UserTable.COLUMN_EMAIL + " LIKE ?";
+        String[] selectionArgs = {"%" + email + "%"};
+        // query user table with condition
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = ?
+         */
+        try (Cursor cursor = db.query(UserTable.TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null)) {
+            int cursorCount = cursor.getCount();
+            return cursorCount > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+
+    @SuppressLint("Range")
+    public boolean isAuthorised(String email, String password) {
+        // array of columns to fetch
+        String[] columns = {UserTable.COLUMN_ID};
+        SQLiteDatabase db = getReadableDatabase();
+        // selection criteria
+        String selection = UserTable.COLUMN_EMAIL + " = ?" + " AND " + UserTable.COLUMN_PASSWORD + " = ?";
+        // selection arguments
+        String[] selectionArgs = {email, password};
+        // query user table with conditions
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
+         */
+
+        try (Cursor cursor = db.query(UserTable.TABLE_NAME, //Table to query
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null)) {
+
+            if (cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    dbUserID = cursor.getInt(cursor.getColumnIndex(UserTable.COLUMN_ID));
+                }
+
+            }
+
+            // count if the number of
+            return cursor.getCount() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+    public boolean registerUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        LocalDate currentDate = LocalDate.now();
+
+        ContentValues cv = new ContentValues();
+        cv.put(UserTable.COLUMN_FIRSTNAME, user.getFirstname());
+        cv.put(UserTable.COLUMN_LASTNAME, user.getLastname());
+        cv.put(UserTable.COLUMN_EMAIL, user.getEmail());
+        cv.put(UserTable.COLUMN_PASSWORD, Encryption.encode(user.getPassword()));
+        cv.put(UserTable.COLUMN_REGISTERED_DATE, String.valueOf(currentDate));
+
+        long result = db.insert(UserTable.TABLE_NAME, null, cv);
+        return result != -1;
+
+    }
+
+
+    public int getUserID(){
+        return dbUserID;
     }
 
 

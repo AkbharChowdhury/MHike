@@ -34,5 +34,6 @@
     <string name="password_min_error">%s password must be at least %d characters long</string>
     <string name="profile_fragment">Profile Fragment</string>
     <string name="nav_logout">Logout</string>
+    <string name="login_error">Incorrect login/password combination. Please try again</string>
 
 </resources>
