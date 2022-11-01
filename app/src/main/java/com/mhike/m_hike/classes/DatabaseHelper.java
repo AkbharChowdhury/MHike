@@ -8,42 +8,41 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mhike.m_hike.classes.tables.HikePhoto;
 import com.mhike.m_hike.classes.tables.HikeTable;
+import com.mhike.m_hike.classes.tables.ObservationTable;
 import com.mhike.m_hike.classes.tables.UserTable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "MHike.db";
+    private static final int DATABASE_VERSION = 1;
 
-    public static final String NAME_COLUMN = "name";
-    public static final String DOB_COLUMN = "dob";
-    public static final String EMAIL_COLUMN = "email";
-
-    private final SQLiteDatabase database;
+    private SQLiteDatabase db;
+    private static DatabaseHelper instance;
+    private int dbUserID = 0;
 
 
-    public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
-        database = getWritableDatabase();
+    //synchronized makes the app thread save
+    public static synchronized DatabaseHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new DatabaseHelper(context);
+        }
+        return instance;
+    }
+
+    private DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        // must be writable for queries to run from on create method
+        db = getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        createUserTable(db);
-        createHikeTable(db);
 
-//        String query = "CREATE TABLE " + UserTable.TABLE_NAME + " ("
-//                + UserTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + UserTable.COLUMN_FIRSTNAME + " TEXT,"
-//                + UserTable.COLUMN_LASTNAME + " TEXT,"
-//                + UserTable.COLUMN_EMAIL + " TEXT,"
-//                + UserTable.COLUMN_PASSWORD + " TEXT)";
-//
-//        db.execSQL(query);
-//        db.execSQL(DATABASE_CREATE);
-//        createUserTable(db);
+        createAllTables(db);
+        
     }
-
 
 
     @Override
@@ -61,18 +60,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.setForeignKeyConstraintsEnabled(true);
     }
 
-    public long insertDetails(String name, String dob, String email) {
-        ContentValues rowValues = new ContentValues();
-
-        rowValues.put(NAME_COLUMN, name);
-        rowValues.put(DOB_COLUMN, dob);
-        rowValues.put(EMAIL_COLUMN, email);
-
-        return database.insertOrThrow(DATABASE_NAME, null, rowValues);
-    }
 
     public String getDetails() {
-        Cursor results = database.query("details", new String[] {"person_id", "name", "dob", "email"},
+        Cursor results = db.query("details", new String[]{"person_id", "name", "dob", "email"},
                 null, null, null, null, "name");
 
         String resultText = "";
@@ -93,10 +83,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    private void createAllTables(SQLiteDatabase db) {
+        createUserTable(db);
+        createHikeTable(db);
+        createHikePhotoTable(db);
+        createObservationTable(db);
+    }
+
+    private void createUserTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + UserTable.TABLE_NAME + " ("
+                + UserTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + UserTable.COLUMN_FIRSTNAME + " TEXT NOT NULL,"
+                + UserTable.COLUMN_LASTNAME + " TEXT NOT NULL,"
+                + UserTable.COLUMN_EMAIL + " TEXT NOT NULL UNIQUE,"
+                + UserTable.COLUMN_PASSWORD + " TEXT NOT NULL,"
+                + UserTable.COLUMN_REGISTERED_DATE + " TEXT NOT NULL)"
+        );
+
+    }
+
 
     private void createHikeTable(SQLiteDatabase db) {
-        String COLUMN_USER_ID = UserTable.COLUMN_ID;
-
+        final String COLUMN_USER_ID = UserTable.COLUMN_ID;
 
         db.execSQL("CREATE TABLE " + HikeTable.TABLE_NAME + " ("
                 + HikeTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -110,23 +118,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + HikeTable.COLUMN_DESCRIPTION + " TEXT,"
                 + HikeTable.COLUMN_DURATION + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_FACILITY + " TEXT NOT NULL,"
-                +"FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_USER_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
+                + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_USER_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
                 ")"
         );
 
     }
 
 
-    private void createUserTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + UserTable.TABLE_NAME + " ("
-                + UserTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + UserTable.COLUMN_FIRSTNAME + " TEXT NOT NULL,"
-                + UserTable.COLUMN_LASTNAME + " TEXT NOT NULL,"
-                + UserTable.COLUMN_EMAIL + " TEXT NOT NULL UNIQUE,"
-                + UserTable.COLUMN_PASSWORD + " TEXT NOT NULL,"
-                + UserTable.COLUMN_REGISTERED_DATE + " TEXT NOT NULL)"
+    private void createHikePhotoTable(SQLiteDatabase db) {
+        final String COLUMN_HIKE_ID = HikePhoto.COLUMN_HIKE_ID;
+        db.execSQL("CREATE TABLE " + HikePhoto.TABLE_NAME + " ("
+                + HikePhoto.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + HikePhoto.COLUMN_HIKE_ID + " INTEGER NOT NULL,"
+                + HikePhoto.COLUMN_PHOTO + " TEXT NOT NULL,"
+
+                + "FOREIGN KEY (" + COLUMN_HIKE_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_HIKE_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
+                ")"
         );
 
     }
+
+
+    private void createObservationTable(SQLiteDatabase db) {
+        final String COLUMN_HIKE_ID = HikePhoto.COLUMN_HIKE_ID;
+        db.execSQL("CREATE TABLE " + ObservationTable.TABLE_NAME + " ("
+                + ObservationTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ObservationTable.COLUMN_HIKE_ID + " INTEGER NOT NULL,"
+                + ObservationTable.COLUMN_OBSERVATION + " TEXT NOT NULL,"
+                + ObservationTable.COLUMN_DATE_TIME + " TEXT NOT NULL,"
+                + ObservationTable.COLUMN_COMMENTS + " TEXT,"
+                + "FOREIGN KEY (" + COLUMN_HIKE_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_HIKE_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
+                ")"
+        );
+
+    }
+
+
 }
 

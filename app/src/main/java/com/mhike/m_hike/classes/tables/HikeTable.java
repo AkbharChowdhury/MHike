@@ -2,9 +2,8 @@ package com.mhike.m_hike.classes.tables;
 
 
 public final class HikeTable {
-    private HikeTable() {
+    private HikeTable(){}
 
-    }
 
 
 
@@ -12,7 +11,6 @@ public final class HikeTable {
     public static final String COLUMN_ID = "hike_id";
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_Hike_NAME = "hike_name";
-
     public static final String COLUMN_LOCATION = "location";
     public static final String COLUMN_HIKE_DATE = "hike_date";
     public static final String COLUMN_PARKING_AVAILABLE = "parking_available";

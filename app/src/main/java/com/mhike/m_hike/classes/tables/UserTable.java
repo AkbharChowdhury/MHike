@@ -1,6 +1,8 @@
 package com.mhike.m_hike.classes.tables;
 
 public class UserTable {
+    private UserTable(){}
+
     public static final String TABLE_NAME = "User";
     public static final String COLUMN_ID = "user_id";
     public static final String COLUMN_FIRSTNAME = "firstname";
