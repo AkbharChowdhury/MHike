@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         int userID = db.getUserID();
         AccountPreferences.setLoginShredPref(context, userID);
         startActivity(new Intent(context, MainActivity.class));
-        Helper.longToastMessage(context, String.valueOf(userID));
     }
 
     private void handleRegisterLink() {
