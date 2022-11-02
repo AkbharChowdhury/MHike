@@ -36,6 +36,11 @@
     <string name="nav_logout">Logout</string>
     <string name="login_error">Incorrect login/password combination. Please try again</string>
     <string name="add_hike">Add Hike</string>
+    <string name="parking">Parking</string>
+    <string name="length_miles">length (miles)</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="example_text">example text</string>
+    <string name="register_success">thank you for creating an account with us</string>
 
     <string-array name="parking_array">
         <item>Yes</item>

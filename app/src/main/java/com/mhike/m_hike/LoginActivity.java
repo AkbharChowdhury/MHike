@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setTitle(R.string.btn_login);
         context = getApplicationContext();
+        checkRegisterMsg();
         form = new Validation(context);
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
@@ -39,6 +40,15 @@ public class LoginActivity extends AppCompatActivity {
         handleRegisterLink();
 
 
+    }
+
+    private void checkRegisterMsg() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("successRegister")) {
+            Helper.longToastMessage(context, getString(R.string.register_success));
+            extras.remove("successRegister");
+
+        }
     }
 
 

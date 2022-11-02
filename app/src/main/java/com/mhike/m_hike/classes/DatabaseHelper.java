@@ -121,7 +121,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + HikeTable.COLUMN_LENGTH + " NUMERIC NOT NULL,"
                 + HikeTable.COLUMN_DIFFICULTY + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_DESCRIPTION + " TEXT,"
-                + HikeTable.COLUMN_DURATION + " TEXT NOT NULL,"
+                + HikeTable.COLUMN_DURATION + " NUMERIC NOT NULL,"
                 + HikeTable.COLUMN_FACILITY + " TEXT NOT NULL,"
                 + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_USER_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
                 ")"

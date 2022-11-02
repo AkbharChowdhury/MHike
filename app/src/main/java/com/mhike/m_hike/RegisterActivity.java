@@ -3,6 +3,7 @@ package com.mhike.m_hike;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -46,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private User getUserDetails() {
         String firstname = Helper.trimStr(txtFirstName);
-        String lastname =  Helper.trimStr(txtLastName);
+        String lastname = Helper.trimStr(txtLastName);
         String email = Helper.trimStr(txtEmail);
         String password = Helper.trimStr(txtPassword, false);
 
@@ -76,14 +77,18 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void homePage() {
+        resetForm();
+        Intent registerIntent = new Intent(context, LoginActivity.class);
+        registerIntent.putExtra("successRegister", true);
+        startActivity(registerIntent);
 
+    }
+
+    private void resetForm() {
         txtFirstName.getEditText().setText("");
         txtLastName.getEditText().setText("");
         txtEmail.getEditText().setText("");
         txtPassword.getEditText().setText("");
-        Helper.longToastMessage(context, "thank you for creating an account with us");
-
-
     }
 
     @Override

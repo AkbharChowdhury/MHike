@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
     tools:context=".AddHikeActivity">
-
-
-
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -25,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Hike name"
+            android:inputType="textPersonName"
             android:maxLength="20"
             android:maxLines="1"
-            android:inputType="textPersonName"
 
             >
 
@@ -35,8 +31,6 @@
 
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -50,9 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Location"
+            android:inputType="textMultiLine"
             android:maxLength="100"
             android:maxLines="3"
-            android:inputType="textMultiLine"
 
             >
 
@@ -60,8 +54,6 @@
 
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -75,24 +67,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Hike Date"
-            android:maxLength="20"
-            android:maxLines="1"
             android:inputType="textPersonName"
-            >
+            android:maxLength="20"
+            android:maxLines="1">
 
         </com.google.android.material.textfield.TextInputEditText>
-
-
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="Select parking options"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        android:layout_margin="10dp"
+        android:hint="@string/parking">
 
         >
 
@@ -117,27 +106,23 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="length (miles)"
-            android:maxLength="20"
-            android:maxLines="1"
+            android:hint="@string/length_miles"
             android:inputType="numberDecimal"
-            >
+            android:maxLength="20"
+            android:maxLines="1">
 
         </com.google.android.material.textfield.TextInputEditText>
-
-
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="Select difficulty"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:hint="@string/difficulty">
 
         >
 
@@ -152,8 +137,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtDescription"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -165,20 +148,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Description"
-            android:maxLength="900"
-            android:maxLines="20"
             android:inputType="textMultiLine"
-            >
+            android:maxLength="900"
+            android:maxLines="20">
 
         </com.google.android.material.textfield.TextInputEditText>
 
 
-
-
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -192,23 +169,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Duration"
-            android:maxLength="10"
-            android:maxLines="1"
             android:inputType="numberDecimal"
-            >
+            android:maxLength="10"
+            android:maxLines="1">
 
         </com.google.android.material.textfield.TextInputEditText>
 
 
-
-
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-
-
 
 
     <androidx.appcompat.widget.AppCompatButton
