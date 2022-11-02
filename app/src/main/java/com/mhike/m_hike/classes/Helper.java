@@ -32,4 +32,13 @@ public final class Helper {
         return textField.getEditText().getText().toString();
 
     }
+
+    public static String[] getParkingArray(){
+        return new String[]{"Yes", "No"};
+    }
+    public static String[] getDifficultyArray(){
+        return  new String[]{"Easy", "Medium", "Hard"};
+    }
+
+
 }
