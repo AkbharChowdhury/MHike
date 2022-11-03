@@ -44,7 +44,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
     private TextInputLayout txtElevationGain;
     private TextInputLayout txtHigh;
     private AutoCompleteTextView txtDifficulty;
-    
+
 
     @SuppressLint({"ResourceType", "ClickableViewAccessibility"})
     @Override
@@ -62,10 +62,6 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         setupAdapter();
 
 
-
-
-
-
         txtHikeDate.setOnTouchListener((view, motionEvent) -> {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -76,6 +72,37 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
         Button btnAddHike = findViewById(R.id.btn_add_hike);
         btnAddHike.setOnClickListener(view -> handleHike());
+
+    }
+
+
+    private Hike getHikeDetails() {
+
+
+        String hikeDate = dbHikeDate;
+        String hikeName = Helper.trimStr(txtHikeName);
+        String description = Helper.trimStr(txtDescription);
+        String location = Helper.trimStr(txtLocation);
+        double distance = Double.parseDouble(Helper.trimStr(txtDistance));
+        double duration = Double.parseDouble(Helper.trimStr(txtDuration));
+        int parkingID = db.getColumnID(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_TYPE, ParkingTable.COLUMN_ID, txtParking.getText().toString());
+        double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
+        double high = Double.parseDouble(Helper.trimStr(txtHigh));
+        int difficultyID = db.getColumnID(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE, DifficultyTable.COLUMN_ID, txtDifficulty.getText().toString());
+
+
+        Hike hikeDetails = new Hike();
+        hikeDetails.setHikeDate(hikeDate);
+        hikeDetails.setHikeName(hikeName);
+        hikeDetails.setDescription(description);
+        hikeDetails.setLocation(location);
+        hikeDetails.setDistance(distance);
+        hikeDetails.setDuration(duration);
+        hikeDetails.setParkingID(parkingID);
+        hikeDetails.setElevationGain(elevationGain);
+        hikeDetails.setHigh(high);
+        hikeDetails.setDifficultyID(difficultyID);
+        return hikeDetails;
 
     }
 
@@ -101,24 +128,18 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
     }
 
     private void handleHike() {
-        Hike hike = new Hike(txtHikeDate,  txtHikeName, txtDescription,  txtLocation,  txtDistance,  txtDuration,  txtParking, txtElevationGain,  txtHigh, txtDifficulty);
+        Hike hike = new Hike(txtHikeDate, txtHikeName, txtDescription, txtLocation, txtDistance, txtDuration, txtParking, txtElevationGain, txtHigh, txtDifficulty);
 
-        if (form.validateHikeForm(hike)){
+        if (form.validateHikeForm(hike)) {
 
-            int parkingID = db.getColumnID(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_TYPE, ParkingTable.COLUMN_ID, txtParking.getText().toString());
-            int difficultyID = db.getColumnID(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE, DifficultyTable.COLUMN_ID, txtDifficulty.getText().toString());
 
-            Helper.longToastMessage(context, String.valueOf(difficultyID));
 //            int difficultyID = db.getUserID()
 //            startActivity(new Intent(context, HikesActivity.class));
 //            Helper.longToastMessage(context,"Done");
         }
 
 
-
     }
-
-
 
 
     public void showDatePickerDialog() {

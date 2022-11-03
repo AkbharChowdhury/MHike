@@ -31,7 +31,7 @@ public final class Helper {
 
     }
 
-    public static String trimStr(TextInputLayout textField, boolean istrimed) {
+    public static String trimStr(TextInputLayout textField, boolean isTrimmed) {
         return textField.getEditText().getText().toString();
 
     }

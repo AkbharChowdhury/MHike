@@ -12,7 +12,7 @@ public final class Hike {
     private double distance;
     private double duration;
     private int parkingID;
-    private String elevationGain;
+    private double elevationGain;
     private double high;
     private int difficultyID;
 
@@ -82,11 +82,11 @@ public final class Hike {
         this.parkingID = parkingID;
     }
 
-    public String getElevationGain() {
+    public double getElevationGain() {
         return elevationGain;
     }
 
-    public void setElevationGain(String elevationGain) {
+    public void setElevationGain(double elevationGain) {
         this.elevationGain = elevationGain;
     }
 
