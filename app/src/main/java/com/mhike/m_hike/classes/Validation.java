@@ -6,6 +6,7 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.UserTable;
 
 
@@ -75,6 +76,11 @@ public final class Validation {
 
     private void setError(TextInputLayout textField, String errorMessage) {
         textField.setError(errorMessage);
+
+    }
+
+    private void setDropDownError(AutoCompleteTextView dropdown, String errorMessage) {
+        dropdown.setError(errorMessage);
 
     }
 
@@ -161,6 +167,15 @@ public final class Validation {
         return String.format(context.getString(R.string.required_field_error), fieldName);
     }
 
+
+    private String getDistanceFieldError(String fieldName, int minDistance) {
+        return String.format(context.getString(R.string.distance_error), fieldName, minDistance);
+    }
+
+    private String getDurationFieldError(String fieldName, int minDuration) {
+        return String.format(context.getString(R.string.distance_error), fieldName, minDuration);
+    }
+
     private String getPasswordMinLengthError(String fieldName, int minLength) {
         return String.format(context.getString(R.string.password_min_error), fieldName, minLength);
     }
@@ -203,20 +218,112 @@ public final class Validation {
     }
 
 
+    private boolean isValidHikeDate(AutoCompleteTextView dropdown) {
+        String fieldName = Helper.capitalise(HikeTable.COLUMN_HIKE_DATE);
+
+        if (dropdown.getText().toString().isEmpty()) {
+            setDropDownError(dropdown, getRequiredFieldError(fieldName));
+            return false;
+        }
+
+        dropdown.setError(null);
+        return true;
+    }
+
+    private boolean isValidHikeName(TextInputLayout textField) {
+        // https://www.youtube.com/watch?v=veOZTvAdzJ8
+        String hikeName = Helper.trimStr(textField);
+        String fieldName = Helper.capitalise(HikeTable.COLUMN_Hike_NAME);
+
+        if (hikeName.isEmpty()) {
+            setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+
+        textField.setError(null);
+        return true;
+    }
+
+    private boolean isValidDistance(TextInputLayout textField) {
+        String distanceStr = Helper.trimStr(textField);
+
+        String fieldName = Helper.capitalise(HikeTable.COLUMN_DISTANCE);
+        final int minDistance = 2;
+        if (distanceStr.isEmpty()) {
+            setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+        if (Double.parseDouble(distanceStr) < minDistance) {
+            setError(textField, getDistanceFieldError(fieldName, minDistance));
+            return false;
+
+        }
+
+        textField.setError(null);
+        return true;
+    }
+
+
+    private boolean isValidDuration(TextInputLayout textField) {
+        String durationStr = Helper.trimStr(textField);
+
+        String fieldName = Helper.capitalise(HikeTable.COLUMN_DISTANCE);
+        final int minDuration = 30;
+
+
+        if (durationStr.isEmpty()) {
+            setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+        if (Double.parseDouble(durationStr) < minDuration) {
+            setError(textField, getDistanceFieldError(fieldName, minDuration));
+            return false;
+
+        }
+
+        textField.setError(null);
+        return true;
+    }
+
+
+    private boolean isEmpty(TextInputLayout textField, String column) {
+        // https://www.youtube.com/watch?v=veOZTvAdzJ8
+        String field = Helper.trimStr(textField);
+        String fieldName = Helper.capitalise(column);
+
+        if (field.isEmpty()) {
+            setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+
+        textField.setError(null);
+        return true;
+    }
+
+
     public boolean validateHikeForm(Hike hike) {
 
-        AutoCompleteTextView txtHikeDate;
-        TextInputLayout txtHikeName;
-        TextInputLayout txtDescription;
-        TextInputLayout txtLocation;
-        TextInputLayout txtDistance;
-        TextInputLayout txtDuration;
-        AutoCompleteTextView txtParking;
-        TextInputLayout txtElevationGain;
-        TextInputLayout txtHigh;
-        TextInputLayout txtDifficulty;
-        
-        return true;
+        AutoCompleteTextView txtHikeDate = hike.getTxtHikeDate();
+        TextInputLayout txtHikeName = hike.getTxtHikeName();
+        TextInputLayout txtDescription = hike.getTxtDescription();
+        TextInputLayout txtLocation = hike.getTxtLocation();
+        TextInputLayout txtDistance = hike.getTxtDistance();
+        TextInputLayout txtDuration = hike.getTxtDuration();
+        AutoCompleteTextView txtParking = hike.getTxtParking();
+        TextInputLayout txtElevationGain = hike.getTxtElevationGain();
+        TextInputLayout txtHigh = hike.getTxtHigh();
+        AutoCompleteTextView txtDifficulty = hike.getTxtDifficulty();
+
+        return !(!isValidHikeDate(txtHikeDate) |
+                !isValidHikeName(txtHikeName) |
+                !isEmpty(txtDescription, HikeTable.COLUMN_DESCRIPTION) |
+                !isEmpty(txtLocation, HikeTable.COLUMN_LOCATION) |
+                !isValidDistance(txtDistance)|
+                !isValidDuration(txtDuration)
+
+        );
+
+
 //
 //        TextInputLayout txtEmail = hike.getDescription();
 //        TextInputLayout txtPassword = user.getTxtPassword();

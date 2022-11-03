@@ -32,6 +32,12 @@
     <string name="email_exists_error">This email is taken, Please choose a different email</string>
     <string name="invalid_email_error">Please enter a valid email!</string>
     <string name="password_min_error">%s password must be at least %d characters long</string>
+
+    <string name="distance_error">%s Must be at least %d miles</string>
+    <string name="duration_error">%s Must be at least %d minutes</string>
+
+
+
     <string name="profile_fragment">Profile Fragment</string>
     <string name="nav_logout">Logout</string>
     <string name="login_error">Incorrect login/password combination. Please try again</string>
