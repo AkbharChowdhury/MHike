@@ -59,6 +59,12 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
         setupAdapter();
 
+        txtDifficulty.isEnabled();
+        txtDifficulty.setText(txtDifficulty.getAdapter().getItem(1).toString(), false);
+
+
+//        txtDifficulty.setText("Easy");
+
 
 
 
