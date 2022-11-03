@@ -48,7 +48,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.nav_logout){
-            AccountPreferences.logout(context);
+//            AccountPreferences.logout(context);
+            SharedPreferences sharedPreferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt(AccountPreferences.USERID, 0);
+            editor.apply();
+            // redirect to login page
+            startActivity(new Intent(context, LoginActivity.class));
         }
         if(item.getItemId() == R.id.nav_hikes){
             startActivity(new Intent(context, HikesActivity.class));

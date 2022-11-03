@@ -41,8 +41,14 @@
     <string name="difficulty">Difficulty</string>
     <string name="example_text">example text</string>
     <string name="register_success">thank you for creating an account with us</string>
-    <string name="duration_mins">Duration (mins)</string>
+    <string name="duration_minutes">Duration (mins)</string>
     <string name="hike_date">Hike Date</string>
+    <string name="hike_name">Hike Name</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
+    <string name="distance_miles">Distance (Miles)</string>
+    <string name="parking_available">Parking Available</string>
+    <string name="elevation_gain">Elevation Gain</string>
 
     <string-array name="parking_array">
         <item>Yes</item>

@@ -30,20 +30,20 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         setContentView(R.layout.activity_add_hike);
         setTitle("Add Hike");
 
-        parkingAutoComplete = findViewById(R.id.autoCompleteParking);
-        parkingAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, Helper.getParkingArray()));
-
-        difficultyAutoComplete = findViewById(R.id.autoCompleteDifficulty);
-        difficultyAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, Helper.getDifficultyArray()));
-        txtHikeDate = findViewById(R.id.txtHikeDate);
-
-        txtHikeDate.setOnTouchListener((view, motionEvent) -> {
-
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                showDatePickerDialog();
-            }
-            return false;
-        });
+//        parkingAutoComplete = findViewById(R.id.autoCompleteParking);
+//        parkingAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, Helper.getParkingArray()));
+//
+//        difficultyAutoComplete = findViewById(R.id.autoCompleteDifficulty);
+//        difficultyAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, Helper.getDifficultyArray()));
+//        txtHikeDate = findViewById(R.id.txtHikeDate);
+//
+//        txtHikeDate.setOnTouchListener((view, motionEvent) -> {
+//
+//            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                showDatePickerDialog();
+//            }
+//            return false;
+//        });
 
     }
 
