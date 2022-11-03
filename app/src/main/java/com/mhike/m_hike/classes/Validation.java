@@ -2,6 +2,7 @@ package com.mhike.m_hike.classes;
 
 import android.content.Context;
 import android.util.Patterns;
+import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
@@ -203,6 +204,18 @@ public final class Validation {
 
 
     public boolean validateHikeForm(Hike hike) {
+
+        AutoCompleteTextView txtHikeDate;
+        TextInputLayout txtHikeName;
+        TextInputLayout txtDescription;
+        TextInputLayout txtLocation;
+        TextInputLayout txtDistance;
+        TextInputLayout txtDuration;
+        AutoCompleteTextView txtParking;
+        TextInputLayout txtElevationGain;
+        TextInputLayout txtHigh;
+        TextInputLayout txtDifficulty;
+        
         return true;
 //
 //        TextInputLayout txtEmail = hike.getDescription();

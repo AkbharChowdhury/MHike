@@ -33,6 +33,13 @@ public class RegisterActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context, db);
 
+       findTextFields();
+
+        Button btnRegister = findViewById(R.id.btn_register);
+        btnRegister.setOnClickListener(view -> handleRegister());
+    }
+
+    private void findTextFields() {
         txtFirstName = findViewById(R.id.txtFirstname);
 
         txtLastName = findViewById(R.id.txtLastname);
@@ -40,9 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         txtEmail = findViewById(R.id.txtEmail);
 
         txtPassword = findViewById(R.id.txtPassword);
-
-        Button btnRegister = findViewById(R.id.btn_register);
-        btnRegister.setOnClickListener(view -> handleRegister());
     }
 
     private User getUserDetails() {

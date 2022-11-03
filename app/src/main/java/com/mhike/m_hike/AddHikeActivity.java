@@ -12,11 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.DatePickerFragment;
 import com.mhike.m_hike.classes.Helper;
 import com.mhike.m_hike.classes.Hike;
 import com.mhike.m_hike.classes.IDatePicker;
+import com.mhike.m_hike.classes.User;
 import com.mhike.m_hike.classes.Validation;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
@@ -30,9 +32,16 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
     private Context context;
     private Validation form;
 
-    private AutoCompleteTextView parkingAutoComplete;
-    private AutoCompleteTextView difficultyAutoComplete;
     private AutoCompleteTextView txtHikeDate;
+    private TextInputLayout txtHikeName;
+    private TextInputLayout txtDescription;
+    private TextInputLayout txtLocation;
+    private TextInputLayout txtDistance;
+    private TextInputLayout txtDuration;
+    private AutoCompleteTextView txtParking;
+    private TextInputLayout txtElevationGain;
+    private TextInputLayout txtHigh;
+    private AutoCompleteTextView txtDifficulty;
     
 
     @SuppressLint({"ResourceType", "ClickableViewAccessibility"})
@@ -46,13 +55,13 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
         setTitle("Add Hike");
 
-        parkingAutoComplete = findViewById(R.id.txtParking);
-        parkingAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME)));
+        findTextFields();
 
-        difficultyAutoComplete = findViewById(R.id.txtDifficulty);
-        difficultyAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(DifficultyTable.TABLE_NAME)));
+        setupAdapter();
 
-        txtHikeDate = findViewById(R.id.txtHikeDate);
+
+
+
         txtHikeDate.setOnTouchListener((view, motionEvent) -> {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -66,8 +75,30 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
     }
 
+    private void findTextFields() {
+
+        txtHikeDate = findViewById(R.id.txtHikeDate);
+        txtHikeName = findViewById(R.id.txtHikeName);
+        txtDescription = findViewById(R.id.txtDescription);
+        txtLocation = findViewById(R.id.txtLocation);
+        txtDistance = findViewById(R.id.txtDistance);
+        txtDuration = findViewById(R.id.txtDuration);
+        txtParking = findViewById(R.id.txtParking);
+        txtElevationGain = findViewById(R.id.txtElevationGain);
+        txtHigh = findViewById(R.id.txtHigh);
+        txtDifficulty = findViewById(R.id.txtDifficulty);
+
+    }
+
+    private void setupAdapter() {
+        txtParking.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME)));
+        txtDifficulty.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(DifficultyTable.TABLE_NAME)));
+
+    }
+
     private void handleHike() {
-        Hike hike = new Hike();
+        Hike hike = new Hike(txtHikeDate,  txtHikeName, txtDescription,  txtLocation,  txtDistance,  txtDuration,  txtParking, txtElevationGain,  txtHigh, txtDifficulty);
+
         if (form.validateHikeForm(hike)){
             Helper.longToastMessage(context,"Done");
         }
@@ -75,6 +106,8 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
 
     }
+
+
 
 
     public void showDatePickerDialog() {

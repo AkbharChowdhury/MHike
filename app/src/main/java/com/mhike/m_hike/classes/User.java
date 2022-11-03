@@ -2,7 +2,7 @@ package com.mhike.m_hike.classes;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class User {
+public final class User {
     private TextInputLayout txtFirstName;
     private TextInputLayout txLastName;
     private TextInputLayout txtEmail;
