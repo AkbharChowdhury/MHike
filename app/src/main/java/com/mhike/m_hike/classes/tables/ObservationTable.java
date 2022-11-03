@@ -2,7 +2,8 @@ package com.mhike.m_hike.classes.tables;
 
 
 public final class ObservationTable {
-    private ObservationTable() {}
+    private ObservationTable() {
+    }
 
     public static final String TABLE_NAME = "Observation";
     public static final String COLUMN_ID = "observation_id";
