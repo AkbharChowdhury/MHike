@@ -9,12 +9,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.HikePhoto;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.ObservationTable;
+import com.mhike.m_hike.classes.tables.ParkingTable;
 import com.mhike.m_hike.classes.tables.UserTable;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -44,8 +48,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         createAllTables(db);
+        addDefaultTableValues(db);
+
+
 
     }
+
+
+
 
 
     @Override
@@ -87,13 +97,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    private void addDefaultTableValues(SQLiteDatabase db){
+        addDifficulty(db);
+        addParking(db);
+    }
+
+
     /************************************************** Create table statements ****************************************/
+
     private void createAllTables(SQLiteDatabase db) {
         createUserTable(db);
+        createDifficultyTable(db);
+        createParkingTable(db);
         createHikeTable(db);
         createHikePhotoTable(db);
         createObservationTable(db);
+
+
+
     }
+
+    private void addDifficulty(SQLiteDatabase db){
+        String[] difficultyList  = {
+                "Easy",
+                "Moderate",
+                "Hard"
+        };
+
+        for(String difficulty : difficultyList){
+
+            ContentValues values = new ContentValues();
+            values.put(DifficultyTable.COLUMN_TYPE, difficulty);
+            db.insert(DifficultyTable.TABLE_NAME, null, values);
+
+        }
+    }
+
+    private void addParking(SQLiteDatabase db){
+        String[] parkingList  = {
+                "Yes",
+                "No"
+        };
+
+        for(String parking : parkingList){
+
+            ContentValues values = new ContentValues();
+            values.put(ParkingTable.COLUMN_TYPE, parking);
+            db.insert(ParkingTable.TABLE_NAME, null, values);
+
+        }
+    }
+
+
 
     private void createUserTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + UserTable.TABLE_NAME + " ("
@@ -108,23 +163,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    private void createDifficultyTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + DifficultyTable.TABLE_NAME + " ("
+                + DifficultyTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + DifficultyTable.COLUMN_TYPE + " TEXT NOT NULL UNIQUE)"
+        );
+
+    }
+
+    private void createParkingTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + ParkingTable.TABLE_NAME + " ("
+                + ParkingTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ParkingTable.COLUMN_TYPE + " TEXT NOT NULL UNIQUE)"
+        );
+
+    }
+
+
     private void createHikeTable(SQLiteDatabase db) {
         final String COLUMN_USER_ID = UserTable.COLUMN_ID;
+        final String COLUMN_PARKING_ID = ParkingTable.COLUMN_ID;
+        final String COLUMN_DIFFICULTY_ID = DifficultyTable.COLUMN_ID;
+
+
 
         db.execSQL("CREATE TABLE " + HikeTable.TABLE_NAME + " ("
                 + HikeTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + HikeTable.COLUMN_USER_ID + " INTEGER NOT NULL,"
-                + HikeTable.COLUMN_Hike_NAME + " TEXT NOT NULL,"
-                + HikeTable.COLUMN_LOCATION + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_HIKE_DATE + " TEXT NOT NULL,"
-                + HikeTable.COLUMN_PARKING_AVAILABLE + " TEXT NOT NULL,"
-                + HikeTable.COLUMN_LENGTH + " NUMERIC NOT NULL,"
-                + HikeTable.COLUMN_DIFFICULTY + " TEXT NOT NULL,"
+                + HikeTable.COLUMN_Hike_NAME + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_DESCRIPTION + " TEXT,"
+                + HikeTable.COLUMN_LOCATION + " TEXT NOT NULL,"
+                + HikeTable.COLUMN_DISTANCE + " NUMERIC NOT NULL,"
                 + HikeTable.COLUMN_DURATION + " NUMERIC NOT NULL,"
-                + HikeTable.COLUMN_FACILITY + " TEXT NOT NULL,"
-                + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_USER_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
-                ")"
+
+                + HikeTable.COLUMN_PARKING_ID + " INTEGER NOT NULL,"
+                + HikeTable.COLUMN_ELEVATION_GAIN + " NUMERIC NOT NULL,"
+                + HikeTable.COLUMN_HIGH + " NUMERIC NOT NULL,"
+                + HikeTable.COLUMN_DIFFICULTY_ID + " INTEGER NOT NULL,"
+
+                + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_USER_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
+                + "FOREIGN KEY (" + COLUMN_PARKING_ID + ") REFERENCES " + ParkingTable.TABLE_NAME + "(" + COLUMN_PARKING_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
+                +"FOREIGN KEY (" + COLUMN_DIFFICULTY_ID + ") REFERENCES " + DifficultyTable.TABLE_NAME + "(" + COLUMN_DIFFICULTY_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
+                + ")"
         );
 
     }
@@ -158,6 +239,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /************************************************** insert default values into table ****************************************/
+
+
+
 
     /************************************************** Create Login/ register ****************************************/
 
@@ -166,19 +251,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = UserTable.COLUMN_EMAIL + " LIKE ?";
         String[] selectionArgs = {"%" + email + "%"};
-        // query user table with condition
-        /**
-         * Here query function is used to fetch records from user table this function works like we use sql query.
-         * SQL query equivalent to this query function is
-         * SELECT user_id FROM user WHERE user_email = ?
-         */
-        try (Cursor cursor = db.query(UserTable.TABLE_NAME, //Table to query
-                columns,                    //columns to return
-                selection,                  //columns for the WHERE clause
-                selectionArgs,              //The values for the WHERE clause
-                null,                       //group the rows
-                null,                      //filter by row groups
-                null)) {
+        // select the email field and compare it to the entered email
+        try (Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
             int cursorCount = cursor.getCount();
             return cursorCount > 0;
 
@@ -199,20 +273,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = UserTable.COLUMN_EMAIL + " = ?" + " AND " + UserTable.COLUMN_PASSWORD + " = ?";
         // selection arguments
         String[] selectionArgs = {email, password};
-        // query user table with conditions
-        /**
-         * Here query function is used to fetch records from user table this function works like we use sql query.
-         * SQL query equivalent to this query function is
-         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
-         */
 
-        try (Cursor cursor = db.query(UserTable.TABLE_NAME, //Table to query
-                columns,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null)) {
+        // query to check if user email and password is correct
+        try (Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
 
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
@@ -234,14 +297,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean registerUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
-        LocalDate currentDate = LocalDate.now();
 
         ContentValues cv = new ContentValues();
         cv.put(UserTable.COLUMN_FIRSTNAME, user.getFirstname());
         cv.put(UserTable.COLUMN_LASTNAME, user.getLastname());
         cv.put(UserTable.COLUMN_EMAIL, user.getEmail());
         cv.put(UserTable.COLUMN_PASSWORD, Encryption.encode(user.getPassword()));
-        cv.put(UserTable.COLUMN_REGISTERED_DATE, String.valueOf(currentDate));
+        cv.put(UserTable.COLUMN_REGISTERED_DATE, String.valueOf(Helper.getCurrentDate()));
 
         long result = db.insert(UserTable.TABLE_NAME, null, cv);
         return result != -1;
@@ -249,7 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int getUserID(){
+    public int getUserID() {
         return dbUserID;
     }
 

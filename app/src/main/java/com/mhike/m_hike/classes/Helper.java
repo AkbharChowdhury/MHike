@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.time.LocalDate;
+
 public final class Helper {
 
     private Helper() {
@@ -30,6 +32,11 @@ public final class Helper {
 
     public static String trimStr(TextInputLayout textField, boolean istrimed) {
         return textField.getEditText().getText().toString();
+
+    }
+
+    public static LocalDate getCurrentDate(){
+        return LocalDate.now();
 
     }
 
