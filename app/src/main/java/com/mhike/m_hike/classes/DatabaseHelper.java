@@ -310,6 +310,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public List<String> populateDropdown(String tableName) {
+        List<String> list = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + tableName;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        try (Cursor cursor = db.rawQuery(selectQuery, null)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursor.getString(1)); // get the type field
+                } while (cursor.moveToNext());
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return list;
+    }
+
 
     public int getUserID() {
         return dbUserID;

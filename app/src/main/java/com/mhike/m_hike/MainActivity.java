@@ -56,8 +56,11 @@ public class MainActivity extends AppCompatActivity {
             // redirect to login page
             startActivity(new Intent(context, LoginActivity.class));
         }
+
         if(item.getItemId() == R.id.nav_hikes){
-            startActivity(new Intent(context, HikesActivity.class));
+//            startActivity(new Intent(context, HikesActivity.class));
+            startActivity(new Intent(context, AddHikeActivity.class));
+
         }
         return super.onOptionsItemSelected(item);
     }

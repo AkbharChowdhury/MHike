@@ -4,49 +4,77 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
+import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.DatePickerFragment;
 import com.mhike.m_hike.classes.Helper;
+import com.mhike.m_hike.classes.Hike;
 import com.mhike.m_hike.classes.IDatePicker;
+import com.mhike.m_hike.classes.Validation;
+import com.mhike.m_hike.classes.tables.DifficultyTable;
+import com.mhike.m_hike.classes.tables.ParkingTable;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
+    private DatabaseHelper db;
+    private Context context;
+    private Validation form;
 
     private AutoCompleteTextView parkingAutoComplete;
     private AutoCompleteTextView difficultyAutoComplete;
     private AutoCompleteTextView txtHikeDate;
+    
 
     @SuppressLint({"ResourceType", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hike);
+        context = getApplicationContext();
+        db = DatabaseHelper.getInstance(context);
+        form = new Validation(context);
+
         setTitle("Add Hike");
 
-//        parkingAutoComplete = findViewById(R.id.autoCompleteParking);
-//        parkingAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, Helper.getParkingArray()));
-//
-//        difficultyAutoComplete = findViewById(R.id.autoCompleteDifficulty);
-//        difficultyAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, Helper.getDifficultyArray()));
-//        txtHikeDate = findViewById(R.id.txtHikeDate);
-//
-//        txtHikeDate.setOnTouchListener((view, motionEvent) -> {
-//
-//            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                showDatePickerDialog();
-//            }
-//            return false;
-//        });
+        parkingAutoComplete = findViewById(R.id.txtParking);
+        parkingAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME)));
+
+        difficultyAutoComplete = findViewById(R.id.txtDifficulty);
+        difficultyAutoComplete.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(DifficultyTable.TABLE_NAME)));
+
+        txtHikeDate = findViewById(R.id.txtHikeDate);
+        txtHikeDate.setOnTouchListener((view, motionEvent) -> {
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                showDatePickerDialog();
+            }
+            return false;
+        });
+
+        Button btnAddHike = findViewById(R.id.btn_add_hike);
+        btnAddHike.setOnClickListener(view -> handleHike());
 
     }
 
+    private void handleHike() {
+        Hike hike = new Hike();
+        if (form.validateHikeForm(hike)){
+            Helper.longToastMessage(context,"Done");
+        }
+
+
+
+    }
 
 
     public void showDatePickerDialog() {

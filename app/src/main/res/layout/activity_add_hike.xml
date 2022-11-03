@@ -1,180 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingHorizontal="16dp"
+    android:layout_height="match_parent"
     tools:context=".AddHikeActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/hike_date">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        tools:context=".AddHikeActivity">
 
-
-        <AutoCompleteTextView
-            android:id="@+id/txtHikeDate"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="16dp"
+            android:hint="@string/hike_date">
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtHikeName"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+            <AutoCompleteTextView
+                android:id="@+id/txtHikeDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
 
-        <com.google.android.material.textfield.TextInputEditText
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtHikeName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hike_name"
-            android:inputType="textPersonName"
-            android:maxLength="30"
-            android:maxLines="1">
+            android:layout_marginTop="16dp">
 
-        </com.google.android.material.textfield.TextInputEditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hike_name"
+                android:inputType="textPersonName"
+                android:maxLength="30"
+                android:maxLines="1">
+
+            </com.google.android.material.textfield.TextInputEditText>
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtDescription"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:hint="@string/description"
-            android:inputType="textMultiLine"
-            android:lines="6"
-            android:maxLength="20"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:scrollHorizontally="false"
+            android:layout_marginTop="16dp">
 
-            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="@string/description"
+                android:inputType="textMultiLine"
+                android:lines="6"
+                android:maxLength="20"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
 
-        </com.google.android.material.textfield.TextInputEditText>
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtLocation"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtLocation"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/location"
-            android:inputType="textPersonName"
-            android:maxLength="30"
-            android:maxLines="1">
+            android:layout_marginTop="16dp">
 
-        </com.google.android.material.textfield.TextInputEditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/location"
+                android:inputType="textPersonName"
+                android:maxLength="30"
+                android:maxLines="1">
+
+            </com.google.android.material.textfield.TextInputEditText>
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtDistance"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtDistance"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/distance_miles"
-            android:inputType="numberDecimal"
-            android:maxLength="4"
-            android:maxLines="1">
+            android:layout_marginTop="16dp">
 
-        </com.google.android.material.textfield.TextInputEditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/distance_miles"
+                android:inputType="numberDecimal"
+                android:maxLength="4"
+                android:maxLines="1">
+
+            </com.google.android.material.textfield.TextInputEditText>
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtDuration"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtDuration"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/duration_minutes"
-            android:inputType="numberDecimal"
-            android:maxLength="4"
-            android:maxLines="1">
+            android:layout_marginTop="16dp">
 
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/duration_minutes"
+                android:inputType="numberDecimal"
+                android:maxLength="4"
+                android:maxLines="1">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/parking_available">
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
-
-        <AutoCompleteTextView
-            android:id="@+id/txtParking"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="16dp"
+            android:hint="@string/parking_available">
 
 
+            <AutoCompleteTextView
+                android:id="@+id/txtParking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtElevationGain"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+                />
 
-        <com.google.android.material.textfield.TextInputEditText
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtElevationGain"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/elevation_gain"
-            android:inputType="number"
-            android:maxLength="4"
-            android:maxLines="1">
+            android:layout_marginTop="16dp">
 
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/elevation_gain"
+                android:inputType="number"
+                android:maxLength="4"
+                android:maxLines="1">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtHigh"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="High"
+                android:inputType="number"
+                android:maxLength="4"
+                android:maxLines="1">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/difficulty">
+
+
+            <AutoCompleteTextView
+                android:id="@+id/txtDifficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_hike"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/orange"
+            android:text="@string/add_hike"
+            android:textColor="@color/white">
+
+        </androidx.appcompat.widget.AppCompatButton>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</ScrollView>

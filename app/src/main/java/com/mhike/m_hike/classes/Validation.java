@@ -202,6 +202,15 @@ public final class Validation {
     }
 
 
+    public boolean validateHikeForm(Hike hike) {
+        return true;
+//
+//        TextInputLayout txtEmail = hike.getDescription();
+//        TextInputLayout txtPassword = user.getTxtPassword();
+//        return !(!isValidEmail(txtEmail) | !isValidPassword(txtPassword));
+
+    }
+
     /**
      * isValidName()
      * ^ beginning of the string
