@@ -193,7 +193,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="High"
+                android:hint="@string/high_ft"
                 android:inputType="number"
                 android:maxLength="4"
                 android:maxLines="1">
@@ -207,9 +207,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/difficulty"
             android:enabled="false"
             android:focusable="false"
+            android:hint="@string/difficulty"
 
             >
 

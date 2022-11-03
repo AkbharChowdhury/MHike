@@ -59,7 +59,8 @@
     <string name="location">Location</string>
     <string name="distance_miles">Distance (Miles)</string>
     <string name="parking_available">Parking Available</string>
-    <string name="elevation_gain">Elevation Gain</string>
+    <string name="elevation_gain">Elevation Gain (ft)</string>
+    <string name="high_ft">High (ft)</string>
 
     <string-array name="parking_array">
         <item>Yes</item>
