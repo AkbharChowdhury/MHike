@@ -172,6 +172,15 @@ public final class Validation {
         return String.format(context.getString(R.string.distance_error), fieldName, minDistance);
     }
 
+    private String getElevationFieldError(String fieldName, int minDistance) {
+        return String.format(context.getString(R.string.elevation_error), fieldName, minDistance);
+    }
+
+    private String getElevationHighFieldError(String fieldName, String elevation) {
+        return String.format(context.getString(R.string.high_high_error), fieldName, elevation);
+    }
+
+
     private String getDurationFieldError(String fieldName, int minDuration) {
         return String.format(context.getString(R.string.distance_error), fieldName, minDuration);
     }
@@ -218,8 +227,8 @@ public final class Validation {
     }
 
 
-    private boolean isValidHikeDate(AutoCompleteTextView dropdown) {
-        String fieldName = Helper.capitalise(HikeTable.COLUMN_HIKE_DATE);
+    private boolean isValidDropdown(AutoCompleteTextView dropdown, String column) {
+        String fieldName = Helper.capitalise(column);
 
         if (dropdown.getText().toString().isEmpty()) {
             setDropDownError(dropdown, getRequiredFieldError(fieldName));
@@ -229,6 +238,7 @@ public final class Validation {
         dropdown.setError(null);
         return true;
     }
+
 
     private boolean isValidHikeName(TextInputLayout textField) {
         // https://www.youtube.com/watch?v=veOZTvAdzJ8
@@ -276,12 +286,60 @@ public final class Validation {
             return false;
         }
         if (Double.parseDouble(durationStr) < minDuration) {
-            setError(textField, getDistanceFieldError(fieldName, minDuration));
+            setError(textField, getDurationFieldError(fieldName, minDuration));
             return false;
 
         }
 
         textField.setError(null);
+        return true;
+    }
+
+
+    private boolean isValidElevation(TextInputLayout textField) {
+        String elevationGainStr = Helper.trimStr(textField);
+
+        String fieldName = Helper.capitalise(HikeTable.COLUMN_ELEVATION_GAIN);
+        final int minElevationGain = 100;
+
+
+        if (elevationGainStr.isEmpty()) {
+            setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+        if (Double.parseDouble(elevationGainStr) < minElevationGain) {
+            setError(textField, getElevationFieldError(fieldName, minElevationGain));
+            return false;
+
+        }
+
+        textField.setError(null);
+        return true;
+    }
+
+    private boolean isValidHigh(TextInputLayout textField, TextInputLayout elevationGain, AutoCompleteTextView txtDifficulty) {
+        String highStr = Helper.trimStr(textField);
+        String elevationGainStr = Helper.trimStr(elevationGain);
+
+
+        String fieldName = Helper.capitalise(HikeTable.COLUMN_HIGH);
+
+
+        if (highStr.isEmpty()) {
+            setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+        if (!elevationGainStr.isEmpty() && Double.parseDouble(highStr) < Double.parseDouble(elevationGainStr)) {
+            setError(textField, getElevationHighFieldError(fieldName, HikeTable.COLUMN_ELEVATION_GAIN));
+            return false;
+
+        }
+
+        textField.setError(null);
+
+        // calculate the difficulty based on the elevation and high
+//        txtDifficulty.setText("Easy");
+
         return true;
     }
 
@@ -314,12 +372,19 @@ public final class Validation {
         TextInputLayout txtHigh = hike.getTxtHigh();
         AutoCompleteTextView txtDifficulty = hike.getTxtDifficulty();
 
-        return !(!isValidHikeDate(txtHikeDate) |
-                !isValidHikeName(txtHikeName) |
-                !isEmpty(txtDescription, HikeTable.COLUMN_DESCRIPTION) |
-                !isEmpty(txtLocation, HikeTable.COLUMN_LOCATION) |
-                !isValidDistance(txtDistance)|
-                !isValidDuration(txtDuration)
+        return !(
+                !isValidDropdown(txtHikeDate, HikeTable.COLUMN_HIKE_DATE) |
+                        !isValidHikeName(txtHikeName) |
+                        !isEmpty(txtDescription, HikeTable.COLUMN_DESCRIPTION) |
+                        !isEmpty(txtLocation, HikeTable.COLUMN_LOCATION) |
+                        !isValidDistance(txtDistance) |
+                        !isValidDuration(txtDuration) |
+                        !isValidDropdown(txtParking, HikeTable.COLUMN_PARKING_ID) |
+                        !isValidElevation(txtElevationGain) |
+                        !isValidHigh(txtHigh, txtElevationGain, txtDifficulty) |
+
+                        !isValidDropdown(txtDifficulty, HikeTable.TABLE_NAME)
+
 
         );
 

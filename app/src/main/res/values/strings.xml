@@ -34,6 +34,10 @@
     <string name="password_min_error">%s password must be at least %d characters long</string>
 
     <string name="distance_error">%s Must be at least %d miles</string>
+    <string name="elevation_error">%s Must be at least %d foot</string>
+    <string name="high_high_error">%s must be greater than %s</string>
+
+
     <string name="duration_error">%s Must be at least %d minutes</string>
 
 
