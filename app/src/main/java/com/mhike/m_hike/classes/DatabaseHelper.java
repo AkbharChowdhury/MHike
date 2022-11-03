@@ -51,11 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         addDefaultTableValues(db);
 
 
-
     }
-
-
-
 
 
     @Override
@@ -97,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    private void addDefaultTableValues(SQLiteDatabase db){
+    private void addDefaultTableValues(SQLiteDatabase db) {
         addDifficulty(db);
         addParking(db);
         addUser(db);
@@ -115,11 +111,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createObservationTable(db);
 
 
-
     }
 
-    private void addDifficulty(SQLiteDatabase db){
-        String[] difficultyList  = {
+    private void addDifficulty(SQLiteDatabase db) {
+        String[] difficultyList = {
                 "Easy",
                 "Moderate",
                 "Hard",
@@ -127,7 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         };
 
-        for(String difficulty : difficultyList){
+        for (String difficulty : difficultyList) {
 
             ContentValues values = new ContentValues();
             values.put(DifficultyTable.COLUMN_TYPE, difficulty);
@@ -136,13 +131,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void addParking(SQLiteDatabase db){
-        String[] parkingList  = {
+    private void addParking(SQLiteDatabase db) {
+        String[] parkingList = {
                 "Yes",
                 "No"
         };
 
-        for(String parking : parkingList){
+        for (String parking : parkingList) {
 
             ContentValues values = new ContentValues();
             values.put(ParkingTable.COLUMN_TYPE, parking);
@@ -150,7 +145,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
     }
-
 
 
     private void createUserTable(SQLiteDatabase db) {
@@ -189,7 +183,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         final String COLUMN_DIFFICULTY_ID = DifficultyTable.COLUMN_ID;
 
 
-
         db.execSQL("CREATE TABLE " + HikeTable.TABLE_NAME + " ("
                 + HikeTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + HikeTable.COLUMN_USER_ID + " INTEGER NOT NULL,"
@@ -207,7 +200,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_USER_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
                 + "FOREIGN KEY (" + COLUMN_PARKING_ID + ") REFERENCES " + ParkingTable.TABLE_NAME + "(" + COLUMN_PARKING_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
-                +"FOREIGN KEY (" + COLUMN_DIFFICULTY_ID + ") REFERENCES " + DifficultyTable.TABLE_NAME + "(" + COLUMN_DIFFICULTY_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
+                + "FOREIGN KEY (" + COLUMN_DIFFICULTY_ID + ") REFERENCES " + DifficultyTable.TABLE_NAME + "(" + COLUMN_DIFFICULTY_ID + ") ON UPDATE CASCADE ON DELETE CASCADE "
                 + ")"
         );
 
@@ -234,8 +227,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ObservationTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ObservationTable.COLUMN_HIKE_ID + " INTEGER NOT NULL,"
                 + ObservationTable.COLUMN_OBSERVATION + " TEXT NOT NULL,"
-                + ObservationTable.COLUMN_DATE_TIME + " TEXT NOT NULL,"
                 + ObservationTable.COLUMN_COMMENTS + " TEXT,"
+                + ObservationTable.COLUMN_DATE + " TEXT NOT NULL,"
+                + ObservationTable.COLUMN_TIME + " TEXT NOT NULL,"
                 + "FOREIGN KEY (" + COLUMN_HIKE_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_HIKE_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
                 ")"
         );
@@ -243,8 +237,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /************************************************** insert default values into table ****************************************/
-
-
 
 
     /************************************************** Create Login/ register ****************************************/
@@ -265,9 +257,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-
-
-
 
 
     @SuppressLint("Range")
@@ -339,18 +328,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public void AddObservation(List<Observation> observationList) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        for (Observation observation : observationList) {
+            ContentValues cv = new ContentValues();
+            cv.put(ObservationTable.COLUMN_HIKE_ID, observation.getHikeID());
+            cv.put(ObservationTable.COLUMN_OBSERVATION, observation.getObservation());
+            cv.put(ObservationTable.COLUMN_COMMENTS, observation.getComments());
+            cv.put(ObservationTable.COLUMN_DATE, observation.getObservationDate());
+            cv.put(ObservationTable.COLUMN_TIME, observation.getObservationTime());
+            db.insert(HikeTable.TABLE_NAME, null, cv);
+        }
+
+    }
+
 
     public void addUser(SQLiteDatabase db) {
 //        db = getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(UserTable.COLUMN_FIRSTNAME,"tom");
+        cv.put(UserTable.COLUMN_FIRSTNAME, "tom");
         cv.put(UserTable.COLUMN_LASTNAME, "Smith");
         cv.put(UserTable.COLUMN_EMAIL, "tom@gmail.com");
         cv.put(UserTable.COLUMN_PASSWORD, Encryption.encode("password"));
         cv.put(UserTable.COLUMN_REGISTERED_DATE, String.valueOf(Helper.getCurrentDate()));
 
-       db.insert(UserTable.TABLE_NAME, null, cv);
+        db.insert(UserTable.TABLE_NAME, null, cv);
 
     }
 
@@ -375,6 +379,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    // for recycler view
+//    @SuppressLint("Range")
+//    public List<Hike> getHikeView() {
+//        List<Hike> hikeList = new ArrayList<>();
+//
+//        String selectQuery = "SELECT  * FROM " + HikeTable.TABLE_NAME;
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        try (Cursor cursor = db.rawQuery(selectQuery, null)) {
+//            if (cursor.moveToFirst()) {
+//                do {
+//                    Hike hike = new Hike();
+//                    hike.setHikeName(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
+//                    hike.setDescription(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
+//                    hike.setHikeDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
+//                    hikeList.add(hike);
+//
+//                } while (cursor.moveToNext());
+//            }
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//
+//        return hikeList;
+//    }
+
+
+    public Cursor getHikeList(){
+        String sql = "SELECT  * FROM " + HikeTable.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db != null ? db.rawQuery(sql, null) : null;
+
+    }
+
+
+
+
+
 
 
     public int getColumnID(String tableName, String column, String idField, String value) {
@@ -386,7 +430,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         try (Cursor cursor = db.query(tableName, columns, selection, selectionArgs, null, null, null)) {
-            if(cursor.getCount() > 0) {
+            if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 id = cursor.getInt(0);
             }

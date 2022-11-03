@@ -42,7 +42,6 @@
     <string name="insertion_error">there was an error creating you account. please try again later.</string>
 
 
-
     <string name="profile_fragment">Profile Fragment</string>
     <string name="nav_logout">Logout</string>
     <string name="login_error">Incorrect login/password combination. Please try again</string>
@@ -61,6 +60,9 @@
     <string name="parking_available">Parking Available</string>
     <string name="elevation_gain">Elevation Gain (ft)</string>
     <string name="high_ft">High (ft)</string>
+    <string name="add_observation">Add Observation</string>
+    <string name="no_hikes">No Hikes Found.. Try adding one</string>
+
 
     <string-array name="parking_array">
         <item>Yes</item>

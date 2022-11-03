@@ -9,7 +9,13 @@
 
 
     <item
-        android:id="@+id/nav_hikes"
+        android:id="@+id/nav_hike"
         android:title="@string/nav_hikes"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/nav_add_observation"
+        android:title="@string/add_observation"
         app:showAsAction="never" />
 </menu>

@@ -10,6 +10,8 @@ public final class ObservationTable {
     public static final String COLUMN_HIKE_ID = "hike_id";
     public static final String COLUMN_OBSERVATION = "observation";
     public static final String COLUMN_COMMENTS = "comments";
-    public static final String COLUMN_DATE_TIME = "date_time";
+    public static final String COLUMN_DATE = "observation_date";
+    public static final String COLUMN_TIME = "observation_time";
+
 
 }

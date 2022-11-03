@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
 
-    private boolean disablePastDates;
+    private final boolean disablePastDates;
 
 
     public DatePickerFragment(boolean disablePastDates) {
@@ -30,6 +30,8 @@ public class DatePickerFragment extends DialogFragment implements
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
         LocalDate dob = LocalDate.of(year, ++month, day);
+
+
         ((AddHikeActivity) getActivity()).updateDate(dob);
     }
 
