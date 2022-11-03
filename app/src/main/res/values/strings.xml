@@ -39,6 +39,7 @@
 
 
     <string name="duration_error">%s Must be at least %d minutes</string>
+    <string name="insertion_error">there was an error creating you account. please try again later.</string>
 
 
 

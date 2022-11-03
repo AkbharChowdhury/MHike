@@ -317,6 +317,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean addHike(Hike hike, int userID) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(HikeTable.COLUMN_USER_ID, userID);
+        cv.put(HikeTable.COLUMN_HIKE_DATE, hike.getHikeDate());
+        cv.put(HikeTable.COLUMN_Hike_NAME, hike.getHikeName());
+        cv.put(HikeTable.COLUMN_DESCRIPTION, hike.getDescription());
+        cv.put(HikeTable.COLUMN_LOCATION, hike.getLocation());
+        cv.put(HikeTable.COLUMN_DISTANCE, hike.getDistance());
+        cv.put(HikeTable.COLUMN_DURATION, hike.getDuration());
+        cv.put(HikeTable.COLUMN_PARKING_ID, hike.getParkingID());
+        cv.put(HikeTable.COLUMN_ELEVATION_GAIN, hike.getElevationGain());
+        cv.put(HikeTable.COLUMN_HIGH, hike.getHigh());
+        cv.put(HikeTable.COLUMN_DIFFICULTY_ID, hike.getDifficultyID());
+        long result = db.insert(HikeTable.TABLE_NAME, null, cv);
+        return result != -1;
+
+    }
+
+
 
     public void addUser(SQLiteDatabase db) {
 //        db = getWritableDatabase();

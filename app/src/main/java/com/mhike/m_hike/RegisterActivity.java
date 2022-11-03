@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            Helper.longToastMessage(context, "there was an error creating you account. please try again later.");
+            Helper.longToastMessage(context, getString(R.string.insertion_error));
         }
 
     }

@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.DatePickerFragment;
 import com.mhike.m_hike.classes.Helper;
@@ -132,12 +134,16 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
         if (form.validateHikeForm(hike)) {
 
+            SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+            int userID = preferences.getInt(AccountPreferences.USERID, 0);
 
-//            int difficultyID = db.getUserID()
-//            startActivity(new Intent(context, HikesActivity.class));
-//            Helper.longToastMessage(context,"Done");
+            if (db.addHike(getHikeDetails(), userID)) {
+                Helper.longToastMessage(context, "hike added");
+                return;
+            }
+
+            Helper.longToastMessage(context, getString(R.string.insertion_error));
         }
-
 
     }
 
@@ -159,11 +165,13 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
 
     @Override
-    public void updateDate(LocalDate dob) {
+    public void updateDate(LocalDate selectedDate) {
         // for storing the date in the database
-        dbHikeDate = db.toString();
+        dbHikeDate = selectedDate.toString();
+
+        Helper.longToastMessage(context, dbHikeDate);
         // show user-friendly date formatted
-        txtHikeDate.setText(formatDate(dob.toString()));
+        txtHikeDate.setText(formatDate(selectedDate.toString()));
 
     }
 
