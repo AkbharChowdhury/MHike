@@ -11,6 +11,10 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mhike.m_hike.classes.AccountPreferences;
+import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.Helper;
+import com.mhike.m_hike.classes.tables.DifficultyTable;
+import com.mhike.m_hike.classes.tables.ParkingTable;
 
 public class HikesActivity extends AppCompatActivity {
     private Context context;
@@ -23,6 +27,7 @@ public class HikesActivity extends AppCompatActivity {
         context = getApplicationContext();
         FloatingActionButton btnAddHike = findViewById(R.id.btn_add_hike);
         btnAddHike.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AddHikeActivity.class)));
+        DatabaseHelper db = DatabaseHelper.getInstance(context);
 
     }
 

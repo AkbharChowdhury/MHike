@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.Helper;
+import com.mhike.m_hike.classes.tables.ParkingTable;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         CheckIsUserLoggedIn();
         setTitle(getString(R.string.nav_home));
+
 
 
     }

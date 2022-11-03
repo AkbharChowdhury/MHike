@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +32,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
     private DatabaseHelper db;
     private Context context;
     private Validation form;
+    private String dbHikeDate;
 
     private AutoCompleteTextView txtHikeDate;
     private TextInputLayout txtHikeName;
@@ -59,11 +61,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
         setupAdapter();
 
-        txtDifficulty.isEnabled();
-        txtDifficulty.setText(txtDifficulty.getAdapter().getItem(1).toString(), false);
 
-
-//        txtDifficulty.setText("Easy");
 
 
 
@@ -106,7 +104,14 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         Hike hike = new Hike(txtHikeDate,  txtHikeName, txtDescription,  txtLocation,  txtDistance,  txtDuration,  txtParking, txtElevationGain,  txtHigh, txtDifficulty);
 
         if (form.validateHikeForm(hike)){
-            Helper.longToastMessage(context,"Done");
+
+            int parkingID = db.getColumnID(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_TYPE, ParkingTable.COLUMN_ID, txtParking.getText().toString());
+            int difficultyID = db.getColumnID(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE, DifficultyTable.COLUMN_ID, txtDifficulty.getText().toString());
+
+            Helper.longToastMessage(context, String.valueOf(difficultyID));
+//            int difficultyID = db.getUserID()
+//            startActivity(new Intent(context, HikesActivity.class));
+//            Helper.longToastMessage(context,"Done");
         }
 
 
@@ -134,6 +139,9 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
     @Override
     public void updateDate(LocalDate dob) {
+        // for storing the date in the database
+        dbHikeDate = db.toString();
+        // show user-friendly date formatted
         txtHikeDate.setText(formatDate(dob.toString()));
 
     }

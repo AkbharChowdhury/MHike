@@ -13,6 +13,8 @@ import com.mhike.m_hike.classes.tables.UserTable;
 public final class Validation {
     private final Context context;
     private DatabaseHelper db;
+    private static final int minDistance = 2;
+
 
 
     public Validation(Context context) {
@@ -258,7 +260,6 @@ public final class Validation {
         String distanceStr = Helper.trimStr(textField);
 
         String fieldName = Helper.capitalise(HikeTable.COLUMN_DISTANCE);
-        final int minDistance = 2;
         if (distanceStr.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
             return false;
@@ -317,9 +318,11 @@ public final class Validation {
         return true;
     }
 
-    private boolean isValidHigh(TextInputLayout textField, TextInputLayout elevationGain, AutoCompleteTextView txtDifficulty) {
+    private boolean isValidHigh(TextInputLayout textField, TextInputLayout txtElevationGain, AutoCompleteTextView txtDifficulty, TextInputLayout txtDistance) {
         String highStr = Helper.trimStr(textField);
-        String elevationGainStr = Helper.trimStr(elevationGain);
+        String elevationGainStr = Helper.trimStr(txtElevationGain);
+        String distanceStr = Helper.trimStr(txtDistance);
+
 
 
         String fieldName = Helper.capitalise(HikeTable.COLUMN_HIGH);
@@ -336,9 +339,15 @@ public final class Validation {
         }
 
         textField.setError(null);
-
         // calculate the difficulty based on the elevation and high
-//        txtDifficulty.setText("Easy");
+        if(isValidElevation(txtElevationGain) && isValidDistance(txtDistance)){
+            double elevationGain = Double.parseDouble(elevationGainStr);
+            double distance = Double.parseDouble(distanceStr);
+            txtDifficulty.setText(txtDifficulty.getAdapter().getItem(Helper.getDifficultyLevel(distance, elevationGain)).toString(), false);
+
+        }
+
+
 
         return true;
     }
@@ -363,7 +372,6 @@ public final class Validation {
 
         AutoCompleteTextView txtHikeDate = hike.getTxtHikeDate();
         TextInputLayout txtHikeName = hike.getTxtHikeName();
-        TextInputLayout txtDescription = hike.getTxtDescription();
         TextInputLayout txtLocation = hike.getTxtLocation();
         TextInputLayout txtDistance = hike.getTxtDistance();
         TextInputLayout txtDuration = hike.getTxtDuration();
@@ -375,13 +383,12 @@ public final class Validation {
         return !(
                 !isValidDropdown(txtHikeDate, HikeTable.COLUMN_HIKE_DATE) |
                         !isValidHikeName(txtHikeName) |
-                        !isEmpty(txtDescription, HikeTable.COLUMN_DESCRIPTION) |
                         !isEmpty(txtLocation, HikeTable.COLUMN_LOCATION) |
                         !isValidDistance(txtDistance) |
                         !isValidDuration(txtDuration) |
                         !isValidDropdown(txtParking, HikeTable.COLUMN_PARKING_ID) |
                         !isValidElevation(txtElevationGain) |
-                        !isValidHigh(txtHigh, txtElevationGain, txtDifficulty) |
+                        !isValidHigh(txtHigh, txtElevationGain, txtDifficulty, txtDistance) |
 
                         !isValidDropdown(txtDifficulty, HikeTable.TABLE_NAME)
 

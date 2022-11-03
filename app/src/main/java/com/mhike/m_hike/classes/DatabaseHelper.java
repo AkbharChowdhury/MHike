@@ -100,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void addDefaultTableValues(SQLiteDatabase db){
         addDifficulty(db);
         addParking(db);
+        addUser(db);
     }
 
 
@@ -121,7 +122,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] difficultyList  = {
                 "Easy",
                 "Moderate",
-                "Hard"
+                "Hard",
+                "Expert"
+
         };
 
         for(String difficulty : difficultyList){
@@ -264,6 +267,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
+
+
     @SuppressLint("Range")
     public boolean isAuthorised(String email, String password) {
         // array of columns to fetch
@@ -310,6 +316,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+
+    public void addUser(SQLiteDatabase db) {
+//        db = getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(UserTable.COLUMN_FIRSTNAME,"tom");
+        cv.put(UserTable.COLUMN_LASTNAME, "Smith");
+        cv.put(UserTable.COLUMN_EMAIL, "tom@gmail.com");
+        cv.put(UserTable.COLUMN_PASSWORD, Encryption.encode("password"));
+        cv.put(UserTable.COLUMN_REGISTERED_DATE, String.valueOf(Helper.getCurrentDate()));
+
+       db.insert(UserTable.TABLE_NAME, null, cv);
+
+    }
+
     public List<String> populateDropdown(String tableName) {
         List<String> list = new ArrayList<>();
 
@@ -329,6 +351,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return list;
+    }
+
+
+
+    public int getColumnID(String tableName, String column, String idField, String value) {
+        int id = 0;
+        String[] columns = {idField};
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = column + " = ?";
+        String[] selectionArgs = {value};
+
+
+        try (Cursor cursor = db.query(tableName, columns, selection, selectionArgs, null, null, null)) {
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                id = cursor.getInt(0);
+            }
+            return id;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+
     }
 
 
