@@ -1,5 +1,6 @@
 package com.mhike.m_hike;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,14 +26,10 @@ public class HikeActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Context context;
 
-    private RecyclerView recyclerView;
     private ArrayList<String> hikeName;
-    private ArrayList<String>hikeDescription;
+    private ArrayList<String> hikeDescription;
     private ArrayList<String> hikeDate;
     private ArrayList<String> hikeID;
-
-
-    private HikeAdapter adapter;
 
 
     @Override
@@ -50,8 +47,8 @@ public class HikeActivity extends AppCompatActivity {
         hikeDescription = new ArrayList<>();
         hikeDate = new ArrayList<>();
 
-        recyclerView = findViewById(R.id.recyclerview);
-        adapter = new HikeAdapter(
+        RecyclerView recyclerView = findViewById(R.id.hike_recyclerview);
+        HikeAdapter adapter = new HikeAdapter(
                 context,
                 hikeID,
                 hikeName,
@@ -66,28 +63,22 @@ public class HikeActivity extends AppCompatActivity {
     @SuppressLint("Range")
     private void showHikeList() {
 
-        try(Cursor cursor = db.getHikeList()) {
+        try (Cursor cursor = db.getHikeList()) {
 
             if (cursor.getCount() == 0) {
                 Helper.longToastMessage(context, getString(R.string.no_hikes));
                 return;
             }
 
-            String s = "";
-//            // populate recycler view from database
             while (cursor.moveToNext()) {
-                s+=cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME));
-
-
                 hikeID.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID)));
                 hikeName.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
                 hikeDescription.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
                 hikeDate.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
             }
-            Helper.longToastMessage(context, hikeName.toString());
 
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -96,10 +87,10 @@ public class HikeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.nav_logout){
+        if (item.getItemId() == R.id.nav_logout) {
             AccountPreferences.logout(context);
         }
-        if(item.getItemId() == R.id.nav_hike){
+        if (item.getItemId() == R.id.nav_hike) {
             startActivity(new Intent(context, HikeActivity.class));
         }
         return super.onOptionsItemSelected(item);
@@ -114,14 +105,14 @@ public class HikeActivity extends AppCompatActivity {
     }
 
 
+    // refresh the activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
+    }
 
-//    // refresh the activity
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == 1){
-//            recreate();
-//        }
-//    }
 
 }
