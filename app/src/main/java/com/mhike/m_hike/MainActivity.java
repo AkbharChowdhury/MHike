@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper db = DatabaseHelper.getInstance(context);
         CheckIsUserLoggedIn();
         setTitle(getString(R.string.nav_home));
+        startActivity(new Intent(this, HikeActivity.class));
 
 
 

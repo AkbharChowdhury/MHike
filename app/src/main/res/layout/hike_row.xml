@@ -7,9 +7,8 @@
     android:layout_margin="16dp"
     android:backgroundTint="#efefef"
     app:cardCornerRadius="16dp"
-    app:cardElevation="12dp"
 
-    >
+    app:cardElevation="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +26,31 @@
                 style="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hike Name: "
+                android:text="ID: "
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/lblHikeID"
+                style="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23"
+                android:textColor="@color/black"
+                android:textSize="11dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hike Name : "
                 android:textColor="@color/black"
                 android:textSize="24dp" />
 
@@ -36,7 +59,6 @@
                 style="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Snowdon"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
         </LinearLayout>
@@ -51,7 +73,7 @@
                 style="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description: "
+                android:text="Hike Description: "
                 android:textColor="@color/black"
                 android:textSize="24dp" />
 
@@ -60,9 +82,9 @@
                 style="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="this is a hike description"
                 android:textColor="@color/black"
-                android:textSize="24dp" />
+                android:textSize="11dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,17 +101,14 @@
                 android:textColor="@color/black"
                 android:textSize="24dp" />
 
-
             <TextView
-                android:id="@+id/lblHikeDate"
+                android:id="@+id/txtHikeDate"
                 style="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="24 Nov 2022"
+                android:text="24/2/2022"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
-
-
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
