@@ -48,25 +48,5 @@ public class EditHikeActivity extends AppCompatActivity {
 
         }
     }
-//        // check if book id exists
-//        if (getIntent().hasExtra("hikeID")) {
-//            hikeID = Integer.parseInt(getIntent().getStringExtra("hikeID"));
-//
-//            Helper.longToastMessage(context, String.valueOf(hikeID));
-////            ArrayList<Hike> hikeList = db.getOneBook(hikeID);
-////            if (books.size() > 0) {
-////                for (Book book : books) {
-////                    title = book.getBookTitle();
-////                    author = book.getAuthor();
-////                    pages = String.valueOf(book.getPages());
-////                }
-////
-////                txtBookTitle.setText(title);
-////                txtAuthor.setText(author);
-////                txtPages.setText(pages);
-////                return;
-////            }
-////            Helper.toastMessage(context, "Error retrieving selected book");
-//
-//        }
+
     }

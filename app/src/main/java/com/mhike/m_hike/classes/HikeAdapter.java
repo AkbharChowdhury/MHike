@@ -29,14 +29,14 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
     private ArrayList hikeID;
     private Activity activity;
 
-
-
-
-    public HikeAdapter(Context context,
+    public HikeAdapter(
+            Activity activity,
+            Context context,
                        ArrayList hikeID,
                        ArrayList hikeName,
                        ArrayList hikeDescription,
                        ArrayList hikeDate) {
+        this.activity = activity;
         this.context = context;
         this.hikeID = hikeID;
         this.hikeName = hikeName;

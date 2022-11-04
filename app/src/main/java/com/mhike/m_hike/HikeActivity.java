@@ -49,6 +49,7 @@ public class HikeActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.hike_recyclerview);
         HikeAdapter adapter = new HikeAdapter(
+                HikeActivity.this,
                 context,
                 hikeID,
                 hikeName,
