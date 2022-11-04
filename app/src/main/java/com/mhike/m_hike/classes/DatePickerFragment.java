@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.mhike.m_hike.AddHikeActivity;
+import com.mhike.m_hike.AddObservationActivity;
 
 import java.time.LocalDate;
 
@@ -18,10 +19,12 @@ public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
 
     private final boolean disablePastDates;
+    private boolean isHikeForm;
 
 
-    public DatePickerFragment(boolean disablePastDates) {
+    public DatePickerFragment(boolean disablePastDates, boolean isHikeForm) {
         this.disablePastDates = disablePastDates;
+        this.isHikeForm = isHikeForm;
 
     }
 
@@ -29,12 +32,14 @@ public class DatePickerFragment extends DialogFragment implements
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
-        LocalDate dob = LocalDate.of(year, ++month, day);
+        LocalDate date = LocalDate.of(year, ++month, day);
 
-
-        ((AddHikeActivity) getActivity()).updateDate(dob);
+        if (isHikeForm) {
+            ((AddHikeActivity) getActivity()).updateDate(date);
+            return;
+        }
+        ((AddObservationActivity) getActivity()).updateDate(date);
     }
-
 
     @NonNull
     @Override

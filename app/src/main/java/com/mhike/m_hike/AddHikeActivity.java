@@ -59,6 +59,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
         setTitle("Add Hike");
 
+
         findTextFields();
 
         setupAdapter();
@@ -109,7 +110,6 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
     }
 
     private void findTextFields() {
-
         txtHikeDate = findViewById(R.id.txtHikeDate);
         txtHikeName = findViewById(R.id.txtHikeName);
         txtDescription = findViewById(R.id.txtDescription);
@@ -149,7 +149,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
 
     public void showDatePickerDialog() {
-        DialogFragment datePicker = new DatePickerFragment(true);
+        DialogFragment datePicker = new DatePickerFragment(true, true);
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 
