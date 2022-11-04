@@ -414,6 +414,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db != null ? db.rawQuery(sql, null) : null;
 
     }
+    @SuppressLint("Range")
+    public Hike  getSelectedHike(String hikeID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_ID +" =?", new String[]{hikeID});
+        if (cursor.moveToLast()) {
+
+            Hike hike = new Hike();
+            hike.setHikeID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))));
+
+            return hike;
+//            book = new Book(title, author, Integer.parseInt(pages));
+
+        }
+        return null;
+    }
 
 
 

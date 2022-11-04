@@ -5,6 +5,16 @@ import android.widget.AutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 
 public final class Hike {
+    private int hikeID;
+
+    public int getHikeID() {
+        return hikeID;
+    }
+
+    public void setHikeID(int hikeID) {
+        this.hikeID = hikeID;
+    }
+
     private String hikeDate;
     private String hikeName;
     private String description;

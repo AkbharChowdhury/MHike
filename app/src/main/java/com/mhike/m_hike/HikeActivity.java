@@ -1,5 +1,6 @@
 package com.mhike.m_hike;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class HikeActivity extends AppCompatActivity {
     private Context context;
     private RecyclerView recyclerView;
     private ArrayList<String> hikeName, hikeDescription, hikeDate;
+    private ArrayList<Integer> hikeID;
     private HikeAdapter adapter;
 
 
@@ -47,9 +49,11 @@ public class HikeActivity extends AppCompatActivity {
 
         hikeName = new ArrayList<>();
         hikeDate = new ArrayList<>();
+        hikeID = new ArrayList<>();
+
         hikeDescription = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
-        adapter = new HikeAdapter(context, hikeName, hikeDescription, hikeDate);
+        adapter = new HikeAdapter(context, hikeID, hikeName, hikeDescription, hikeDate);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         showHikeList();
@@ -66,6 +70,7 @@ public class HikeActivity extends AppCompatActivity {
             }
 
             while (cursor.moveToNext()) {
+                hikeID.add(cursor.getInt(cursor.getColumnIndex(HikeTable.COLUMN_ID)));
                 hikeName.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
                 hikeDescription.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
                 hikeDate.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
@@ -95,6 +100,17 @@ public class HikeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
         return true;
+    }
+
+
+
+    // refresh the activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
     }
 
 }
