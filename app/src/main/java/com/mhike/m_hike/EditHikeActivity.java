@@ -54,13 +54,9 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
         form = new Validation(context);
 
 
-
         findTextFields();
         setupAdapter();
         setTxtHikeDate();
-
-
-
         getIntentAndSetData();
     }
 
@@ -69,7 +65,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
         if (getIntent().hasExtra("hikeID")) {
             String hikeID = getIntent().getStringExtra("hikeID");
             Helper.longToastMessage(context, hikeID);
-
+            db.getSelectedHike(hikeID);
 
         }
     }
@@ -88,11 +84,13 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
         txtDifficulty = findViewById(R.id.txtDifficulty);
 
     }
+
     private void setupAdapter() {
         txtParking.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME)));
         txtDifficulty.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(DifficultyTable.TABLE_NAME)));
 
     }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setTxtHikeDate() {
         txtHikeDate.setOnTouchListener((view, motionEvent) -> {
@@ -103,6 +101,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
             return false;
         });
     }
+
     public void showDatePickerDialog() {
         DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.EDIT_HIKE);
         datePicker.show(getSupportFragmentManager(), "datePicker");

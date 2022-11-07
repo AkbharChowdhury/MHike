@@ -414,6 +414,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db != null ? db.rawQuery(sql, null) : null;
 
     }
+
+    // get hike details for edut hike form
     @SuppressLint("Range")
     public Hike  getSelectedHike(String hikeID) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -422,9 +424,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             Hike hike = new Hike();
             hike.setHikeID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))));
-
+            hike.setHikeDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
+            hike.setHikeDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
+            hike.setDescription(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
+            hike.setLocation(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_LOCATION)));
+            hike.setDistance(Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DISTANCE))));
+            hike.setDuration(Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DURATION))));
+            hike.setParkingID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_PARKING_ID))));
+            hike.setElevationGain(Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ELEVATION_GAIN))));
+            hike.setHikeID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIGH))));
+            hike.setDifficultyID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DIFFICULTY_ID))));
             return hike;
-//            book = new Book(title, author, Integer.parseInt(pages));
 
         }
         return null;
