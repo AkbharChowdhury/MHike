@@ -14,15 +14,19 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.DatePickerFragment;
 import com.mhike.m_hike.classes.Helper;
+import com.mhike.m_hike.classes.Hike;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.interfaces.IDatePicker;
 import com.mhike.m_hike.classes.Validation;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
+import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
     int hikeID;
@@ -64,8 +68,57 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
 
         if (getIntent().hasExtra("hikeID")) {
             String hikeID = getIntent().getStringExtra("hikeID");
-            Helper.longToastMessage(context, hikeID);
-            db.getSelectedHike(hikeID);
+            List<Hike> hikeList = db.getSelectedHike(hikeID);
+
+            if (hikeList.size() == 0){
+                Helper.longToastMessage(context, "No hikes found");
+                return;
+            }
+
+            for (Hike hike : hikeList){
+                
+                txtHikeDate.setText(formatDate(hike.getHikeDate()));
+                txtHikeName.getEditText().setText(hike.getHikeName());
+                txtDescription.getEditText().setText(hike.getDescription());
+                txtLocation.getEditText().setText(hike.getLocation());
+                txtDistance.getEditText().setText(String.valueOf(hike.getDistance()));
+                txtDuration.getEditText().setText(String.valueOf(hike.getDuration()));
+                String parkingStr = db.getColumnName(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_ID, String.valueOf(hike.getParkingID()), ParkingTable.COLUMN_TYPE);
+                txtParking.setText(parkingStr);
+                txtElevationGain.getEditText().setText(String.valueOf(hike.getElevationGain()));
+                txtHigh.getEditText().setText(String.valueOf(hike.getHigh()));
+
+                Helper.longToastMessage(context, String.valueOf(hike.getHigh()));
+
+
+                String difficultyStr = db.getColumnName(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_ID, String.valueOf(hike.getDifficultyID()), DifficultyTable.COLUMN_TYPE);
+                txtDifficulty.setText(difficultyStr);
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+//            Helper.longToastMessage(context, "oj");
+
+
+//            Hike hike = db.getSelectedHike(hikeID);
+
+//            Helper.longToastMessage(context, hike.getHikeName());
+
+
+
+//            List<Hike> hike = db.getSelectedHike(hikeID);
+
+
 
         }
     }
@@ -123,7 +176,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
         // for storing the date in the database
         dbHikeDate = selectedDate.toString();
 
-        Helper.longToastMessage(context, dbHikeDate);
+//        Helper.longToastMessage(context, dbHikeDate);
         // show user-friendly date formatted
         txtHikeDate.setText(formatDate(selectedDate.toString()));
 

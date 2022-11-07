@@ -72,7 +72,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
         int selectedHikeID = Integer.parseInt(String.valueOf(hikeID.get(position)));
 
 
-        Helper.longToastMessage(context, String.valueOf(selectedHikeID));
+//        Helper.longToastMessage(context, String.valueOf(selectedHikeID));
         Intent intent = new Intent(context, EditHikeActivity.class);
         intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
         return intent;
