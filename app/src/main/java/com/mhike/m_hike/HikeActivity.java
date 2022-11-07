@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -74,7 +75,7 @@ public class HikeActivity extends AppCompatActivity {
     @SuppressLint("Range")
     private void showHikeList() {
 
-        try (Cursor cursor = db.getHikeList()) {
+        try (Cursor cursor = db.getHikeList(String.valueOf(getUserID()))) {
 
             if (cursor.getCount() == 0) {
                 Helper.longToastMessage(context, getString(R.string.no_hikes));
@@ -123,6 +124,11 @@ public class HikeActivity extends AppCompatActivity {
         if(requestCode == 1){
             recreate();
         }
+    }
+
+    private int getUserID(){
+        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+        return preferences.getInt(AccountPreferences.USERID, 0);
     }
 
 

@@ -90,7 +90,6 @@ public final class User {
 
     // login form
     public User(TextInputLayout txtEmail, TextInputLayout txtPassword) {
-
         this.txtEmail = txtEmail;
         this.txtPassword = txtPassword;
     }

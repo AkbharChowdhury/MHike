@@ -67,7 +67,9 @@
     <string name="update_hike">Update Hike</string>
     <string name="hike_update_msg">Hike updated</string>
     <string name="hike_update_failed">Could not update hike</string>
-
+    <string name="username_dashboard">Tom Smith</string>
+    <string name="observation_title">Sights</string>
+    <string name="get_user_first_last_name">%s %s</string>
 
 
     <string-array name="parking_array">

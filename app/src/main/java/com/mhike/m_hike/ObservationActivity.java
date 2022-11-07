@@ -10,5 +10,6 @@ public class ObservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observation);
+        setTitle(getString(R.string.observation_title));
     }
 }

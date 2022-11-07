@@ -290,6 +290,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+
+    @SuppressLint("Range")
+    public User getUserFirstAndLastName(String userID) {
+        // array of columns to fetch
+        String[] columns = {UserTable.COLUMN_FIRSTNAME, UserTable.COLUMN_LASTNAME};
+        SQLiteDatabase db = getReadableDatabase();
+        // selection criteria
+        String selection = UserTable.COLUMN_ID + " = ?";
+        // selection arguments
+        String[] selectionArgs = {userID};
+        User user = new User();
+
+        // query to check if user email and password is correct
+        try (Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+
+            if (cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    user.setFirstname(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN_FIRSTNAME)));
+                    user.setLastname(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN_LASTNAME)));
+
+                }
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return user;
+
+        }
+        return user;
+
+    }
+
     public boolean registerUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -408,10 +443,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //    }
 
 
-    public Cursor getHikeList(){
-        String sql = "SELECT  * FROM " + HikeTable.TABLE_NAME;
+    public Cursor getHikeList(String userID){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db != null ? db.rawQuery(sql, null) : null;
+        return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?", new String[]{userID}, null) : null;
 
     }
 
@@ -508,7 +542,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long hikeUpdated = db.update(HikeTable.TABLE_NAME, cv, HikeTable.COLUMN_ID + "=?", new String[]{hikeID});
         return hikeUpdated != -1;
-
 
 
     }
