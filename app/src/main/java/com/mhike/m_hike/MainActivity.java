@@ -3,25 +3,16 @@ package com.mhike.m_hike;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mhike.m_hike.classes.AccountPreferences;
-import com.mhike.m_hike.classes.CustomMenu;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.Hike;
 import com.mhike.m_hike.classes.User;
-import com.mhike.m_hike.classes.tables.ParkingTable;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;
@@ -38,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         TextView user_dashboard = findViewById(R.id.lbl_user_dashboard);
 
         User user = db.getUserFirstAndLastName(String.valueOf(getUserID()));
-//        user_dashboard.setText(userDetails.getFirstname() + " " + userDetails.getLastname());
         user_dashboard.setText(getString(R.string.get_user_first_last_name));
 
 
@@ -46,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 String.format(getString(R.string.get_user_first_last_name),
                         user.getFirstname(), user.getLastname()
                 ));
-//        user_dashboard.setText(db.getUserFirstAndLastName("1");
         buttonCard();
 
 

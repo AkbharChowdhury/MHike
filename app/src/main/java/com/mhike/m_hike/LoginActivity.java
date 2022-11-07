@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout txtPassword;
     private DatabaseHelper db;
     private Validation form;
+    private TextView lblLoginError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(context);
         handleRegisterLink();
         loginRequiredMsg();
+        lblLoginError = findViewById(R.id.lbl_login_error);
+        lblLoginError.setVisibility(View.INVISIBLE);
 
 
     }
@@ -70,11 +74,13 @@ public class LoginActivity extends AppCompatActivity {
         if (form.validateLoginForm(new User(txtEmail, txtPassword))) {
 
             if (db.isAuthorised(email, Encryption.encode(password))) {
+                lblLoginError.setVisibility(View.INVISIBLE);
+
                 configUserDetails();
                 return;
             }
+            lblLoginError.setVisibility(View.VISIBLE);
 
-            Helper.toastMessage(context, getString(R.string.login_error));
 
         }
 

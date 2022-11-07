@@ -97,24 +97,6 @@ public class HikeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.nav_logout) {
-            AccountPreferences.logout(context);
-        }
-        if (item.getItemId() == R.id.nav_hike) {
-            startActivity(new Intent(context, HikeActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-
-        return true;
-    }
 
 
     // refresh the activity
