@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.mhike.m_hike.classes.IDatePicker;
+import com.mhike.m_hike.classes.interfaces.IDatePicker;
 
 import java.time.LocalDate;
 

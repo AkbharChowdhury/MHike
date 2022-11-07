@@ -62,6 +62,9 @@
     <string name="high_ft">High (ft)</string>
     <string name="add_observation">Add Observation</string>
     <string name="no_hikes">No Hikes Found.. Try adding one</string>
+    <string name="edit_hike_title">Edit Hike</string>
+    <string name="add_hike_title">Add Hike</string>
+    <string name="update_hike">Update Hike</string>
 
 
     <string-array name="parking_array">

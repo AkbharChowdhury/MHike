@@ -5,11 +5,9 @@ import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -20,8 +18,8 @@ import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.DatePickerFragment;
 import com.mhike.m_hike.classes.Helper;
 import com.mhike.m_hike.classes.Hike;
-import com.mhike.m_hike.classes.IDatePicker;
-import com.mhike.m_hike.classes.User;
+import com.mhike.m_hike.classes.enums.ActivityForm;
+import com.mhike.m_hike.classes.interfaces.IDatePicker;
 import com.mhike.m_hike.classes.Validation;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
@@ -57,14 +55,22 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);
 
-        setTitle("Add Hike");
-
+        setTitle(getString(R.string.add_hike_title));
 
         findTextFields();
-
         setupAdapter();
+        setTxtHikeDate();
 
 
+
+
+        Button btnAddHike = findViewById(R.id.btn_add_hike);
+        btnAddHike.setOnClickListener(view -> handleHike());
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setTxtHikeDate() {
         txtHikeDate.setOnTouchListener((view, motionEvent) -> {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -72,10 +78,6 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
             }
             return false;
         });
-
-        Button btnAddHike = findViewById(R.id.btn_add_hike);
-        btnAddHike.setOnClickListener(view -> handleHike());
-
     }
 
 
@@ -149,7 +151,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
 
     public void showDatePickerDialog() {
-        DialogFragment datePicker = new DatePickerFragment(true, true);
+        DialogFragment datePicker = new DatePickerFragment(true, ActivityForm.ADD_HIKE);
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 
