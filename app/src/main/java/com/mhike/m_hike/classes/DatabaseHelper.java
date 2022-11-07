@@ -490,6 +490,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dbUserID;
     }
 
+    public boolean updateHike(Hike hike, String hikeID, int userID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(HikeTable.COLUMN_USER_ID, userID);
+        cv.put(HikeTable.COLUMN_HIKE_DATE, hike.getHikeDate());
+        cv.put(HikeTable.COLUMN_Hike_NAME, hike.getHikeName());
+        cv.put(HikeTable.COLUMN_DESCRIPTION, hike.getDescription());
+        cv.put(HikeTable.COLUMN_LOCATION, hike.getLocation());
+        cv.put(HikeTable.COLUMN_DISTANCE, hike.getDistance());
+        cv.put(HikeTable.COLUMN_DURATION, hike.getDuration());
+        cv.put(HikeTable.COLUMN_PARKING_ID, hike.getParkingID());
+        cv.put(HikeTable.COLUMN_ELEVATION_GAIN, hike.getElevationGain());
+        cv.put(HikeTable.COLUMN_HIGH, hike.getHigh());
+        cv.put(HikeTable.COLUMN_DIFFICULTY_ID, hike.getDifficultyID());
+
+        long hikeUpdated = db.update(HikeTable.TABLE_NAME, cv, "hike_id=?", new String[]{hikeID});
+        return hikeUpdated != -1;
+
+
+
+    }
+
 
 }
 

@@ -224,7 +224,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add_hike"
+            android:id="@+id/btn_edit_hike"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
