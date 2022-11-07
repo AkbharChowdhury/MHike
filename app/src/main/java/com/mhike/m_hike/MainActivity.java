@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(context, LoginActivity.class));
                 break;
             case R.id.nav_hike:
+                Helper.longToastMessage(context, "ddddd");
                 startActivity(new Intent(context, HikeActivity.class));
                 break;
 

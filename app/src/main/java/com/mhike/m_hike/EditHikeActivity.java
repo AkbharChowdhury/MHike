@@ -107,7 +107,6 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
 
             SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
             int userID = preferences.getInt(AccountPreferences.USERID, 0);
-            
             if (db.updateHike(getHikeDetails(), getIntent().getStringExtra("hikeID"), userID)) {
                 Helper.toastMessage(context, "Hike updated successfully");
                 return;
@@ -186,7 +185,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker {
     }
 
     public void showDatePickerDialog() {
-        DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.EDIT_HIKE);
+        DialogFragment datePicker = new DatePickerFragment(true, ActivityForm.EDIT_HIKE);
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 

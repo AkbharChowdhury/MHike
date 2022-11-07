@@ -65,6 +65,9 @@
     <string name="edit_hike_title">Edit Hike</string>
     <string name="add_hike_title">Add Hike</string>
     <string name="update_hike">Update Hike</string>
+    <string name="hike_update_msg">Hike updated</string>
+    <string name="hike_update_failed">Could not update hike</string>
+
 
 
     <string-array name="parking_array">

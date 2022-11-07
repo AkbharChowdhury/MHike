@@ -61,6 +61,16 @@ public class HikeActivity extends AppCompatActivity {
 
     }
 
+    private void checkHikeUpdatedMsg() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("hikeAdded")) {
+            Helper.longToastMessage(context, getString(R.string.hike_update_msg));
+            extras.remove("successRegister");
+
+        }
+    }
+
+
     @SuppressLint("Range")
     private void showHikeList() {
 
@@ -114,6 +124,12 @@ public class HikeActivity extends AppCompatActivity {
             recreate();
         }
     }
+
+
+
+
+
+
 
 
 }

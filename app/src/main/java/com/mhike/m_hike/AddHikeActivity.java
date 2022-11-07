@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -54,6 +55,11 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);
+        CheckIsUserLoggedIn();
+
+        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+        int userID = preferences.getInt(AccountPreferences.USERID, 0);
+        Helper.longToastMessage(context, String.valueOf(userID));
 
         setTitle(getString(R.string.add_hike_title));
 
@@ -67,6 +73,16 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         Button btnAddHike = findViewById(R.id.btn_add_hike);
         btnAddHike.setOnClickListener(view -> handleHike());
 
+    }
+    private void CheckIsUserLoggedIn() {
+        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+        int userID = preferences.getInt(AccountPreferences.USERID, 0);
+        if (userID == 0) {
+            // redirect to login page if user is not logged in
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.putExtra("loginRequired", true);
+            startActivity(intent);
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -144,7 +160,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
                 return;
             }
 
-            Helper.longToastMessage(context, getString(R.string.insertion_error));
+            Helper.longToastMessage(context, "There was an error adding hike");
         }
 
     }

@@ -506,7 +506,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(HikeTable.COLUMN_HIGH, hike.getHigh());
         cv.put(HikeTable.COLUMN_DIFFICULTY_ID, hike.getDifficultyID());
 
-        long hikeUpdated = db.update(HikeTable.TABLE_NAME, cv, "hike_id=?", new String[]{hikeID});
+        long hikeUpdated = db.update(HikeTable.TABLE_NAME, cv, HikeTable.COLUMN_ID + "=?", new String[]{hikeID});
         return hikeUpdated != -1;
 
 

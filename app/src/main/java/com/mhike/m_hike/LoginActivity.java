@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(view -> handleLogin());
         db = DatabaseHelper.getInstance(context);
         handleRegisterLink();
+        loginRequiredMsg();
 
 
     }
@@ -47,6 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         if (extras != null && extras.getBoolean("successRegister")) {
             Helper.longToastMessage(context, getString(R.string.register_success));
             extras.remove("successRegister");
+
+        }
+    }
+
+    private void loginRequiredMsg() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("loginRequired")) {
+            Helper.longToastMessage(context, "you must be logged in!");
+            extras.remove("loginRequired");
 
         }
     }
