@@ -325,6 +325,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+    @SuppressLint("Range")
+    public List<String> getHikeNameList(String userID) {
+        // array of columns to fetch
+        String[] columns = {HikeTable.COLUMN_Hike_NAME};
+        SQLiteDatabase db = getReadableDatabase();
+        // selection criteria
+        String selection = UserTable.COLUMN_ID + " = ?";
+        // selection arguments
+        String[] selectionArgs = {userID};
+        List<String> hikeNameList = new ArrayList<>();
+
+        // query to check if user email and password is correct
+        try (Cursor cursor = db.query(HikeTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+                while (cursor.moveToNext()) {
+                    hikeNameList.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
+
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return hikeNameList;
+
+        }
+        return hikeNameList;
+
+    }
+
     public boolean registerUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -414,44 +442,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    // for recycler view
-//    @SuppressLint("Range")
-//    public List<Hike> getHikeView() {
-//        List<Hike> hikeList = new ArrayList<>();
-//
-//        String selectQuery = "SELECT  * FROM " + HikeTable.TABLE_NAME;
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        try (Cursor cursor = db.rawQuery(selectQuery, null)) {
-//            if (cursor.moveToFirst()) {
-//                do {
-//                    Hike hike = new Hike();
-//                    hike.setHikeName(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
-//                    hike.setDescription(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
-//                    hike.setHikeDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
-//                    hikeList.add(hike);
-//
-//                } while (cursor.moveToNext());
-//            }
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            return null;
-//        }
-//
-//        return hikeList;
-//    }
+
 
 
     public Cursor getHikeList(String userID){
         SQLiteDatabase db = this.getReadableDatabase();
-//        return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?", new String[]{userID}, null) : null;
         return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?" + "ORDER BY hike_date", new String[]{userID}, null) : null;
-
-
     }
 
-    // get hike details for edut hike form
     @SuppressLint("Range")
     public List<Hike>  getSelectedHike(String hikeID) {
         List<Hike> hikeList = new ArrayList<>();

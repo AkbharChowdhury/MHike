@@ -21,6 +21,7 @@
         </activity>
         <activity
             android:name=".AddObservationActivity"
+            android:parentActivityName=".ObservationActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"

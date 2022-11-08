@@ -174,7 +174,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
 
     }
 
-
+    @Override
     public void showDatePickerDialog() {
         DialogFragment datePicker = new DatePickerFragment(true, ActivityForm.ADD_HIKE);
         datePicker.show(getSupportFragmentManager(), "datePicker");

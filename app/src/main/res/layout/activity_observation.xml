@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".ObservationActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hike_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_observation"
+        app:backgroundTint="@color/white"
+        android:backgroundTint="@color/orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/ic_add" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
