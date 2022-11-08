@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.tables.HikeTable;
+import com.mhike.m_hike.classes.tables.ObservationTable;
 import com.mhike.m_hike.classes.tables.UserTable;
 
 
@@ -378,8 +379,6 @@ public final class Validation {
         AutoCompleteTextView txtParking = hike.getTxtParking();
         TextInputLayout txtElevationGain = hike.getTxtElevationGain();
         TextInputLayout txtHigh = hike.getTxtHigh();
-       // AutoCompleteTextView txtDifficulty = hike.getTxtDifficulty();
-
         return !(
                 !isValidDropdown(txtHikeDate, HikeTable.COLUMN_HIKE_DATE) |
                         !isValidHikeName(txtHikeName) |
@@ -390,18 +389,33 @@ public final class Validation {
                         !isValidElevation(txtElevationGain) |
                         !isValidHigh(txtHigh, txtElevationGain, txtDistance) //|
 
-//                        !isValidDropdown(txtDifficulty, HikeTable.TABLE_NAME)
-
 
         );
 
 
-//
-//        TextInputLayout txtEmail = hike.getDescription();
-//        TextInputLayout txtPassword = user.getTxtPassword();
-//        return !(!isValidEmail(txtEmail) | !isValidPassword(txtPassword));
+
 
     }
+
+
+
+    public boolean validateObservationForm(Observation observation) {
+        AutoCompleteTextView txtHikeNameID = observation.getTxtHikeID();
+
+
+        AutoCompleteTextView txtDate = observation.getTxtDate();
+        AutoCompleteTextView txtTime = observation.getTxtTime();
+        TextInputLayout txtObservation = observation.getTxtObservation();
+        return !(
+                !isValidDropdown(txtHikeNameID, HikeTable.COLUMN_Hike_NAME) |
+                        !isValidDropdown(txtDate, ObservationTable.COLUMN_DATE) |
+                        !isValidDropdown(txtTime, ObservationTable.COLUMN_TIME) |
+                        !isEmpty(txtObservation, ObservationTable.COLUMN_OBSERVATION)
+
+        );
+
+    }
+
 
     /**
      * isValidName()

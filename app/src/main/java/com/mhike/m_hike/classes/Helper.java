@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ValueRange;
@@ -59,6 +60,20 @@ public final class Helper {
         String fullDay = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(selectedDate);
         return fullDay;
     }
+
+    public static String formatTime(String time) {
+        String[] timeSplit = time.split(":");
+        String timeColonPattern = "hh:mm a";
+
+        int hour = Integer.parseInt(timeSplit[0]);
+        int minute = Integer.parseInt(timeSplit[1]);
+        LocalTime colonTime = LocalTime.of(hour, minute);
+        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timeColonPattern);
+        return timeColonFormatter.format(colonTime);
+
+    }
+
+
 
     public static String formatDateShort(String date) {
         String[] dateSplit = date.split("-");

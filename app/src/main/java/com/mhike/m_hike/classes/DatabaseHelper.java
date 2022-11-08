@@ -1,7 +1,6 @@
 package com.mhike.m_hike.classes;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +15,6 @@ import com.mhike.m_hike.classes.tables.ObservationTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
 import com.mhike.m_hike.classes.tables.UserTable;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -222,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private void createObservationTable(SQLiteDatabase db) {
-        final String COLUMN_HIKE_ID = HikePhoto.COLUMN_HIKE_ID;
+        final String COLUMN_HIKE_ID = HikeTable.COLUMN_ID;
         db.execSQL("CREATE TABLE " + ObservationTable.TABLE_NAME + " ("
                 + ObservationTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ObservationTable.COLUMN_HIKE_ID + " INTEGER NOT NULL,"
@@ -230,7 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ObservationTable.COLUMN_COMMENTS + " TEXT,"
                 + ObservationTable.COLUMN_DATE + " TEXT NOT NULL,"
                 + ObservationTable.COLUMN_TIME + " TEXT NOT NULL,"
-                + "FOREIGN KEY (" + COLUMN_HIKE_ID + ") REFERENCES " + UserTable.TABLE_NAME + "(" + COLUMN_HIKE_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
+                + "FOREIGN KEY (" + COLUMN_HIKE_ID + ") REFERENCES " + HikeTable.TABLE_NAME + "(" + COLUMN_HIKE_ID + ") ON UPDATE CASCADE ON DELETE CASCADE " +
                 ")"
         );
 
@@ -391,9 +389,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void AddObservation(List<Observation> observationList) {
+    public void addObservation(List<Observation> observationList) {
 
         SQLiteDatabase db = this.getWritableDatabase();
+
         for (Observation observation : observationList) {
             ContentValues cv = new ContentValues();
             cv.put(ObservationTable.COLUMN_HIKE_ID, observation.getHikeID());
@@ -401,8 +400,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cv.put(ObservationTable.COLUMN_COMMENTS, observation.getComments());
             cv.put(ObservationTable.COLUMN_DATE, observation.getObservationDate());
             cv.put(ObservationTable.COLUMN_TIME, observation.getObservationTime());
-            db.insert(HikeTable.TABLE_NAME, null, cv);
+            db.insert(ObservationTable.TABLE_NAME, null, cv);
         }
+
+    }
+
+    public boolean obj() {
+
+        // Gets the data repository in write mode
+//        SQLiteDatabase dbg = db.
+
+// Create a new map of values, where column names are the keys
+        ContentValues cv = new ContentValues();
+        cv.put(ObservationTable.COLUMN_HIKE_ID,7);
+        cv.put(ObservationTable.COLUMN_OBSERVATION, "aASSDSSDDS");
+        cv.put(ObservationTable.COLUMN_COMMENTS,"asasa");
+        cv.put(ObservationTable.COLUMN_DATE,"sasa");
+        cv.put(ObservationTable.COLUMN_TIME, "sdsd");
+
+// Insert the new row, returning the primary key value of the new row
+        long newRowId = db.insert(ObservationTable.TABLE_NAME, null, cv);
+        return newRowId !=-1;
 
     }
 
@@ -476,6 +494,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return hikeList;
+    }
+
+
+
+    @SuppressLint("Range")
+    public  int  getHikeIDByName(String hikeName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_Hike_NAME + " =?", new String[]{hikeName});
+
+        if (cursor.moveToLast()) {
+           return cursor.getInt(cursor.getColumnIndex(ObservationTable.COLUMN_HIKE_ID));
+
+
+
+        }
+
+        return 0;
     }
 
     @SuppressLint("Range")

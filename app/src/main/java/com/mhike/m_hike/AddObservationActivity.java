@@ -17,9 +17,14 @@ import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.DatePickerFragment;
 import com.mhike.m_hike.classes.Helper;
+import com.mhike.m_hike.classes.Hike;
+import com.mhike.m_hike.classes.Observation;
 import com.mhike.m_hike.classes.Validation;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.interfaces.IDatePicker;
+import com.mhike.m_hike.classes.tables.HikeTable;
+import com.mhike.m_hike.classes.tables.ObservationTable;
+import com.mhike.m_hike.classes.tables.ParkingTable;
 
 
 import android.app.AlertDialog;
@@ -30,6 +35,7 @@ import android.widget.Button;
 import android.widget.TimePicker;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,11 +65,6 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         txtHikeTime = findViewById(R.id.txtHikeTime);
         txtHikeName = findViewById(R.id.txtHikeName);
 
-
-
-
-
-
     }
 
     public void popTimePicker()
@@ -71,12 +72,11 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
         {
             @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
-            {
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                  hour = selectedHour;
                  minute = selectedMinute;
                  dbHikeTime = String.format(Locale.getDefault(), "%02d:%02d",hour, minute);
-                 txtHikeTime.setText("");
+                 txtHikeTime.setText(Helper.formatTime(dbHikeTime));
 
             }
         };
@@ -98,17 +98,52 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_observation);
         context = getApplicationContext();
+
         findTextFields();
 
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);
+        List<Observation>g=new ArrayList<>();
+        if (db.obj()){
+            Helper.longToastMessage(context,"added");
+        } else{
+            Helper.longToastMessage(context,"error");
+
+        }
+
+
         txtHikeDate.setText(Helper.formatDate(CURRENT_DATE));
         setDateAndTimeFields();
-
         setupAdapter();
+        Button btnAddObservation = findViewById(R.id.btn_add_observation);
+        btnAddObservation.setOnClickListener(view -> addObservations());
 
 
     }
+
+    private void addObservations() {
+        Observation observation = new Observation(txtHikeName, txtObservation, txtComments, txtHikeDate, txtHikeTime);
+//        int hikeID = db.getColumnID(HikeTable.TABLE_NAME, HikeTable.COLUMN_Hike_NAME, HikeTable.COLUMN_ID, txtHikeName.getText().toString());
+        int hikeID = db.getHikeIDByName(txtHikeName.getText().toString());
+
+        observation.setHikeID(hikeID);
+        observation.setObservation(Helper.trimStr(txtObservation));
+        observation.setComments(Helper.trimStr(txtComments));
+        observation.setObservationDate(dbHikeDate);
+        observation.setObservationTime(dbHikeTime);
+
+        List<Observation> observationList = new ArrayList<>();
+        observationList.add(observation);
+
+        if(form.validateObservationForm(observation)){
+            db.addObservation(observationList);
+                Helper.longToastMessage(context, "Observation added");
+
+//            Helper.longToastMessage(context, "done");
+        }
+    }
+
+
 
     private void setupAdapter() {
         String userID = String.valueOf(getUserID());
@@ -151,6 +186,9 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         Helper.longToastMessage(context, dbHikeDate);
         // show user-friendly date formatted
         txtHikeDate.setText(Helper.formatDate(selectedDate.toString()));
+
+
+
 
     }
 

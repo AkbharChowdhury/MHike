@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper db = DatabaseHelper.getInstance(context);
 
         CheckIsUserLoggedIn();
+//        startActivity(new Intent(context, AddObservationActivity.class));
         setTitle(getString(R.string.nav_home));
         TextView user_dashboard = findViewById(R.id.lbl_user_dashboard);
 

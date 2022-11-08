@@ -1,27 +1,14 @@
 package com.mhike.m_hike.classes;
 
+import android.widget.AutoCompleteTextView;
+
 import com.google.android.material.textfield.TextInputLayout;
 // time picker https://www.youtube.com/watch?v=c6c1giRekB4
 public class Observation {
     private TextInputLayout txtObservation;
     private TextInputLayout txtComments;
-    private TextInputLayout txtDate;
-    private TextInputLayout txtTime;
-    private int hikeID;
-    private String observation;
-    private String comments;
-    private String observationDate;
-    private String observationTime;
-    public  Observation(){
-
-    }
-
-    public Observation(TextInputLayout txtObservation, TextInputLayout txtComments, TextInputLayout txtDate, TextInputLayout txtTime) {
-        this.txtObservation = txtObservation;
-        this.txtComments = txtComments;
-        this.txtDate = txtDate;
-        this.txtTime = txtTime;
-    }
+    private AutoCompleteTextView txtDate;
+    private AutoCompleteTextView txtTime;
 
     public TextInputLayout getTxtObservation() {
         return txtObservation;
@@ -39,20 +26,28 @@ public class Observation {
         this.txtComments = txtComments;
     }
 
-    public TextInputLayout getTxtDate() {
+    public AutoCompleteTextView getTxtDate() {
         return txtDate;
     }
 
-    public void setTxtDate(TextInputLayout txtDate) {
+    public void setTxtDate(AutoCompleteTextView txtDate) {
         this.txtDate = txtDate;
     }
 
-    public TextInputLayout getTxtTime() {
+    public AutoCompleteTextView getTxtTime() {
         return txtTime;
     }
 
-    public void setTxtTime(TextInputLayout txtTime) {
+    public void setTxtTime(AutoCompleteTextView txtTime) {
         this.txtTime = txtTime;
+    }
+
+    public AutoCompleteTextView getTxtHikeID() {
+        return txtHikeID;
+    }
+
+    public void setTxtHikeID(AutoCompleteTextView txtHikeID) {
+        this.txtHikeID = txtHikeID;
     }
 
     public int getHikeID() {
@@ -94,4 +89,30 @@ public class Observation {
     public void setObservationTime(String observationTime) {
         this.observationTime = observationTime;
     }
+
+    public Observation(AutoCompleteTextView txtHikeID, TextInputLayout txtObservation, TextInputLayout txtComments, AutoCompleteTextView txtDate, AutoCompleteTextView txtTime) {
+        this.txtHikeID = txtHikeID;
+        this.txtObservation = txtObservation;
+        this.txtComments = txtComments;
+        this.txtDate = txtDate;
+        this.txtTime = txtTime;
+    }
+
+    private AutoCompleteTextView txtHikeID;
+
+    private int hikeID;
+    private String observation;
+    private String comments;
+    private String observationDate;
+    private String observationTime;
+
+
+    public  Observation(){
+
+    }
+
+
+
+
+
 }
