@@ -103,13 +103,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);
-        List<Observation>g=new ArrayList<>();
-        if (db.obj()){
-            Helper.longToastMessage(context,"added");
-        } else{
-            Helper.longToastMessage(context,"error");
 
-        }
 
 
         txtHikeDate.setText(Helper.formatDate(CURRENT_DATE));

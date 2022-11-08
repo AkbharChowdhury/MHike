@@ -405,36 +405,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean obj() {
-
-        // Gets the data repository in write mode
-//        SQLiteDatabase dbg = db.
-
-// Create a new map of values, where column names are the keys
-        ContentValues cv = new ContentValues();
-        cv.put(ObservationTable.COLUMN_HIKE_ID,7);
-        cv.put(ObservationTable.COLUMN_OBSERVATION, "aASSDSSDDS");
-        cv.put(ObservationTable.COLUMN_COMMENTS,"asasa");
-        cv.put(ObservationTable.COLUMN_DATE,"sasa");
-        cv.put(ObservationTable.COLUMN_TIME, "sdsd");
-
-// Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(ObservationTable.TABLE_NAME, null, cv);
-        return newRowId !=-1;
-
-    }
 
 
+
+    // default user
     public void addUser(SQLiteDatabase db) {
-//        db = getWritableDatabase();
-
         ContentValues cv = new ContentValues();
         cv.put(UserTable.COLUMN_FIRSTNAME, "tom");
         cv.put(UserTable.COLUMN_LASTNAME, "Smith");
         cv.put(UserTable.COLUMN_EMAIL, "tom@gmail.com");
         cv.put(UserTable.COLUMN_PASSWORD, Encryption.encode("password"));
         cv.put(UserTable.COLUMN_REGISTERED_DATE, String.valueOf(Helper.getCurrentDate()));
-
         db.insert(UserTable.TABLE_NAME, null, cv);
 
     }
@@ -467,6 +448,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?" + "ORDER BY hike_date", new String[]{userID}, null) : null;
     }
+    public Cursor getObservationList(String userID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="SELECT \n" +
+                "o.*\n" +
+                "FROM observation o\n" +
+                "JOIN Hike h ON h.hike_id = o.hike_id\n" +
+                "WHERE h.user_id = ?";
+        return db != null ? db.rawQuery(sql, new String[]{userID}, null) : null;
+    }
+
+
 
     @SuppressLint("Range")
     public List<Hike>  getSelectedHike(String hikeID) {
