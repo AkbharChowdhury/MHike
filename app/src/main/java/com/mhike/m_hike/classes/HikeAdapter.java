@@ -53,26 +53,24 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
 
 
     }
+    
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.hikeID.setText(String.valueOf(hikeID.get(position)));
         holder.hikeName.setText(String.valueOf(hikeName.get(position)));
         holder.hikeDescription.setText(String.valueOf(hikeDescription.get(position)));
-        holder.hikeDate.setText(String.valueOf(hikeDate.get(position)));
+        holder.hikeDate.setText(Helper.formatDateShort(String.valueOf(hikeDate.get(position))));
         holder.mainLayout.setOnClickListener(view -> activity.startActivityForResult(hikeIntent(position), 1));
 
     }
 
     @Override
     public int getItemCount() {
-        return hikeName.size();
+        return hikeID.size();
     }
+
     private Intent hikeIntent(int position){
-        int selectedHikeID = Integer.parseInt(String.valueOf(hikeID.get(position)));
-
-
-//        Helper.longToastMessage(context, String.valueOf(selectedHikeID));
         Intent intent = new Intent(context, EditHikeActivity.class);
         intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
         return intent;

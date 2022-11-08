@@ -7,11 +7,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.classes.AccountPreferences;
@@ -22,18 +25,21 @@ import com.mhike.m_hike.classes.Hike;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.interfaces.IDatePicker;
 import com.mhike.m_hike.classes.Validation;
+import com.mhike.m_hike.classes.interfaces.IDifficulty;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.List;
 
-public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
+public class AddHikeActivity extends AppCompatActivity implements IDatePicker, IDifficulty {
     private DatabaseHelper db;
     private Context context;
     private Validation form;
-    private String dbHikeDate;
+    private final String CURRENT_DATE = Helper.getCurrentDate().toString();
+    private String dbHikeDate = CURRENT_DATE;
 
     private AutoCompleteTextView txtHikeDate;
     private TextInputLayout txtHikeName;
@@ -44,8 +50,8 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
     private AutoCompleteTextView txtParking;
     private TextInputLayout txtElevationGain;
     private TextInputLayout txtHigh;
-    private AutoCompleteTextView txtDifficulty;
-
+    private TextView lblDifficulty;
+    private List<String> difficultyList;
 
     @SuppressLint({"ResourceType", "ClickableViewAccessibility"})
     @Override
@@ -55,6 +61,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);
+        difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME);
         CheckIsUserLoggedIn();
 
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
@@ -66,14 +73,16 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         findTextFields();
         setupAdapter();
         setTxtHikeDate();
-
-
-
-
         Button btnAddHike = findViewById(R.id.btn_add_hike);
         btnAddHike.setOnClickListener(view -> handleHike());
 
+        txtHikeDate.setText(Helper.formatDate(CURRENT_DATE));
+        txtElevationGain.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> showDifficultyLevel());
+
     }
+
+
+
     private void CheckIsUserLoggedIn() {
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
         int userID = preferences.getInt(AccountPreferences.USERID, 0);
@@ -109,7 +118,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         int parkingID = db.getColumnID(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_TYPE, ParkingTable.COLUMN_ID, txtParking.getText().toString());
         double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
         double high = Double.parseDouble(Helper.trimStr(txtHigh));
-        int difficultyID = db.getColumnID(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE, DifficultyTable.COLUMN_ID, txtDifficulty.getText().toString());
+        int difficultyID = db.getColumnID(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE, DifficultyTable.COLUMN_ID, lblDifficulty.getText().toString());
 
 
         Hike hikeDetails = new Hike();
@@ -137,18 +146,18 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         txtParking = findViewById(R.id.txtParking);
         txtElevationGain = findViewById(R.id.txtElevationGain);
         txtHigh = findViewById(R.id.txtHigh);
-        txtDifficulty = findViewById(R.id.txtDifficulty);
+        lblDifficulty = findViewById(R.id.lbl_difficulty);
 
     }
 
+
     private void setupAdapter() {
         txtParking.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME)));
-        txtDifficulty.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(DifficultyTable.TABLE_NAME)));
 
     }
 
     private void handleHike() {
-        Hike hike = new Hike(txtHikeDate, txtHikeName, txtDescription, txtLocation, txtDistance, txtDuration, txtParking, txtElevationGain, txtHigh, txtDifficulty);
+        Hike hike = new Hike(txtHikeDate, txtHikeName, txtDescription, txtLocation, txtDistance, txtDuration, txtParking, txtElevationGain, txtHigh, lblDifficulty);
 
         if (form.validateHikeForm(hike)) {
 
@@ -171,16 +180,6 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 
-    private String formatDate(String date) {
-        String[] dateSplit = date.split("-");
-        int year = Integer.parseInt(dateSplit[0]);
-        int month = Integer.parseInt(dateSplit[1]);
-        int day = Integer.parseInt(dateSplit[2]);
-        LocalDate selectedDate = LocalDate.of(year, month, day);
-        String fullDay = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(selectedDate);
-        return fullDay;
-    }
-
 
     @Override
     public void updateDate(LocalDate selectedDate) {
@@ -189,8 +188,21 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker {
 
         Helper.longToastMessage(context, dbHikeDate);
         // show user-friendly date formatted
-        txtHikeDate.setText(formatDate(selectedDate.toString()));
+        txtHikeDate.setText(Helper.formatDate(selectedDate.toString()));
 
     }
 
+    @Override
+    public void showDifficultyLevel() {
+        // calculate the difficulty based on the elevation and high
+        if (form.isValidElevation(txtElevationGain) && form.isValidDistance(txtDistance)) {
+            double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
+            double distance = Double.parseDouble(Helper.trimStr(txtDistance));
+            int difficultyLevel = Helper.getDifficultyLevel(distance, elevationGain);
+            String difficultyName = difficultyList.get(difficultyLevel);
+            lblDifficulty.setTextColor(Helper.getDifficultyColour(difficultyLevel, context));
+            lblDifficulty.setText(difficultyName);
+        }
+
+    }
 }

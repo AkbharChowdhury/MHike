@@ -1,6 +1,7 @@
 package com.mhike.m_hike.classes;
 
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,6 +36,8 @@ public final class Hike {
     private AutoCompleteTextView txtParking;
     private TextInputLayout txtElevationGain;
     private TextInputLayout txtHigh;
+    private TextView lblDifficulty;
+
 
     public String getHikeDate() {
         return hikeDate;
@@ -188,15 +191,15 @@ public final class Hike {
         this.txtHigh = txtHigh;
     }
 
-    public AutoCompleteTextView getTxtDifficulty() {
-        return txtDifficulty;
+    public TextView getLblDifficulty() {
+        return lblDifficulty;
     }
 
-    public void setTxtDifficulty(AutoCompleteTextView txtDifficulty) {
-        this.txtDifficulty = txtDifficulty;
+    public void setLblDifficulty(AutoCompleteTextView txtDifficulty) {
+        this.lblDifficulty = txtDifficulty;
     }
 
-    public Hike(AutoCompleteTextView txtHikeDate, TextInputLayout txtHikeName, TextInputLayout txtDescription, TextInputLayout txtLocation, TextInputLayout txtDistance, TextInputLayout txtDuration, AutoCompleteTextView txtParking, TextInputLayout txtElevationGain, TextInputLayout txtHigh, AutoCompleteTextView txtDifficulty) {
+    public Hike(AutoCompleteTextView txtHikeDate, TextInputLayout txtHikeName, TextInputLayout txtDescription, TextInputLayout txtLocation, TextInputLayout txtDistance, TextInputLayout txtDuration, AutoCompleteTextView txtParking, TextInputLayout txtElevationGain, TextInputLayout txtHigh, TextView lblDifficulty) {
         this.txtHikeDate = txtHikeDate;
         this.txtHikeName = txtHikeName;
         this.txtDescription = txtDescription;
@@ -206,10 +209,9 @@ public final class Hike {
         this.txtParking = txtParking;
         this.txtElevationGain = txtElevationGain;
         this.txtHigh = txtHigh;
-        this.txtDifficulty = txtDifficulty;
+        this.lblDifficulty = lblDifficulty;
     }
 
-    private AutoCompleteTextView txtDifficulty;
 
     public Hike(){
 

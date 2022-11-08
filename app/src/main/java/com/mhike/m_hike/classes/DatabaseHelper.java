@@ -445,7 +445,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getHikeList(String userID){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?", new String[]{userID}, null) : null;
+//        return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?", new String[]{userID}, null) : null;
+        return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?" + "ORDER BY hike_date", new String[]{userID}, null) : null;
+
 
     }
 
@@ -544,6 +546,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return hikeUpdated != -1;
 
 
+    }
+    public boolean deleteRecord(String table, String idField, String id){
+        String whereClause = idField + "=?";
+        String[] whereArgs = new String[] { String.valueOf(id) };
+        long result = db.delete(table, whereClause, whereArgs);
+        return result!= -1;
     }
 
 

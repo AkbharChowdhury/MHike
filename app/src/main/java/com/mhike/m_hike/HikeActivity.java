@@ -13,6 +13,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mhike.m_hike.classes.AccountPreferences;
@@ -39,6 +41,7 @@ public class HikeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hike);
         setTitle(getString(R.string.nav_hikes));
         context = getApplicationContext();
+        checkMessage();
         FloatingActionButton btnAddHike = findViewById(R.id.btn_add_hike);
         btnAddHike.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AddHikeActivity.class)));
         db = DatabaseHelper.getInstance(context);
@@ -60,7 +63,20 @@ public class HikeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         showHikeList();
 
+
+
+
     }
+
+    private void checkMessage() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("message")) {
+            Helper.longToastMessage(context, getString(R.string.hike_deleted_confirm));
+            extras.remove("message");
+
+        }
+    }
+
 
     private void checkHikeUpdatedMsg() {
         Bundle extras = getIntent().getExtras();
@@ -70,6 +86,7 @@ public class HikeActivity extends AppCompatActivity {
 
         }
     }
+
 
 
     @SuppressLint("Range")
@@ -112,6 +129,7 @@ public class HikeActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
         return preferences.getInt(AccountPreferences.USERID, 0);
     }
+
 
 
 

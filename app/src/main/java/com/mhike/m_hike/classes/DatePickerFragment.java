@@ -90,6 +90,7 @@ public class DatePickerFragment extends DialogFragment implements
         // disable future dates
         Long currentTimeMillis = System.currentTimeMillis() - 1000;
         datePicker.getDatePicker().setMaxDate(currentTimeMillis);
+
         return datePicker;
 
     }

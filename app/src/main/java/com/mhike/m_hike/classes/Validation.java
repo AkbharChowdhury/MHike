@@ -256,7 +256,7 @@ public final class Validation {
         return true;
     }
 
-    private boolean isValidDistance(TextInputLayout textField) {
+    public boolean isValidDistance(TextInputLayout textField) {
         String distanceStr = Helper.trimStr(textField);
 
         String fieldName = Helper.capitalise(HikeTable.COLUMN_DISTANCE);
@@ -297,7 +297,7 @@ public final class Validation {
     }
 
 
-    private boolean isValidElevation(TextInputLayout textField) {
+    public boolean isValidElevation(TextInputLayout textField) {
         String elevationGainStr = Helper.trimStr(textField);
 
         String fieldName = Helper.capitalise(HikeTable.COLUMN_ELEVATION_GAIN);
@@ -318,7 +318,7 @@ public final class Validation {
         return true;
     }
 
-    private boolean isValidHigh(TextInputLayout textField, TextInputLayout txtElevationGain, AutoCompleteTextView txtDifficulty, TextInputLayout txtDistance) {
+    private boolean isValidHigh(TextInputLayout textField, TextInputLayout txtElevationGain, TextInputLayout txtDistance) {
         String highStr = Helper.trimStr(textField);
         String elevationGainStr = Helper.trimStr(txtElevationGain);
         String distanceStr = Helper.trimStr(txtDistance);
@@ -343,7 +343,7 @@ public final class Validation {
         if(isValidElevation(txtElevationGain) && isValidDistance(txtDistance)){
             double elevationGain = Double.parseDouble(elevationGainStr);
             double distance = Double.parseDouble(distanceStr);
-            txtDifficulty.setText(txtDifficulty.getAdapter().getItem(Helper.getDifficultyLevel(distance, elevationGain)).toString(), false);
+//            txtDifficulty.setText(txtDifficulty.getAdapter().getItem(Helper.getDifficultyLevel(distance, elevationGain)).toString(), false);
 
         }
 
@@ -378,7 +378,7 @@ public final class Validation {
         AutoCompleteTextView txtParking = hike.getTxtParking();
         TextInputLayout txtElevationGain = hike.getTxtElevationGain();
         TextInputLayout txtHigh = hike.getTxtHigh();
-        AutoCompleteTextView txtDifficulty = hike.getTxtDifficulty();
+       // AutoCompleteTextView txtDifficulty = hike.getTxtDifficulty();
 
         return !(
                 !isValidDropdown(txtHikeDate, HikeTable.COLUMN_HIKE_DATE) |
@@ -388,9 +388,9 @@ public final class Validation {
                         !isValidDuration(txtDuration) |
                         !isValidDropdown(txtParking, HikeTable.COLUMN_PARKING_ID) |
                         !isValidElevation(txtElevationGain) |
-                        !isValidHigh(txtHigh, txtElevationGain, txtDifficulty, txtDistance) |
+                        !isValidHigh(txtHigh, txtElevationGain, txtDistance) //|
 
-                        !isValidDropdown(txtDifficulty, HikeTable.TABLE_NAME)
+//                        !isValidDropdown(txtDifficulty, HikeTable.TABLE_NAME)
 
 
         );
