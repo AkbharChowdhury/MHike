@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditHikeActivity extends AppCompatActivity implements IDatePicker, IDifficulty {
-    int hikeID;
 
     private DatabaseHelper db;
     private Context context;
@@ -59,7 +58,6 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
     private List<String> difficultyList;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +67,6 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context, db);
         difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
-
 
 
         findTextFields();
@@ -84,13 +81,14 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
 
 
     }
-    private void deleteHike(String hikeID){
 
-         new AlertDialog.Builder(EditHikeActivity.this)
+    private void deleteHike(String hikeID) {
+
+        new AlertDialog.Builder(EditHikeActivity.this)
                 .setMessage(getString(R.string.hike_subtitle_msg)).setCancelable(false)
                 .setTitle(getString(R.string.hike_title_confirm))
-                .setPositiveButton(getString(R.string.yes), (dialog, which) ->{
-                    if (db.deleteRecord(HikeTable.TABLE_NAME, HikeTable.COLUMN_ID, hikeID)){
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    if (db.deleteRecord(HikeTable.TABLE_NAME, HikeTable.COLUMN_ID, hikeID)) {
                         Intent intent = new Intent(context, HikeActivity.class);
                         intent.putExtra("message", true);
                         startActivity(intent);
@@ -116,7 +114,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
         double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
         double high = Double.parseDouble(Helper.trimStr(txtHigh));
         int difficultyID = db.getColumnID(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE, DifficultyTable.COLUMN_ID, lblDifficulty.getText().toString());
-        
+
         Hike hikeDetails = new Hike();
         hikeDetails.setHikeDate(hikeDate);
         hikeDetails.setHikeName(hikeName);
@@ -163,12 +161,12 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
             String hikeID = getIntent().getStringExtra("hikeID");
             List<Hike> hikeList = db.getSelectedHike(hikeID);
 
-            if (hikeList.size() == 0){
+            if (hikeList.size() == 0) {
                 Helper.longToastMessage(context, "No hikes found");
                 return;
             }
 
-            for (Hike hike : hikeList){
+            for (Hike hike : hikeList) {
 
                 txtHikeDate.setText(Helper.formatDate(hike.getHikeDate()));
 
@@ -187,7 +185,6 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
 
 
             }
-
 
 
         }
@@ -230,7 +227,6 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
     }
 
 
-
     @Override
     public void updateDate(LocalDate selectedDate) {
         // for storing the date in the database
@@ -239,6 +235,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
         txtHikeDate.setText(Helper.formatDate(selectedDate.toString()));
 
     }
+
     @Override
     public void showDifficultyLevel() {
         // calculate the difficulty based on the elevation and high
