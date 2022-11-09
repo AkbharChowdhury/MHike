@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +33,8 @@ public class ObservationActivity extends AppCompatActivity {
     private ArrayList<String> hikeDescription;
     private ArrayList<String> hikeDate;
     private ArrayList<String> hikeID;
+    private final Activity CURRENT_ACTIVITY = ObservationActivity.this;
+
 
 
     @Override
@@ -42,7 +45,7 @@ public class ObservationActivity extends AppCompatActivity {
         context = getApplicationContext();
         checkMessage();
         FloatingActionButton btnObservation = findViewById(R.id.btn_add_observation);
-        btnObservation.setOnClickListener(view -> startActivity(new Intent(context, AddObservationActivity.class)));
+        btnObservation.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, AddObservationActivity.class));
         db = DatabaseHelper.getInstance(context);
 
         hikeID = new ArrayList<>();

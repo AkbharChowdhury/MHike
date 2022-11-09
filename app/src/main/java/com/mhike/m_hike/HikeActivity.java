@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class HikeActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Context context;
+    private final Activity CURRENT_ACTIVITY = HikeActivity.this;
 
     private ArrayList<String> hikeName;
     private ArrayList<String> hikeDescription;
@@ -44,7 +46,8 @@ public class HikeActivity extends AppCompatActivity {
         context = getApplicationContext();
         checkMessage();
         FloatingActionButton btnAddHike = findViewById(R.id.btn_add_hike);
-        btnAddHike.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AddHikeActivity.class)));
+        btnAddHike.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, AddHikeActivity.class));
+
         db = DatabaseHelper.getInstance(context);
 
         hikeID = new ArrayList<>();

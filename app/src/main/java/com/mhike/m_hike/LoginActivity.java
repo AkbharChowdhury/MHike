@@ -1,5 +1,6 @@
 package com.mhike.m_hike;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Validation form;
     private TextView lblLoginError;
+    private final Activity currentActivity = LoginActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +91,13 @@ public class LoginActivity extends AppCompatActivity {
     private void configUserDetails() {
         int userID = db.getUserID();
         AccountPreferences.setLoginShredPref(context, userID);
-        startActivity(new Intent(context, MainActivity.class));
+        Helper.goToPage(currentActivity, MainActivity.class);
+
     }
 
     private void handleRegisterLink() {
         TextView registerLink = findViewById(R.id.btn_register_link);
-        registerLink.setOnClickListener(view -> startActivity(new Intent(context, RegisterActivity.class)));
+        registerLink.setOnClickListener(view -> Helper.goToPage(currentActivity, RegisterActivity.class));
     }
 
 

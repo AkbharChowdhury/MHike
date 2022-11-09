@@ -2,6 +2,7 @@ package com.mhike.m_hike.classes;
 
 import static android.content.Intent.getIntent;
 
+import android.app.Activity;
 import android.app.DirectAction;
 import android.content.Context;
 import android.graphics.Color;
@@ -84,6 +85,11 @@ public final class Helper {
         }
     }
 
+    public static void goToPage(Activity currentActivity, Class<? extends Activity> activityPageToOpen) {
+
+        currentActivity.startActivity(new Intent(currentActivity, activityPageToOpen));
+
+    }
 
 
     public static String formatDateShort(String date) {

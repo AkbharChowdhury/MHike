@@ -84,6 +84,12 @@
     <string name="hike">Hike</string>
     <string name="time">Time</string>
     <string name="my_hikes">My hikes</string>
+    <string name="dashboard_hike">Hike \n<font color="#A9A9A9">View, edit and delete hikes</font></string>
+    <string name="dashboard_search">Search \n<font color="#A9A9A9">Search for hikes and view hike details</font></string>
+
+    <string name="dashboard_observations">Sights \n<font color="#A9A9A9">View and add observation for hikes</font></string>
+    <string name="dashboard_upload">Upload Hike \n<font color="#A9A9A9">Upload hikes to web server</font></string>
+
 
 
     <string-array name="parking_array">

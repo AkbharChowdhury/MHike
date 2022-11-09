@@ -27,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper instance;
     private int dbUserID = 0;
 
-
     //synchronized makes the app thread save
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
@@ -48,7 +47,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createAllTables(db);
         addDefaultTableValues(db);
 
-
     }
 
 
@@ -66,30 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
     }
-
-
-    public String getDetails() {
-        Cursor results = db.query("details", new String[]{"person_id", "name", "dob", "email"},
-                null, null, null, null, "name");
-
-        String resultText = "";
-
-        results.moveToFirst();
-        while (!results.isAfterLast()) {
-            int id = results.getInt(0);
-            String name = results.getString(1);
-            String dob = results.getString(2);
-            String email = results.getString(3);
-
-            resultText += id + " " + name + " " + dob + " " + email + "\n";
-
-            results.moveToNext();
-        }
-
-        return resultText;
-
-    }
-
 
     private void addDefaultTableValues(SQLiteDatabase db) {
         addDifficulty(db);
@@ -276,8 +250,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
 
             }
-
-            // count if the number of
             return cursor.getCount() > 0;
 
         } catch (Exception e) {
@@ -289,7 +261,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
+    /**
+     * retrives the user first and last name- for dashboard functionality
+     * */
     @SuppressLint("Range")
     public User getUserFirstAndLastName(String userID) {
         // array of columns to fetch
@@ -324,33 +298,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-//    @SuppressLint("Range")
-//    public List<String> getHikeNameList(String userID) {
-//        // array of columns to fetch
-//        String[] columns = {HikeTable.COLUMN_Hike_NAME};
-//        SQLiteDatabase db = getReadableDatabase();
-//        // selection criteria
-//        String selection = UserTable.COLUMN_ID + " = ?";
-//        // selection arguments
-//        String[] selectionArgs = {userID};
-//        List<String> hikeNameList = new ArrayList<>();
-//
-//        // query to check if user email and password is correct
-//        try (Cursor cursor = db.query(HikeTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-//                while (cursor.moveToNext()) {
-//                    hikeNameList.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
-//
-//                }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return hikeNameList;
-//
-//        }
-//        return hikeNameList;
-//
-//    }
-
+    /**
+     * Register user details
+     * */
     public boolean registerUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -367,6 +317,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * add single hike to the hike table
+     * */
     public boolean addHike(Hike hike, int userID) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -388,7 +341,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
+    /**
+     * add a list of observation
+     * */
     public void addObservation(List<Observation> observationList) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -406,9 +361,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-    // default user
+    /**
+     * add default user to the User table
+     * */
     public void addUser(SQLiteDatabase db) {
         ContentValues cv = new ContentValues();
         cv.put(UserTable.COLUMN_FIRSTNAME, "tom");

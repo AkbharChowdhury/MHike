@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -56,7 +57,6 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
     private TextInputLayout txtHigh;
     private TextView lblDifficulty;
     private List<String> difficultyList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
