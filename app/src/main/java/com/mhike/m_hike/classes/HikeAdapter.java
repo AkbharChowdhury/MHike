@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mhike.m_hike.AddHikeActivity;
+import com.mhike.m_hike.AddObservationActivity;
 import com.mhike.m_hike.EditHikeActivity;
 import com.mhike.m_hike.MainActivity;
 import com.mhike.m_hike.ObservationActivity;
@@ -31,12 +33,16 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
     private ArrayList hikeDate;
     private ArrayList hikeID;
     private Activity activity;
-    private boolean isHikeForms;
+//    private boolean isHikeForms;
+    private final ActivityForm activityForm;
+
 
     public HikeAdapter(
             Activity activity,
             Context context,
-            boolean isHikeForms,
+//            boolean isHikeForms,
+            ActivityForm activityForm,
+
 
             ArrayList hikeID,
                        ArrayList hikeName,
@@ -44,7 +50,9 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
                        ArrayList hikeDate) {
         this.activity = activity;
         this.context = context;
-        this.isHikeForms = isHikeForms;
+//        this.isHikeForms = isHikeForms;
+        this.activityForm = activityForm;
+
 
         this.hikeID = hikeID;
         this.hikeName = hikeName;
@@ -71,6 +79,8 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
         holder.hikeDate.setText(Helper.formatDateShort(String.valueOf(hikeDate.get(position))));
         holder.mainLayout.setOnClickListener(view -> activity.startActivityForResult(hikeIntent(position), 1));
 
+
+
     }
 
     @Override
@@ -80,17 +90,59 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
 
     private Intent hikeIntent(int position){
 
-        if (isHikeForms) {
-            Intent intent;
-            intent = new Intent(context, EditHikeActivity.class);
-            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
-            return intent;
-        } else{
-            Intent intent;
-            intent = new Intent(context, ViewHikeObservationActivity.class);
-            return intent;
+         Class<? extends Activity> activityToOpen =  AddObservationActivity.class;
+
+        switch (activityForm) {
+            case OBSERVATION_RECYCLER:
+                activityToOpen =  ViewHikeObservationActivity.class;
+                break;
+
+            case HIKE_RECYCLER:
+                activityToOpen =  EditHikeActivity.class;
+                break;
+            default:
+                Helper.showActivityFormErrorMessage();
 
         }
+
+            Intent intent = new Intent(context, activityToOpen);
+            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+            return intent;
+
+//        if (activityForm == ActivityForm.HIKE_RECYCLER) {
+//            Intent intent;
+//            intent = new Intent(context, EditHikeActivity.class);
+//            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+//            return intent;
+//        }
+//        else{
+//            Intent intent;
+//            intent = new Intent(context, ViewHikeObservationActivity.class);
+//            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+//            return intent;
+//        }
+
+
+//        else if(activityForm == ActivityForm.OBSERVATION_RECYCLER){
+//            Intent intent;
+//            intent = new Intent(context, ViewHikeObservationActivity.class);
+//            return intent;
+//
+//        }
+
+
+
+//        if (isHikeForms) {
+//            Intent intent;
+//            intent = new Intent(context, EditHikeActivity.class);
+//            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+//            return intent;
+//        } else{
+//            Intent intent;
+//            intent = new Intent(context, ViewHikeObservationActivity.class);
+//            return intent;
+//
+//        }
 
 //        switch (activityForm){
 //            case HIKE_RECYCLER:

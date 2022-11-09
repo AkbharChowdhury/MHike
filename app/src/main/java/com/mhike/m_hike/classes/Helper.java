@@ -6,10 +6,12 @@ import android.app.DirectAction;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.classes.enums.ActivityForm;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -71,6 +73,15 @@ public final class Helper {
         DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern(timeColonPattern);
         return timeColonFormatter.format(colonTime);
 
+    }
+
+    public static void showActivityFormErrorMessage() {
+        // display error and show valid enum Activity forms
+        ActivityForm[] activityForms = ActivityForm.values();
+        Log.d("invalidActivityForm", "You must enter a valid Activity form, from the following list");
+        for (ActivityForm form : activityForms) {
+            Log.d("validActivityForm", form.toString());
+        }
     }
 
 

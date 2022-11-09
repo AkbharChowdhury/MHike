@@ -30,6 +30,8 @@
     <string name="required_name_error">%s cannot contain numbers or spaces</string>
     <string name="required_field_error">%s is required</string>
     <string name="email_exists_error">This email is taken, Please choose a different email</string>
+    <string name="hike_exists_error">This hike already exists!</string>
+
     <string name="invalid_email_error">Please enter a valid email!</string>
     <string name="password_min_error">%s password must be at least %d characters long</string>
 
@@ -61,7 +63,10 @@
     <string name="elevation_gain">Elevation Gain (ft)</string>
     <string name="high_ft">High (ft)</string>
     <string name="add_observation">Add Observation</string>
-    <string name="no_hikes">No Hikes Found.. Try adding one</string>
+    <string name="no_hikes">No hikes Found.. Try adding one</string>
+    <string name="no_hikes_observation">No observations yet…trying adding one</string>
+
+
     <string name="edit_hike_title">Edit Hike</string>
     <string name="add_hike_title">Add Hike</string>
     <string name="update_hike">Update Hike</string>

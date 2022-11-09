@@ -22,12 +22,12 @@ public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
 
     private final boolean disablePastDates;
-    private ActivityForm activityForm;
+    private final ActivityForm ACTIVITY_FORM;
 
 
     public DatePickerFragment(boolean disablePastDates, ActivityForm activityForm) {
         this.disablePastDates = disablePastDates;
-        this.activityForm = activityForm;
+        ACTIVITY_FORM = activityForm;
 
     }
 
@@ -42,7 +42,7 @@ public class DatePickerFragment extends DialogFragment implements
     }
 
     private void updateDateOnForm(LocalDate date) {
-        switch (activityForm) {
+        switch (ACTIVITY_FORM) {
             case ADD_HIKE:
                 ((AddHikeActivity) getActivity()).updateDate(date);
                 break;
@@ -54,20 +54,12 @@ public class DatePickerFragment extends DialogFragment implements
                 ((AddObservationActivity) getActivity()).updateDate(date);
                 break;
             default:
-                showActivityFormErrorMessage();
-
+                Helper.showActivityFormErrorMessage();
 
         }
     }
 
-    private void showActivityFormErrorMessage() {
-        // display error and show valid enum Activity forms
-        ActivityForm activityForms[] = ActivityForm.values();
-        Log.d("invalidActivityForm", "You must enter a valid Activity form, from the following list");
-        for (ActivityForm form : activityForms) {
-            Log.d("validActivityForm", form.toString());
-        }
-    }
+
 
     @NonNull
     @Override

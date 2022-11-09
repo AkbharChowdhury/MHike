@@ -10,15 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.HikeAdapter;
 import com.mhike.m_hike.classes.ObservationAdapter;
-import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.ObservationTable;
 
 import java.util.ArrayList;
@@ -36,7 +33,6 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observation);
-        setTitle(getString(R.string.observation_title));
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
 
@@ -60,18 +56,22 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         showObservationList();
 
-
-
-
-
-
-        FloatingActionButton btnAddObservation = findViewById(R.id.btn_add_observation);
-        btnAddObservation.setOnClickListener(view -> startActivity(new Intent(context, AddObservationActivity.class)));
     }
 
     @SuppressLint("Range")
     private void showObservationList() {
-        try (Cursor cursor = db.getObservationList(String.valueOf(getUserID()))) {
+
+        if (!getIntent().hasExtra("hikeID")) {
+            Helper.longToastMessage(context, "error hike id not found");
+            return;
+        }
+
+        String hikeID = getIntent().getStringExtra("hikeID");
+        String userID = String.valueOf(getUserID());
+
+        setTitle("Observation details for " + db.getHikeNameListByID(hikeID));
+
+        try (Cursor cursor = db.getObservationList(userID, hikeID)) {
 
             if (cursor.getCount() == 0) {
                 Helper.longToastMessage(context, "No observations found");
@@ -96,4 +96,7 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
         return preferences.getInt(AccountPreferences.USERID, 0);
     }
+
+
+
 }

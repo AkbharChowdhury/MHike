@@ -239,13 +239,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /************************************************** Create Login/ register ****************************************/
 
-    public boolean emailExists(String email) {
-        String[] columns = {UserTable.COLUMN_EMAIL};
+    public boolean columnExists(String fieldValue, String column, String table) {
+        String[] columns = {column};
         SQLiteDatabase db = this.getReadableDatabase();
-        String selection = UserTable.COLUMN_EMAIL + " LIKE ?";
-        String[] selectionArgs = {"%" + email + "%"};
+        String selection = column + " LIKE ?";
+        String[] selectionArgs = { fieldValue };
         // select the email field and compare it to the entered email
-        try (Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = db.query(table, columns, selection, selectionArgs, null, null, null)) {
             int cursorCount = cursor.getCount();
             return cursorCount > 0;
 
@@ -324,32 +324,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    @SuppressLint("Range")
-    public List<String> getHikeNameList(String userID) {
-        // array of columns to fetch
-        String[] columns = {HikeTable.COLUMN_Hike_NAME};
-        SQLiteDatabase db = getReadableDatabase();
-        // selection criteria
-        String selection = UserTable.COLUMN_ID + " = ?";
-        // selection arguments
-        String[] selectionArgs = {userID};
-        List<String> hikeNameList = new ArrayList<>();
-
-        // query to check if user email and password is correct
-        try (Cursor cursor = db.query(HikeTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
-                while (cursor.moveToNext()) {
-                    hikeNameList.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
-
-                }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return hikeNameList;
-
-        }
-        return hikeNameList;
-
-    }
+//    @SuppressLint("Range")
+//    public List<String> getHikeNameList(String userID) {
+//        // array of columns to fetch
+//        String[] columns = {HikeTable.COLUMN_Hike_NAME};
+//        SQLiteDatabase db = getReadableDatabase();
+//        // selection criteria
+//        String selection = UserTable.COLUMN_ID + " = ?";
+//        // selection arguments
+//        String[] selectionArgs = {userID};
+//        List<String> hikeNameList = new ArrayList<>();
+//
+//        // query to check if user email and password is correct
+//        try (Cursor cursor = db.query(HikeTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+//                while (cursor.moveToNext()) {
+//                    hikeNameList.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
+//
+//                }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return hikeNameList;
+//
+//        }
+//        return hikeNameList;
+//
+//    }
 
     public boolean registerUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -420,16 +420,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public List<String> populateDropdown(String tableName) {
+    @SuppressLint("Range")
+    public List<String> populateDropdown(String tableName, String column) {
         List<String> list = new ArrayList<>();
 
-        String selectQuery = "SELECT  * FROM " + tableName;
+        String selectQuery = "SELECT " + column + " FROM " + tableName;
         SQLiteDatabase db = this.getReadableDatabase();
 
         try (Cursor cursor = db.rawQuery(selectQuery, null)) {
             if (cursor.moveToFirst()) {
                 do {
-                    list.add(cursor.getString(1)); // get the type field
+                    list.add(cursor.getString(cursor.getColumnIndex(column))); // get the type field
+                } while (cursor.moveToNext());
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return list;
+    }
+    @SuppressLint("Range")
+    public List<String> getUserHikes(String userID) {
+        List<String> list = new ArrayList<>();
+
+        String selectQuery =
+             "SELECT " + HikeTable.COLUMN_Hike_NAME + " FROM " + HikeTable.TABLE_NAME + " WHERE " + HikeTable.COLUMN_USER_ID + " =?";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        try (Cursor cursor = db.rawQuery(selectQuery, new String[]{userID}, null)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME))); // get the type field
+                } while (cursor.moveToNext());
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return list;
+    }
+
+
+    @SuppressLint("Range")
+    public List<String> getHikeNameListByID(String hikeID) {
+        List<String> list = new ArrayList<>();
+
+        String selectQuery =
+                "SELECT " + HikeTable.COLUMN_Hike_NAME + " FROM " + HikeTable.TABLE_NAME + " WHERE " + HikeTable.COLUMN_ID +"=?";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        try (Cursor cursor = db.rawQuery(selectQuery, new String[]{hikeID}, null)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME))); // get the type field
                 } while (cursor.moveToNext());
             }
 
@@ -449,25 +496,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?" + "ORDER BY hike_date", new String[]{userID}, null) : null;
     }
 
-
     public Cursor getHikeListObservation(String userID){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT h.* from  observation o \n" +
-                "JOIN Hike h on h.hike_id = o.hike_id\n" +
-                "WHERE user_id = ?\n";
-        return db != null ? db.rawQuery(sql, new String[]{userID}, null) : null;
+        return db != null ? db.rawQuery("SELECT DISTINCT  o.hike_id,\n" +
+                "h.hike_name,\n" +
+                "h.description,\n" +
+                "h.hike_date\n" +
+                "\n" +
+                "FROM observation o\n" +
+                "JOIN Hike h ON h.hike_id = o.hike_id\n" +
+                "WHERE h.user_id = ?", new String[]{userID}, null) : null;
     }
 
 
 
-    public Cursor getObservationList(String userID){
+    public Cursor getObservationList(String userID, String hikeID){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql="SELECT \n" +
-                "o.*\n" +
-                "FROM observation o\n" +
-                "JOIN Hike h ON h.hike_id = o.hike_id\n" +
-                "WHERE h.user_id = ?";
-        return db != null ? db.rawQuery(sql, new String[]{userID}, null) : null;
+
+        String sql = String.format(
+                "SELECT o.* FROM %s o JOIN %s h ON h.%s = o.%s WHERE h.%s = ? AND o.%s = ?",
+                ObservationTable.TABLE_NAME,
+                HikeTable.TABLE_NAME,
+                HikeTable.COLUMN_ID,
+                ObservationTable.COLUMN_HIKE_ID,
+                HikeTable.COLUMN_USER_ID,
+                ObservationTable.COLUMN_HIKE_ID);
+        return db != null ? db.rawQuery(sql, new String[]{userID, hikeID}, null) : null;
     }
 
 

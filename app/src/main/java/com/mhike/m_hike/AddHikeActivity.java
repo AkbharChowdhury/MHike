@@ -60,8 +60,8 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
         setContentView(R.layout.activity_add_hike);
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
-        form = new Validation(context);
-        difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME);
+        form = new Validation(context, db);
+        difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
         CheckIsUserLoggedIn();
 
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
@@ -152,7 +152,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
 
 
     private void setupAdapter() {
-        txtParking.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME)));
+        txtParking.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_TYPE)));
 
     }
 

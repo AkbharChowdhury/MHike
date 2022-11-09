@@ -10,27 +10,21 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.DatePickerFragment;
 import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.Hike;
 import com.mhike.m_hike.classes.Observation;
 import com.mhike.m_hike.classes.Validation;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.interfaces.IDatePicker;
 import com.mhike.m_hike.classes.tables.HikeTable;
-import com.mhike.m_hike.classes.tables.ObservationTable;
-import com.mhike.m_hike.classes.tables.ParkingTable;
 
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 
@@ -98,6 +92,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_observation);
         context = getApplicationContext();
+        setTitle("Add Observation");
 
         findTextFields();
 
@@ -109,7 +104,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         txtHikeDate.setText(Helper.formatDate(CURRENT_DATE));
         setDateAndTimeFields();
         setupAdapter();
-        Button btnAddObservation = findViewById(R.id.btn_add_observation);
+        Button btnAddObservation = findViewById(R.id.btn_add_obj);
         btnAddObservation.setOnClickListener(view -> addObservations());
 
 
@@ -141,7 +136,11 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
     private void setupAdapter() {
         String userID = String.valueOf(getUserID());
-        txtHikeName.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item,  db.getHikeNameList(userID).toArray()));
+
+
+        txtHikeName.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item,
+                db.getUserHikes(userID)
+                ));
 
     }
 

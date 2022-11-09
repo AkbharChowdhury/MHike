@@ -67,8 +67,8 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
         setTitle(getString(R.string.edit_hike_title));
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
-        form = new Validation(context);
-        difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME);
+        form = new Validation(context, db);
+        difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
 
 
 
@@ -116,8 +116,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
         double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
         double high = Double.parseDouble(Helper.trimStr(txtHigh));
         int difficultyID = db.getColumnID(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE, DifficultyTable.COLUMN_ID, lblDifficulty.getText().toString());
-
-
+        
         Hike hikeDetails = new Hike();
         hikeDetails.setHikeDate(hikeDate);
         hikeDetails.setHikeName(hikeName);
@@ -134,12 +133,21 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
     }
 
     private void updateHike() {
-        Hike hike = new Hike(txtHikeDate, txtHikeName, txtDescription, txtLocation, txtDistance, txtDuration, txtParking, txtElevationGain, txtHigh, lblDifficulty);
+        Hike hike = new Hike(txtHikeDate, txtHikeName,
+                txtDescription,
+                txtLocation,
+                txtDistance,
+                txtDuration,
+                txtParking,
+                txtElevationGain,
+                txtHigh,
+                lblDifficulty);
 
         if (form.validateHikeForm(hike)) {
 
             SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
             int userID = preferences.getInt(AccountPreferences.USERID, 0);
+
             if (db.updateHike(getHikeDetails(), getIntent().getStringExtra("hikeID"), userID)) {
                 Helper.toastMessage(context, "Hike updated successfully");
                 return;
@@ -201,7 +209,7 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
     }
 
     private void setupAdapter() {
-        txtParking.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME)));
+        txtParking.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, db.populateDropdown(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_TYPE)));
 
     }
 

@@ -15,6 +15,8 @@ public final class Validation {
     private final Context context;
     private DatabaseHelper db;
     private static final int minDistance = 2;
+    private boolean setAdditionalCheck = false;
+
 
 
 
@@ -29,8 +31,6 @@ public final class Validation {
 
 
     }
-//
-
 
     private boolean isValidEmail(TextInputLayout textField) {
         // https://www.youtube.com/watch?v=veOZTvAdzJ8
@@ -46,30 +46,12 @@ public final class Validation {
             setError(textField, getInvalidEmailError());
             return false;
         }
+        if (setAdditionalCheck){
 
-        textField.setError(null);
-        return true;
-    }
-
-
-    private boolean isValidEmailReg(TextInputLayout textField) {
-        // https://www.youtube.com/watch?v=veOZTvAdzJ8
-        String email = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(UserTable.COLUMN_EMAIL);
-
-        if (email.isEmpty()) {
-            setError(textField, getRequiredFieldError(fieldName));
-            return false;
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            setError(textField, getInvalidEmailError());
-            return false;
-        }
-
-        if (db.emailExists(email)) {
-            setError(textField, getEmailExistsError());
-            return false;
+            if (db.columnExists(email, UserTable.COLUMN_EMAIL, UserTable.TABLE_NAME)) {
+                setError(textField, getEmailExistsError());
+                return false;
+            }
         }
 
         textField.setError(null);
@@ -170,6 +152,9 @@ public final class Validation {
         return String.format(context.getString(R.string.required_field_error), fieldName);
     }
 
+    private String getDuplicateHikeNameError() {
+        return context.getString(R.string.hike_exists_error);
+    }
 
     private String getDistanceFieldError(String fieldName, int minDistance) {
         return String.format(context.getString(R.string.distance_error), fieldName, minDistance);
@@ -211,9 +196,12 @@ public final class Validation {
         TextInputLayout txtEmail = user.getTxtEmail();
         TextInputLayout txtPassword = user.getTxtPassword();
 
+        setAdditionalCheck = true;
+
+
         return !(!isValidFirstName(txtFirstName) |
                 !isValidLastName(txtLastName) |
-                !isValidEmailReg(txtEmail) |
+                !isValidEmail(txtEmail) |
                 !isValidPassword(txtPassword) |
                 !isPassword8Chars(txtPassword)
         );
@@ -250,6 +238,10 @@ public final class Validation {
 
         if (hikeName.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
+            return false;
+        }
+        if (db.columnExists(hikeName, HikeTable.COLUMN_Hike_NAME, HikeTable.TABLE_NAME)) {
+            setError(textField, getDuplicateHikeNameError());
             return false;
         }
 
@@ -387,7 +379,7 @@ public final class Validation {
                         !isValidDuration(txtDuration) |
                         !isValidDropdown(txtParking, HikeTable.COLUMN_PARKING_ID) |
                         !isValidElevation(txtElevationGain) |
-                        !isValidHigh(txtHigh, txtElevationGain, txtDistance) //|
+                        !isValidHigh(txtHigh, txtElevationGain, txtDistance)
 
 
         );

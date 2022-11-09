@@ -56,7 +56,7 @@ public class HikeActivity extends AppCompatActivity {
         HikeAdapter adapter = new HikeAdapter(
                 HikeActivity.this,
                 context,
-                true,
+                ActivityForm.HIKE_RECYCLER,
                 hikeID,
                 hikeName,
                 hikeDescription,

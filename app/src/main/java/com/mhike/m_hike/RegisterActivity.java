@@ -69,7 +69,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         // if the form is valid and user email is unique store their details in the database
         if (form.validateRegisterForm(user)) {
-
             if (db.registerUser(getUserDetails())) {
                 homePage();
                 return;
