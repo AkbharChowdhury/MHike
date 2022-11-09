@@ -58,7 +58,6 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
         return new MyViewHolder(view);
 
 
-
     }
 
 
@@ -67,10 +66,10 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
         holder.observationID.setText(String.valueOf(observationID.get(position)));
         holder.observation.setText(String.valueOf(observation.get(position)));
         holder.observationDate.setText(Helper.formatDateShort(String.valueOf(observationDate.get(position))));
-        holder.observationTime.setText("  "+Helper.formatTime(String.valueOf(observationTime.get(position))));
+        holder.observationTime.setText("  " + Helper.formatTime(String.valueOf(observationTime.get(position))));
 
 
-        holder.mainLayoutObservation.setOnClickListener(view -> activity.startActivityForResult(ObservationIntent(position), 1));
+//        holder.mainLayoutObservation.setOnClickListener(view -> activity.startActivityForResult(ObservationIntent(position), 1));
 
     }
 
@@ -78,12 +77,12 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     public int getItemCount() {
         return observationID.size();
     }
-
-    private Intent ObservationIntent(int position){
-        Intent intent = new Intent(context, ViewHikeObservationActivity.class);
-        intent.putExtra("observationID", String.valueOf(observationID.get(position)));
-        return intent;
-    }
+//
+//    private Intent ObservationIntent(int position){
+//        Intent intent = new Intent(context, ViewHikeObservationActivity.class);
+//        intent.putExtra("observationID", String.valueOf(observationID.get(position)));
+//        return intent;
+//    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mainLayoutObservation;
