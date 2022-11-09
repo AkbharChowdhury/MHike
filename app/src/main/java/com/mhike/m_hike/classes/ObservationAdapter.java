@@ -18,14 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mhike.m_hike.EditHikeActivity;
 import com.mhike.m_hike.MainActivity;
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.ViewHikeObservationActivity;
 
 import java.util.ArrayList;
 
 public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.MyViewHolder> {
     private Context context;
     private ArrayList observation;
-    private ArrayList observationDateTime;
-    private ArrayList obervationID;
+    private ArrayList observationDate;
+    private ArrayList observationTime;
+
+    private ArrayList observationID;
 
 
     private Activity activity;
@@ -35,13 +38,17 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
             Context context,
             ArrayList observationID,
             ArrayList observation,
-            ArrayList observationDateTime
-            ) {
+            ArrayList observationDate,
+            ArrayList observationTime
+
+    ) {
         this.activity = activity;
         this.context = context;
-        this.obervationID = observationID;
+        this.observationID = observationID;
         this.observation = observation;
-        this.observationDateTime = observationDateTime;
+        this.observationDate = observationDate;
+        this.observationTime = observationTime;
+
     }
 
     @NonNull
@@ -57,21 +64,24 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.observationID.setText(String.valueOf(obervationID.get(position)));
+        holder.observationID.setText(String.valueOf(observationID.get(position)));
         holder.observation.setText(String.valueOf(observation.get(position)));
-        holder.dateTime.setText(String.valueOf(observationDateTime.get(position)));
+        holder.observationDate.setText(Helper.formatDateShort(String.valueOf(observationDate.get(position))));
+        holder.observationTime.setText("  "+Helper.formatTime(String.valueOf(observationTime.get(position))));
+
+
         holder.mainLayoutObservation.setOnClickListener(view -> activity.startActivityForResult(ObservationIntent(position), 1));
 
     }
 
     @Override
     public int getItemCount() {
-        return obervationID.size();
+        return observationID.size();
     }
 
     private Intent ObservationIntent(int position){
-        Intent intent = new Intent(context, EditHikeActivity.class);
-        intent.putExtra("observationID", String.valueOf(obervationID.get(position)));
+        Intent intent = new Intent(context, ViewHikeObservationActivity.class);
+        intent.putExtra("observationID", String.valueOf(observationID.get(position)));
         return intent;
     }
 
@@ -79,13 +89,16 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
         CardView mainLayoutObservation;
         TextView observationID;
         TextView observation;
-        TextView dateTime;
+        TextView observationDate;
+        TextView observationTime;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             observationID = itemView.findViewById(R.id.txtObservationID);
             observation = itemView.findViewById(R.id.txtObservation);
-            dateTime = itemView.findViewById(R.id.txtDateTime);
+            observationDate = itemView.findViewById(R.id.txtObservationDate);
+            observationTime = itemView.findViewById(R.id.txtObservationTime);
             mainLayoutObservation = itemView.findViewById(R.id.mainLayoutObservation);
 
         }

@@ -448,6 +448,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db != null ? db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_USER_ID + " =?" + "ORDER BY hike_date", new String[]{userID}, null) : null;
     }
+
+
+    public Cursor getHikeListObservation(String userID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT h.* from  observation o \n" +
+                "JOIN Hike h on h.hike_id = o.hike_id\n" +
+                "WHERE user_id = ?\n";
+        return db != null ? db.rawQuery(sql, new String[]{userID}, null) : null;
+    }
+
+
+
     public Cursor getObservationList(String userID){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql="SELECT \n" +

@@ -4,5 +4,8 @@ public enum ActivityForm {
 
     ADD_HIKE,
     EDIT_HIKE,
-    ADD_OBSERVATION
+    ADD_OBSERVATION,
+    HIKE_RECYCLER,
+    OBSERVATION_RECYCLER,
+
 }

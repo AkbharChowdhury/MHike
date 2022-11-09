@@ -93,11 +93,21 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/txtDateTime"
+                android:id="@+id/txtObservationDate"
                 style="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="24/2/2022"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+
+
+            <TextView
+                android:id="@+id/txtObservationTime"
+                style="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="    12:30"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
         </LinearLayout>

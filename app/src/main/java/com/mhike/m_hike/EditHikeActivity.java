@@ -101,16 +101,6 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
                 })
                 .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.cancel()).create().show();
 
-//        AlertDialog alert = altdial.create();
-////        alert.setTitle("Are you sure you want to delete this Hike?");
-////        alert.show();
-////        new AlertDialog.Builder(EditHikeActivity.this).setTitle("Details entered").setMessage(
-////                "OK"
-////                        ).setNeutralButton("Back",
-////                (dialogInterface, i) -> {
-////
-////                }).show();
-
     }
 
     private Hike getHikeDetails() {

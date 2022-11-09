@@ -78,6 +78,7 @@
     <string name="hike_deleted_confirm">Hike deleted</string>
     <string name="hike">Hike</string>
     <string name="time">Time</string>
+    <string name="my_hikes">My hikes</string>
 
 
     <string-array name="parking_array">

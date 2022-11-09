@@ -21,6 +21,7 @@ import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.Helper;
 import com.mhike.m_hike.classes.HikeAdapter;
+import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.tables.HikeTable;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class HikeActivity extends AppCompatActivity {
         HikeAdapter adapter = new HikeAdapter(
                 HikeActivity.this,
                 context,
+                true,
                 hikeID,
                 hikeName,
                 hikeDescription,
@@ -129,13 +131,5 @@ public class HikeActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
         return preferences.getInt(AccountPreferences.USERID, 0);
     }
-
-
-
-
-
-
-
-
 
 }

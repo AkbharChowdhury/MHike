@@ -17,7 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mhike.m_hike.EditHikeActivity;
 import com.mhike.m_hike.MainActivity;
+import com.mhike.m_hike.ObservationActivity;
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.ViewHikeObservationActivity;
+import com.mhike.m_hike.classes.enums.ActivityForm;
 
 import java.util.ArrayList;
 
@@ -28,16 +31,21 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
     private ArrayList hikeDate;
     private ArrayList hikeID;
     private Activity activity;
+    private boolean isHikeForms;
 
     public HikeAdapter(
             Activity activity,
             Context context,
-                       ArrayList hikeID,
+            boolean isHikeForms,
+
+            ArrayList hikeID,
                        ArrayList hikeName,
                        ArrayList hikeDescription,
                        ArrayList hikeDate) {
         this.activity = activity;
         this.context = context;
+        this.isHikeForms = isHikeForms;
+
         this.hikeID = hikeID;
         this.hikeName = hikeName;
         this.hikeDescription = hikeDescription;
@@ -71,9 +79,32 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
     }
 
     private Intent hikeIntent(int position){
-        Intent intent = new Intent(context, EditHikeActivity.class);
-        intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
-        return intent;
+
+        if (isHikeForms) {
+            Intent intent;
+            intent = new Intent(context, EditHikeActivity.class);
+            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+            return intent;
+        } else{
+            Intent intent;
+            intent = new Intent(context, ViewHikeObservationActivity.class);
+            return intent;
+
+        }
+
+//        switch (activityForm){
+//            case HIKE_RECYCLER:
+//                intent = new Intent(context, EditHikeActivity.class);
+//                intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+//                return intent;
+//            case OBSERVATION_RECYCLER:
+//                intent = new Intent(context, ViewHikeObservationActivity.class);
+//                intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+//                return intent;
+//
+//        }
+//        return new Intent();
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
