@@ -402,7 +402,7 @@ public final class Validation {
                 !isValidDropdown(txtHikeNameID, HikeTable.COLUMN_Hike_NAME) |
                         !isValidDropdown(txtDate, ObservationTable.COLUMN_DATE) |
                         !isValidDropdown(txtTime, ObservationTable.COLUMN_TIME) |
-                        !isEmpty(txtObservation, ObservationTable.COLUMN_OBSERVATION)
+                        !isEmpty(txtObservation, ObservationTable.OBSERVATION_TITLE)
 
         );
 

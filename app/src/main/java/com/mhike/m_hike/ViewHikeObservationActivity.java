@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.Helper;
@@ -80,7 +78,7 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
 
             while (cursor.moveToNext()) {
                 observationID.add(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_ID)));
-                observation.add(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_OBSERVATION)));
+                observation.add(cursor.getString(cursor.getColumnIndex(ObservationTable.OBSERVATION_TITLE)));
                 observationDate.add(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_DATE)));
                 observationTime.add(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_TIME)));
 

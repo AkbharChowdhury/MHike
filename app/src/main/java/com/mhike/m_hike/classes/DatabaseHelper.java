@@ -224,7 +224,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + ObservationTable.TABLE_NAME + " ("
                 + ObservationTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ObservationTable.COLUMN_HIKE_ID + " INTEGER NOT NULL,"
-                + ObservationTable.COLUMN_OBSERVATION + " TEXT NOT NULL,"
+                + ObservationTable.OBSERVATION_TITLE + " TEXT NOT NULL,"
                 + ObservationTable.COLUMN_COMMENTS + " TEXT,"
                 + ObservationTable.COLUMN_DATE + " TEXT NOT NULL,"
                 + ObservationTable.COLUMN_TIME + " TEXT NOT NULL,"
@@ -396,7 +396,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (Observation observation : observationList) {
             ContentValues cv = new ContentValues();
             cv.put(ObservationTable.COLUMN_HIKE_ID, observation.getHikeID());
-            cv.put(ObservationTable.COLUMN_OBSERVATION, observation.getObservation());
+            cv.put(ObservationTable.OBSERVATION_TITLE, observation.getObservation());
             cv.put(ObservationTable.COLUMN_COMMENTS, observation.getComments());
             cv.put(ObservationTable.COLUMN_DATE, observation.getObservationDate());
             cv.put(ObservationTable.COLUMN_TIME, observation.getObservationTime());
