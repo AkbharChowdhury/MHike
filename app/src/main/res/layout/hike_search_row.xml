@@ -14,22 +14,32 @@
 
         <!-- text view for our course name -->
         <TextView
-            android:id="@+id/idTVCourseName"
+            android:id="@+id/lblHikeNameSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Course Name"
+            android:text="Snowdown"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <!-- text view for our course description -->
         <TextView
-            android:id="@+id/idTVCourseDescription"
+            android:id="@+id/lblHikeDescriptionSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idTVCourseName"
+            android:layout_below="@id/lblHikeNameSearch"
             android:padding="5dp"
-            android:text="Course Description"
+            android:text="Hike Description"
+            android:textColor="@color/black" />
+
+
+
+        <TextView
+            android:id="@+id/lblHikeDateSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblHikeDescriptionSearch"
+            android:padding="5dp"
+            android:text="Hike Date"
             android:textColor="@color/black" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

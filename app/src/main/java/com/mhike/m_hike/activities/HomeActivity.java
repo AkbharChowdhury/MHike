@@ -1,5 +1,9 @@
 package com.mhike.m_hike.activities;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,29 +15,39 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mhike.m_hike.R;
-import com.mhike.m_hike.classes.adapters.CourseAdapter;
+import com.mhike.m_hike.classes.AccountPreferences;
+import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.adapters.SearchAdapter;
 import com.mhike.m_hike.classes.models.CourseModel;
+import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.tables.HikeTable;
+import com.mhike.m_hike.utilities.Helper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     // creating variables for
     // our ui components.
-    private RecyclerView courseRV;
+    private RecyclerView searchRecyclerView;
+    DatabaseHelper db;
+    Context context;
 
     // variable for our adapter
     // class and array list
-    private CourseAdapter adapter;
-    private ArrayList<CourseModel> courseModelArrayList;
+    private SearchAdapter adapter;
+    private ArrayList<Hike> hikeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        setTitle("Search hikes...");
+        context = getApplicationContext();
+        db = DatabaseHelper.getInstance(context);
         // initializing our variables.
-        courseRV = findViewById(R.id.idRVCourses);
+        searchRecyclerView = findViewById(R.id.search_recycler);
 
         // calling method to
         // build recycler view.
@@ -76,12 +90,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private void filter(String text) {
         // creating a new array list to filter our data.
-        ArrayList<CourseModel> filteredlist = new ArrayList<>();
+        ArrayList<Hike> filteredlist = new ArrayList<>();
 
         // running a for loop to compare elements.
-        for (CourseModel item : courseModelArrayList) {
+        for (Hike item : hikeList) {
             // checking if the entered string matched with any item of our recycler view.
-            if (item.getCourseName().toLowerCase().contains(text.toLowerCase())) {
+            if (item.getHikeName().toLowerCase().contains(text.toLowerCase())) {
                 // if the item is matched we are
                 // adding it to our filtered list.
                 filteredlist.add(item);
@@ -101,28 +115,86 @@ public class HomeActivity extends AppCompatActivity {
     private void buildRecyclerView() {
 
         // below line we are creating a new array list
-        courseModelArrayList = new ArrayList<>();
+//        hikeList = new ArrayList<>();
+//        Hike hike1 = new Hike();
+//        hike1.setHikeID(1);
+//        hike1.setHikeName("SnowDown");
+//        hike1.setDescription("Snow down is cool");
+//
+//
+//        Hike hike2 = new Hike();
+//        hike2.setHikeID(2);
+//        hike2.setHikeName("Hilltop");
+//        hike2.setDescription("Hiltop is cool");
+//        hikeList.add(hike1);
+//
+//        hikeList.add(hike2);
+
+
+
+
 
         // below line is to add data to our array list.
-        courseModelArrayList.add(new CourseModel("DSA", "DSA Self Paced Course"));
-        courseModelArrayList.add(new CourseModel("JAVA", "JAVA Self Paced Course"));
-        courseModelArrayList.add(new CourseModel("C++", "C++ Self Paced Course"));
-        courseModelArrayList.add(new CourseModel("Python", "Python Self Paced Course"));
-        courseModelArrayList.add(new CourseModel("Fork CPP", "Fork CPP Self Paced Course"));
+//        hikeList.add(new CourseModel("DSA", "DSA Self Paced Course"));
+//        hikeList.add(new CourseModel("JAVA", "JAVA Self Paced Course"));
+//        hikeList.add(new CourseModel("C++", "C++ Self Paced Course"));
+//        hikeList.add(new CourseModel("Python", "Python Self Paced Course"));
+//        hikeList.add(new CourseModel("Fork CPP", "Fork CPP Self Paced Course"));
 
         // initializing our adapter class.
-        adapter = new CourseAdapter(courseModelArrayList, HomeActivity.this);
+        hikeList = (ArrayList<Hike>) getHikeListData();
+        adapter = new SearchAdapter(hikeList, HomeActivity.this);
 
         // adding layout manager to our recycler view.
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        courseRV.setHasFixedSize(true);
+        searchRecyclerView.setHasFixedSize(true);
 
         // setting layout manager
         // to our recycler view.
-        courseRV.setLayoutManager(manager);
+        searchRecyclerView.setLayoutManager(manager);
 
         // setting adapter to
         // our recycler view.
-        courseRV.setAdapter(adapter);
+        searchRecyclerView.setAdapter(adapter);
+
+
+    }
+
+    @SuppressLint("Range")
+    private List<Hike> getHikeListData() {
+//         db.getHikeList(String.valueOf(getUserID()))
+        List<Hike> list = new ArrayList<>();
+
+        try (Cursor cursor = db.getHikeList("1")) {
+
+
+            if (cursor.getCount() == 0) {
+                Helper.longToastMessage(context, getString(R.string.no_hikes));
+                return list;
+            }
+
+            while (cursor.moveToNext()) {
+                list.add(new Hike(
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))
+
+                ));
+
+            }
+            return list;
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return list;
+
+
+    }
+    private int getUserID(){
+        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+        return preferences.getInt(AccountPreferences.USERID, 0);
     }
 }

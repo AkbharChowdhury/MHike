@@ -211,6 +211,13 @@ public final class Hike {
         this.txtHigh = txtHigh;
         this.lblDifficulty = lblDifficulty;
     }
+    public Hike(int id, String name, String description, String hikeDate){
+        hikeID = id;
+        hikeName = name;
+        this.description = description;
+        this.hikeDate = hikeDate;
+
+    }
 
 
     public Hike(){

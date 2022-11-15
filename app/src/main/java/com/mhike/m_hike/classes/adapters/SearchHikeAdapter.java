@@ -10,22 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mhike.m_hike.R;
-import com.mhike.m_hike.classes.models.CourseModel;
+import com.mhike.m_hike.classes.models.Hike;
 
 import java.util.ArrayList;
 
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
+public class SearchHikeAdapter extends RecyclerView.Adapter<SearchHikeAdapter.ViewHolder> {
 
     // creating a variable for array list and context.
-    private ArrayList<CourseModel> courseModelArrayList;
+    private ArrayList<Hike> courseModelArrayList;
+    private ArrayList<Hike> HikeList;
+//https://www.geeksforgeeks.org/searchview-in-android-with-recyclerview/
 
     // creating a constructor for our variables.
-    public CourseAdapter(ArrayList<CourseModel> courseModelArrayList, Context context) {
-        this.courseModelArrayList = courseModelArrayList;
+    public SearchHikeAdapter(ArrayList<Hike> HikeList, Context context) {
+        this.HikeList = HikeList;
     }
 
     // method for filtering our recyclerview items.
-    public void filterList(ArrayList<CourseModel> filterlist) {
+    public void filterList(ArrayList<Hike> filterlist) {
         // below line is to add our filtered
         // list in our course array list.
         courseModelArrayList = filterlist;
@@ -36,24 +38,23 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     @NonNull
     @Override
-    public CourseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SearchHikeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // below line is to inflate our layout.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_rv_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hike_search_row, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchHikeAdapter.ViewHolder holder, int position) {
         // setting data to our views of recycler view.
-        CourseModel model = courseModelArrayList.get(position);
-        holder.courseNameTV.setText(model.getCourseName());
-        holder.courseDescTV.setText(model.getCourseDescription());
+        Hike model = courseModelArrayList.get(position);
+        holder.courseNameTV.setText(model.getHikeName());
+        holder.courseDescTV.setText(model.getDescription());
     }
 
     @Override
     public int getItemCount() {
-        // returning the size of array list.
-        return courseModelArrayList.size();
+        return HikeList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,8 +64,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our views with their ids.
-            courseNameTV = itemView.findViewById(R.id.idTVCourseName);
-            courseDescTV = itemView.findViewById(R.id.idTVCourseDescription);
+            courseNameTV = itemView.findViewById(R.id.lblHikeNameSearch);
+            courseDescTV = itemView.findViewById(R.id.lblHikeDescriptionSearch);
         }
     }
 }
