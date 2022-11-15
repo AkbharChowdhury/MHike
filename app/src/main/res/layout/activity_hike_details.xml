@@ -4,10 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ObservationActivity">
+    tools:context=".HikeDetails">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/observation_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

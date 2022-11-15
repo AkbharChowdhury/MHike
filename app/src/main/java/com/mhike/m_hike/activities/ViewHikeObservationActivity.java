@@ -1,4 +1,4 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,10 +10,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.ObservationAdapter;
+import com.mhike.m_hike.utilities.Helper;
+import com.mhike.m_hike.classes.adapters.ObservationAdapter;
 import com.mhike.m_hike.classes.tables.ObservationTable;
 
 import java.util.ArrayList;

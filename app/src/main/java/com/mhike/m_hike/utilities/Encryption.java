@@ -1,4 +1,4 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.utilities;
 
 import android.util.Log;
 

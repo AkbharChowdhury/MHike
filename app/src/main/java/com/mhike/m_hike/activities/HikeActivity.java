@@ -1,4 +1,4 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,16 +12,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.HikeAdapter;
+import com.mhike.m_hike.utilities.Helper;
+import com.mhike.m_hike.classes.adapters.HikeAdapter;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.tables.HikeTable;
 
@@ -42,9 +39,9 @@ public class HikeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike);
+        checkMessage();
         setTitle(getString(R.string.nav_hikes));
         context = getApplicationContext();
-        checkMessage();
         FloatingActionButton btnAddHike = findViewById(R.id.btn_add_hike);
         btnAddHike.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, AddHikeActivity.class));
 
@@ -67,30 +64,20 @@ public class HikeActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         showHikeList();
-
-
-
-
     }
+
 
     private void checkMessage() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getBoolean("message")) {
-            Helper.longToastMessage(context, getString(R.string.hike_deleted_confirm));
-            extras.remove("message");
+        String key = Helper.TOAST_MESSAGE;
+        if (extras != null && extras.getBoolean(key)) {
+            Helper.longToastMessage(context, extras.getString(key));
+            extras.clear();
 
         }
+
     }
 
-
-    private void checkHikeUpdatedMsg() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getBoolean("hikeAdded")) {
-            Helper.longToastMessage(context, getString(R.string.hike_update_msg));
-            extras.remove("successRegister");
-
-        }
-    }
 
 
 

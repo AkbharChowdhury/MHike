@@ -1,29 +1,29 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
+import com.mhike.m_hike.R;
+import com.mhike.m_hike.SearchHike;
+import com.mhike.m_hike.UploadHike;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.User;
+import com.mhike.m_hike.utilities.Helper;
+import com.mhike.m_hike.classes.models.User;
 
 public class MainActivity extends AppCompatActivity {
-    private Context context;
     private final Activity CURRENT_ACTIVITY = MainActivity.this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = getApplicationContext();
+        Context context = getApplicationContext();
         DatabaseHelper db = DatabaseHelper.getInstance(context);
 
         CheckIsUserLoggedIn();
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         hikeCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, HikeActivity.class));
         sightsCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, ObservationActivity.class));
+        searchCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, SearchHike.class));
+        uploadCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, UploadHike.class));
 
         logoutCard.setOnClickListener(view -> logout());
 

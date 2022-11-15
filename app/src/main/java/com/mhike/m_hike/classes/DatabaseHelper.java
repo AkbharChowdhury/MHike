@@ -8,12 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.models.Observation;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.HikePhoto;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.ObservationTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
 import com.mhike.m_hike.classes.tables.UserTable;
+import com.mhike.m_hike.utilities.Encryption;
+import com.mhike.m_hike.utilities.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -262,7 +267,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     /**
-     * retrives the user first and last name- for dashboard functionality
+     * retrieves the user first and last name- for dashboard functionality
      * */
     @SuppressLint("Range")
     public User getUserFirstAndLastName(String userID) {

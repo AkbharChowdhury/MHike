@@ -1,42 +1,36 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.DatePickerFragment;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.Hike;
-import com.mhike.m_hike.classes.MyDialog;
+import com.mhike.m_hike.utilities.DatePickerFragment;
+import com.mhike.m_hike.utilities.Helper;
+import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.interfaces.IDatePicker;
-import com.mhike.m_hike.classes.Validation;
+import com.mhike.m_hike.utilities.Validation;
 import com.mhike.m_hike.classes.interfaces.IDifficulty;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EditHikeActivity extends AppCompatActivity implements IDatePicker, IDifficulty {

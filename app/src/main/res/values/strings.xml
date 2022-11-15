@@ -6,6 +6,8 @@
     <string name="nav_sights">Sights</string>
     <string name="nav_search">Search</string>
     <string name="nav_profile">Profile</string>
+    <string name="search_hike">Search Hike</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_fragment">Home Fragment</string>
@@ -36,6 +38,7 @@
     <string name="password_min_error">%s password must be at least %d characters long</string>
 
     <string name="distance_error">%s Must be at least %d miles</string>
+
     <string name="elevation_error">%s Must be at least %d foot</string>
     <string name="high_high_error">%s must be greater than %s</string>
 
@@ -53,6 +56,8 @@
     <string name="difficulty">Difficulty</string>
     <string name="example_text">example text</string>
     <string name="register_success">thank you for creating an account with us</string>
+    <string name="hike_added_success">Hike has been added</string>
+
     <string name="duration_minutes">Duration (mins)</string>
     <string name="hike_date">Hike Date</string>
     <string name="hike_name">Hike Name</string>
@@ -89,7 +94,8 @@
 
     <string name="dashboard_observations">Sights \n<font color="#A9A9A9">View and add observation for hikes</font></string>
     <string name="dashboard_upload">Upload Hike \n<font color="#A9A9A9">Upload hikes to web server</font></string>
-
+    <string name="upload_hike">Upload Hike</string>
+    <string name="observation_date">observation date</string>
 
 
     <string-array name="parking_array">

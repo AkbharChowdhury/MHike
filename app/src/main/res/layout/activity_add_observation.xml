@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddObservationActivity">
+    tools:context=".activities.AddObservationActivity">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -12,7 +12,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        tools:context=".AddObservationActivity">
+        tools:context=".activities.AddObservationActivity">
 
 
 
@@ -90,11 +90,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/hike_date">
+            android:hint="@string/observation_date">
 
 
             <AutoCompleteTextView
-                android:id="@+id/txtHikeDate"
+                android:id="@+id/txtObservationDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"

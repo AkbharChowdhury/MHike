@@ -1,4 +1,4 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.classes.adapters;
 
 
 import android.annotation.SuppressLint;
@@ -8,20 +8,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mhike.m_hike.AddHikeActivity;
-import com.mhike.m_hike.AddObservationActivity;
-import com.mhike.m_hike.EditHikeActivity;
-import com.mhike.m_hike.MainActivity;
-import com.mhike.m_hike.ObservationActivity;
+import com.mhike.m_hike.HikeDetails;
+import com.mhike.m_hike.activities.AddObservationActivity;
+import com.mhike.m_hike.activities.EditHikeActivity;
 import com.mhike.m_hike.R;
-import com.mhike.m_hike.ViewHikeObservationActivity;
+import com.mhike.m_hike.activities.ViewHikeObservationActivity;
+import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 
 import java.util.ArrayList;
@@ -99,6 +97,10 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
 
             case HIKE_RECYCLER:
                 activityToOpen =  EditHikeActivity.class;
+                break;
+
+            case SEARCH_HIKE:
+                activityToOpen =  HikeDetails.class;
                 break;
             default:
                 Helper.showActivityFormErrorMessage();

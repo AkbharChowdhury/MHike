@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditHikeActivity">
+    tools:context=".activities.EditHikeActivity">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -12,7 +12,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        tools:context=".AddHikeActivity">
+        tools:context=".activities.AddHikeActivity">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"

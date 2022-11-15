@@ -1,4 +1,4 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.utilities;
 
 import android.content.Context;
 import android.util.Patterns;
@@ -6,6 +6,10 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.models.Observation;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.classes.tables.ObservationTable;
 import com.mhike.m_hike.classes.tables.UserTable;
@@ -170,7 +174,7 @@ public final class Validation {
 
 
     private String getDurationFieldError(String fieldName, int minDuration) {
-        return String.format(context.getString(R.string.distance_error), fieldName, minDuration);
+        return String.format(context.getString(R.string.duration_error), fieldName, minDuration);
     }
 
     private String getPasswordMinLengthError(String fieldName, int minLength) {

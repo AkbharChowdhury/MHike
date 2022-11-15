@@ -1,19 +1,19 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.utilities;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.mhike.m_hike.AddHikeActivity;
-import com.mhike.m_hike.AddObservationActivity;
-import com.mhike.m_hike.EditHikeActivity;
+import com.mhike.m_hike.activities.AddHikeActivity;
+import com.mhike.m_hike.activities.AddObservationActivity;
+import com.mhike.m_hike.activities.EditHikeActivity;
 import com.mhike.m_hike.classes.enums.ActivityForm;
+import com.mhike.m_hike.utilities.Helper;
 
 import java.time.LocalDate;
 
@@ -25,9 +25,22 @@ public class DatePickerFragment extends DialogFragment implements
     private final ActivityForm ACTIVITY_FORM;
 
 
+
+    // for add hike form
+    private String minHikeDate;
+
+
+
     public DatePickerFragment(boolean disablePastDates, ActivityForm activityForm) {
         this.disablePastDates = disablePastDates;
         ACTIVITY_FORM = activityForm;
+
+    }
+
+    public DatePickerFragment(boolean disablePastDates, ActivityForm activityForm, String minHikeDate) {
+        this.disablePastDates = disablePastDates;
+        ACTIVITY_FORM = activityForm;
+        this.minHikeDate = minHikeDate;
 
     }
 
@@ -64,6 +77,8 @@ public class DatePickerFragment extends DialogFragment implements
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        long now = System.currentTimeMillis() - 1000;
+
 
         LocalDate d = LocalDate.now();
         int year = d.getYear();
@@ -74,14 +89,18 @@ public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog datePicker = new DatePickerDialog(getActivity(), this, year, --month, day);
         if (disablePastDates) {
             // disable past dates
-            Long currentTimeMillis = System.currentTimeMillis() - 1000;
-            datePicker.getDatePicker().setMinDate(currentTimeMillis);
+            datePicker.getDatePicker().setMinDate(now);
             return datePicker;
 
         }
-        // disable future dates
-        Long currentTimeMillis = System.currentTimeMillis() - 1000;
-        datePicker.getDatePicker().setMaxDate(currentTimeMillis);
+        // disable future dates and set min observation date to hike date
+        if (!minHikeDate.isEmpty()){
+
+//            datePicker.getDatePicker().setMinDate(now+(1000*60*60*24*7));
+        }
+
+
+        datePicker.getDatePicker().setMaxDate(now);
 
         return datePicker;
 

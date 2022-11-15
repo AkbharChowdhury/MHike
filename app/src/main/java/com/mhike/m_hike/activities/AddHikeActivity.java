@@ -1,4 +1,4 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -7,31 +7,28 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.DatePickerFragment;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.Hike;
+import com.mhike.m_hike.utilities.DatePickerFragment;
+import com.mhike.m_hike.utilities.Helper;
+import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.interfaces.IDatePicker;
-import com.mhike.m_hike.classes.Validation;
+import com.mhike.m_hike.utilities.Validation;
 import com.mhike.m_hike.classes.interfaces.IDifficulty;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.ParkingTable;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
 
 public class AddHikeActivity extends AppCompatActivity implements IDatePicker, IDifficulty {
@@ -63,10 +60,6 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
         form = new Validation(context, db);
         difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
         CheckIsUserLoggedIn();
-
-        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        int userID = preferences.getInt(AccountPreferences.USERID, 0);
-        Helper.longToastMessage(context, String.valueOf(userID));
 
         setTitle(getString(R.string.add_hike_title));
 
@@ -165,7 +158,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
             int userID = preferences.getInt(AccountPreferences.USERID, 0);
 
             if (db.addHike(getHikeDetails(), userID)) {
-                Helper.longToastMessage(context, "hike added");
+                hikePage();
                 return;
             }
 
@@ -203,6 +196,13 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
             lblDifficulty.setTextColor(Helper.getDifficultyColour(difficultyLevel, context));
             lblDifficulty.setText(difficultyName);
         }
+
+    }
+
+    private void hikePage() {
+        Intent registerIntent = new Intent(context, HikeActivity.class);
+        registerIntent.putExtra(Helper.TOAST_MESSAGE, getString(R.string.hike_added_success));
+        startActivity(registerIntent);
 
     }
 }

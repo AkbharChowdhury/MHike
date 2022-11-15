@@ -1,9 +1,6 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.utilities;
 
-import android.app.AlertDialog;
 import android.content.Context;
-
-import com.mhike.m_hike.EditHikeActivity;
 
 public final class MyDialog {
     private MyDialog(){

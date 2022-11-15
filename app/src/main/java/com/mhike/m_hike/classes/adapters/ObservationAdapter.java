@@ -1,24 +1,20 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.classes.adapters;
 
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mhike.m_hike.EditHikeActivity;
-import com.mhike.m_hike.MainActivity;
 import com.mhike.m_hike.R;
-import com.mhike.m_hike.ViewHikeObservationActivity;
+import com.mhike.m_hike.utilities.Helper;
 
 import java.util.ArrayList;
 

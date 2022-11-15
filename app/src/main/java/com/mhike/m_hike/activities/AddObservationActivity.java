@@ -1,4 +1,4 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -12,15 +12,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.DatePickerFragment;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.Observation;
-import com.mhike.m_hike.classes.Validation;
+import com.mhike.m_hike.utilities.DatePickerFragment;
+import com.mhike.m_hike.utilities.Helper;
+import com.mhike.m_hike.classes.models.Observation;
+import com.mhike.m_hike.utilities.Validation;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.interfaces.IDatePicker;
-import com.mhike.m_hike.classes.tables.HikeTable;
 
 
 import android.app.AlertDialog;
@@ -42,7 +42,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
     private String dbHikeTime;
 
 
-    private AutoCompleteTextView txtHikeDate;
+    private AutoCompleteTextView txtObservationDate;
     private AutoCompleteTextView txtHikeName;
 
     private TextInputLayout txtObservation;
@@ -53,7 +53,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
 
     private void findTextFields() {
-        txtHikeDate = findViewById(R.id.txtHikeDate);
+        txtObservationDate = findViewById(R.id.txtObservationDate);
         txtObservation = findViewById(R.id.txtObservation);
         txtComments = findViewById(R.id.txtComments);
         txtHikeTime = findViewById(R.id.txtHikeTime);
@@ -101,7 +101,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
 
 
-        txtHikeDate.setText(Helper.formatDate(CURRENT_DATE));
+        txtObservationDate.setText(Helper.formatDate(CURRENT_DATE));
         setDateAndTimeFields();
         setupAdapter();
         Button btnAddObservation = findViewById(R.id.btn_add_obj);
@@ -111,7 +111,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
     }
 
     private void addObservations() {
-        Observation observation = new Observation(txtHikeName, txtObservation, txtComments, txtHikeDate, txtHikeTime);
+        Observation observation = new Observation(txtHikeName, txtObservation, txtComments, txtObservationDate, txtHikeTime);
 //        int hikeID = db.getColumnID(HikeTable.TABLE_NAME, HikeTable.COLUMN_Hike_NAME, HikeTable.COLUMN_ID, txtHikeName.getText().toString());
         int hikeID = db.getHikeIDByName(txtHikeName.getText().toString());
 
@@ -146,7 +146,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
     @SuppressLint("ClickableViewAccessibility")
     private void setDateAndTimeFields() {
-        txtHikeDate.setOnTouchListener((view, motionEvent) -> {
+        txtObservationDate.setOnTouchListener((view, motionEvent) -> {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 showDatePickerDialog();
@@ -167,7 +167,8 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
     }
     @Override
     public void showDatePickerDialog() {
-        DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.ADD_OBSERVATION);
+        DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.ADD_OBSERVATION, "sss");
+
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 
@@ -176,12 +177,8 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         // for storing the date in the database
         dbHikeDate = selectedDate.toString();
 
-        Helper.longToastMessage(context, dbHikeDate);
         // show user-friendly date formatted
-        txtHikeDate.setText(Helper.formatDate(selectedDate.toString()));
-
-
-
+        txtObservationDate.setText(Helper.formatDate(selectedDate.toString()));
 
     }
 

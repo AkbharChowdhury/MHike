@@ -1,4 +1,4 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.utilities;
 
 import static android.content.Intent.getIntent;
 
@@ -22,6 +22,7 @@ import java.time.temporal.ValueRange;
 import android.content.Intent;
 
 public final class Helper {
+    public static final String TOAST_MESSAGE = "message";
 
     private Helper() {
     }
@@ -160,6 +161,8 @@ public final class Helper {
 
         }
     }
+
+
 
 
 

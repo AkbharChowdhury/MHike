@@ -1,4 +1,4 @@
-package com.mhike.m_hike.classes;
+package com.mhike.m_hike.classes.models;
 
 import com.google.android.material.textfield.TextInputLayout;
 

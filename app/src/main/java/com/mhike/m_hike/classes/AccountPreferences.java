@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.mhike.m_hike.LoginActivity;
+import com.mhike.m_hike.activities.LoginActivity;
 
 public final class AccountPreferences {
 

@@ -1,4 +1,4 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,10 +8,11 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.DatabaseHelper;
-import com.mhike.m_hike.classes.Helper;
-import com.mhike.m_hike.classes.User;
-import com.mhike.m_hike.classes.Validation;
+import com.mhike.m_hike.utilities.Helper;
+import com.mhike.m_hike.classes.models.User;
+import com.mhike.m_hike.utilities.Validation;
 
 
 public class RegisterActivity extends AppCompatActivity {
