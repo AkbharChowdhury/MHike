@@ -35,7 +35,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.SearchHike"
+            android:name=".activities.SearchHikeActivity"
             android:exported="false"
             android:parentActivityName=".activities.MainActivity">
             <meta-data

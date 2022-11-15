@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mhike.m_hike.R;
-import com.mhike.m_hike.classes.models.CourseModel;
 import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.utilities.Helper;
 
@@ -27,10 +27,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     // method for filtering our recyclerview items.
-    public void filterList(ArrayList<Hike> filterlist) {
+    public void filterList(ArrayList<Hike> filteredList) {
         // below line is to add our filtered
         // list in our course array list.
-        hikeList = filterlist;
+        hikeList = filteredList;
         // below line is to notify our adapter
         // as change in recycler view data.
         notifyDataSetChanged();
@@ -40,14 +40,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // below line is to inflate our layout.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hike_search_row, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.hike_search_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
         // setting data to our views of recycler view.
         Hike hike = hikeList.get(position);
+        // Note: the hike ID MUST be in String format to set the next
+        holder.hikeID.setText(String.valueOf(hike.getHikeID()));
         holder.hikeName.setText(hike.getHikeName());
         holder.hikeDescription.setText(hike.getDescription());
         holder.hikeDate.setText(Helper.formatDate(hike.getHikeDate()));
@@ -62,17 +63,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our views.
+        private final TextView hikeID;
         private final TextView hikeName;
         private final TextView hikeDescription;
         private final TextView hikeDate;
+        private final CardView mainSearchLayout;
+
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our views with their ids.
+            hikeID = itemView.findViewById(R.id.lblHikeIDSearch);
             hikeName = itemView.findViewById(R.id.lblHikeNameSearch);
             hikeDescription = itemView.findViewById(R.id.lblHikeDescriptionSearch);
             hikeDate = itemView.findViewById(R.id.lblHikeDateSearch);
-
+            mainSearchLayout  = itemView.findViewById(R.id.mainSearchLayout);
         }
     }
 }

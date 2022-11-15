@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainSearchLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -13,14 +13,30 @@
         android:layout_height="wrap_content">
 
         <!-- text view for our course name -->
+
+
+        <TextView
+            android:id="@+id/lblHikeIDSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/lblHikeIDSearch"
+            android:padding="8dp"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="invisible" />
+
         <TextView
             android:id="@+id/lblHikeNameSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Snowdown"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/lblHikeDescriptionSearch"
@@ -30,7 +46,6 @@
             android:padding="5dp"
             android:text="Hike Description"
             android:textColor="@color/black" />
-
 
 
         <TextView
