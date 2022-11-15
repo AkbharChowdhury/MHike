@@ -16,6 +16,7 @@ import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.utilities.Helper;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 
 
 public class DatePickerFragment extends DialogFragment implements
@@ -23,21 +24,17 @@ public class DatePickerFragment extends DialogFragment implements
 
     private final boolean disablePastDates;
     private final ActivityForm ACTIVITY_FORM;
+    private long minHikeDate = 0;
 
-
-
-    // for add hike form
-    private String minHikeDate;
 
 
 
     public DatePickerFragment(boolean disablePastDates, ActivityForm activityForm) {
         this.disablePastDates = disablePastDates;
         ACTIVITY_FORM = activityForm;
-
     }
 
-    public DatePickerFragment(boolean disablePastDates, ActivityForm activityForm, String minHikeDate) {
+    public DatePickerFragment(boolean disablePastDates, ActivityForm activityForm, long minHikeDate) {
         this.disablePastDates = disablePastDates;
         ACTIVITY_FORM = activityForm;
         this.minHikeDate = minHikeDate;
@@ -78,8 +75,6 @@ public class DatePickerFragment extends DialogFragment implements
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         long now = System.currentTimeMillis() - 1000;
-
-
         LocalDate d = LocalDate.now();
         int year = d.getYear();
         int month = d.getMonthValue();
@@ -94,9 +89,9 @@ public class DatePickerFragment extends DialogFragment implements
 
         }
         // disable future dates and set min observation date to hike date
-        if (!minHikeDate.isEmpty()){
+        if (minHikeDate != 0){
+         // set min date
 
-//            datePicker.getDatePicker().setMinDate(now+(1000*60*60*24*7));
         }
 
 

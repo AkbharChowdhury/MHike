@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.mhike.m_hike.R;
-import com.mhike.m_hike.SearchHike;
-import com.mhike.m_hike.UploadHike;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.utilities.Helper;
@@ -57,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         hikeCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, HikeActivity.class));
         sightsCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, ObservationActivity.class));
-        searchCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, SearchHike.class));
-        uploadCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, UploadHike.class));
+        searchCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, HomeActivity.class));
+        uploadCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, UploadHikeActivity.class));
 
         logoutCard.setOnClickListener(view -> logout());
 

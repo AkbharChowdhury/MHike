@@ -30,6 +30,7 @@ import android.widget.TimePicker;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -167,7 +168,9 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
     }
     @Override
     public void showDatePickerDialog() {
-        DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.ADD_OBSERVATION, "sss");
+
+
+        DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.ADD_OBSERVATION,  9309403);
 
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }

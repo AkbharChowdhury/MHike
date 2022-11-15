@@ -1,10 +1,12 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class UploadHike extends AppCompatActivity {
+import com.mhike.m_hike.R;
+
+public class UploadHikeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

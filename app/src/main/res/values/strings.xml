@@ -96,6 +96,7 @@
     <string name="dashboard_upload">Upload Hike \n<font color="#A9A9A9">Upload hikes to web server</font></string>
     <string name="upload_hike">Upload Hike</string>
     <string name="observation_date">observation date</string>
+    <string name="search">Search</string>
 
 
     <string-array name="parking_array">

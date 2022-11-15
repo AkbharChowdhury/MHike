@@ -1,8 +1,10 @@
-package com.mhike.m_hike;
+package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.mhike.m_hike.R;
 
 public class SearchHike extends AppCompatActivity {
 
