@@ -111,53 +111,6 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
             intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
             return intent;
 
-//        if (activityForm == ActivityForm.HIKE_RECYCLER) {
-//            Intent intent;
-//            intent = new Intent(context, EditHikeActivity.class);
-//            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
-//            return intent;
-//        }
-//        else{
-//            Intent intent;
-//            intent = new Intent(context, ViewHikeObservationActivity.class);
-//            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
-//            return intent;
-//        }
-
-
-//        else if(activityForm == ActivityForm.OBSERVATION_RECYCLER){
-//            Intent intent;
-//            intent = new Intent(context, ViewHikeObservationActivity.class);
-//            return intent;
-//
-//        }
-
-
-
-//        if (isHikeForms) {
-//            Intent intent;
-//            intent = new Intent(context, EditHikeActivity.class);
-//            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
-//            return intent;
-//        } else{
-//            Intent intent;
-//            intent = new Intent(context, ViewHikeObservationActivity.class);
-//            return intent;
-//
-//        }
-
-//        switch (activityForm){
-//            case HIKE_RECYCLER:
-//                intent = new Intent(context, EditHikeActivity.class);
-//                intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
-//                return intent;
-//            case OBSERVATION_RECYCLER:
-//                intent = new Intent(context, ViewHikeObservationActivity.class);
-//                intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
-//                return intent;
-//
-//        }
-//        return new Intent();
 
     }
 

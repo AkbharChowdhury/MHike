@@ -19,6 +19,7 @@ import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.adapters.SearchAdapter;
+import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.utilities.Helper;
@@ -140,7 +141,7 @@ public class SearchHikeActivity extends AppCompatActivity {
 
         // initializing our adapter class.
         hikeList = (ArrayList<Hike>) getHikeListData();
-        adapter = new SearchAdapter(hikeList, SearchHikeActivity.this);
+        adapter = new SearchAdapter(hikeList, context, SearchHikeActivity.this);
 
         // adding layout manager to our recycler view.
         LinearLayoutManager manager = new LinearLayoutManager(this);

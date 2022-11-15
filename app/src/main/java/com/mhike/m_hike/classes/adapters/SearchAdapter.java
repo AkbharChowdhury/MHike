@@ -1,6 +1,8 @@
 package com.mhike.m_hike.classes.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mhike.m_hike.HikeDetails;
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.activities.AddObservationActivity;
+import com.mhike.m_hike.activities.EditHikeActivity;
+import com.mhike.m_hike.activities.ViewHikeObservationActivity;
 import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.utilities.Helper;
 
@@ -20,10 +26,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     // creating a variable for array list and context.
     private ArrayList<Hike> hikeList;
+    private Activity activity;
+    private Context context;
+
+
 
     // creating a constructor for our variables.
-    public SearchAdapter(ArrayList<Hike> hikeList, Context context) {
+    public SearchAdapter(ArrayList<Hike> hikeList, Context context, Activity activity) {
         this.hikeList = hikeList;
+        this.context = context;
+        this.activity = activity;
+
     }
 
     // method for filtering our recyclerview items.
@@ -52,6 +65,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.hikeName.setText(hike.getHikeName());
         holder.hikeDescription.setText(hike.getDescription());
         holder.hikeDate.setText(Helper.formatDate(hike.getHikeDate()));
+        holder.mainSearchLayout.setOnClickListener(view -> activity.startActivityForResult(hikeIntent(position), 1));
 
     }
 
@@ -59,6 +73,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public int getItemCount() {
         // returning the size of array list.
         return hikeList.size();
+    }
+
+
+    private Intent hikeIntent(int position){
+
+        Intent intent = new Intent(context, HikeDetails.class);
+        intent.putExtra("hikeID", String.valueOf(hikeList.get(position).getHikeID()));
+        return intent;
+
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // initializing our adapter class.
         hikeList = (ArrayList<Hike>) getHikeListData();
-        adapter = new SearchAdapter(hikeList, HomeActivity.this);
+        adapter = new SearchAdapter(hikeList, context, HomeActivity.this);
 
         // adding layout manager to our recycler view.
         LinearLayoutManager manager = new LinearLayoutManager(this);

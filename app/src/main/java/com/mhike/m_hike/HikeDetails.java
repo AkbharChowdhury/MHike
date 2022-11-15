@@ -10,5 +10,6 @@ public class HikeDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike_details);
+        setTitle("Hike details");
     }
 }

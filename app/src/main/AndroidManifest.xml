@@ -44,6 +44,7 @@
         </activity>
         <activity
             android:name=".HikeDetails"
+            android:parentActivityName=".activities.SearchHikeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
