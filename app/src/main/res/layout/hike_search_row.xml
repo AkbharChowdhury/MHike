@@ -6,7 +6,13 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="8dp">
+
+    app:cardCornerRadius="16dp"
+
+    app:cardElevation="12dp"
+
+
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -55,6 +61,16 @@
             android:layout_below="@id/lblHikeDescriptionSearch"
             android:padding="5dp"
             android:text="Hike Date"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/lblHikeDifficultySearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblHikeDateSearch"
+            android:padding="5dp"
+            android:text="High"
+            android:textStyle="bold"
             android:textColor="@color/black" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

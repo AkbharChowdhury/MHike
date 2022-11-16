@@ -178,7 +178,9 @@ public class HomeActivity extends AppCompatActivity {
                         Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
-                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)),
+                        "",
+                        1
 
                 ));
 

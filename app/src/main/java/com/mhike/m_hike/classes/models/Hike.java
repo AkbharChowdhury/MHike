@@ -26,6 +26,15 @@ public final class Hike {
     private double elevationGain;
     private double high;
     private int difficultyID;
+    private String difficultyLevel;
+
+    public String getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(String difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
 
     private AutoCompleteTextView txtHikeDate;
     private TextInputLayout txtHikeName;
@@ -211,11 +220,15 @@ public final class Hike {
         this.txtHigh = txtHigh;
         this.lblDifficulty = lblDifficulty;
     }
-    public Hike(int id, String name, String description, String hikeDate){
+    public Hike(int id, String name, String description, String hikeDate, String difficultyLevel, int difficultyID){
         hikeID = id;
         hikeName = name;
         this.description = description;
         this.hikeDate = hikeDate;
+        this.difficultyLevel = difficultyLevel;
+        this.difficultyID = difficultyID;
+
+
 
     }
 

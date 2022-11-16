@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
         CardView uploadCard = findViewById(R.id.card_upload_hike);
         CardView logoutCard = findViewById(R.id.card_logout);
 
+//        hikeCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, HikeActivity.class));
         hikeCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, HikeActivity.class));
+
         sightsCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, ObservationActivity.class));
         searchCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, SearchHikeActivity.class));
         uploadCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, UploadHikeActivity.class));

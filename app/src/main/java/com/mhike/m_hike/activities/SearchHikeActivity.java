@@ -21,6 +21,7 @@ import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.adapters.SearchAdapter;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.utilities.Helper;
 
@@ -114,31 +115,6 @@ public class SearchHikeActivity extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-
-        // below line we are creating a new array list
-//        hikeList = new ArrayList<>();
-//        Hike hike1 = new Hike();
-//        hike1.setHikeID(1);
-//        hike1.setHikeName("SnowDown");
-//        hike1.setDescription("Snow down is cool");
-//
-//
-//        Hike hike2 = new Hike();
-//        hike2.setHikeID(2);
-//        hike2.setHikeName("Hilltop");
-//        hike2.setDescription("Hiltop is cool");
-//        hikeList.add(hike1);
-//
-//        hikeList.add(hike2);
-
-
-        // below line is to add data to our array list.
-//        hikeList.add(new CourseModel("DSA", "DSA Self Paced Course"));
-//        hikeList.add(new CourseModel("JAVA", "JAVA Self Paced Course"));
-//        hikeList.add(new CourseModel("C++", "C++ Self Paced Course"));
-//        hikeList.add(new CourseModel("Python", "Python Self Paced Course"));
-//        hikeList.add(new CourseModel("Fork CPP", "Fork CPP Self Paced Course"));
-
         // initializing our adapter class.
         hikeList = (ArrayList<Hike>) getHikeListData();
         adapter = new SearchAdapter(hikeList, context, SearchHikeActivity.this);
@@ -161,6 +137,8 @@ public class SearchHikeActivity extends AppCompatActivity {
     @SuppressLint("Range")
     private List<Hike> getHikeListData() {
         List<Hike> list = new ArrayList<>();
+        List<String> difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
+
 
         try (Cursor cursor = db.getHikeList(String.valueOf(getUserID()))) {
 
@@ -170,23 +148,25 @@ public class SearchHikeActivity extends AppCompatActivity {
             }
 
             while (cursor.moveToNext()) {
+                double distance = cursor.getDouble(cursor.getColumnIndex(HikeTable.COLUMN_DISTANCE));
+                double elevationGain = cursor.getDouble(cursor.getColumnIndex(HikeTable.COLUMN_ELEVATION_GAIN));
+
+
+                int difficultyLevel = Helper.getDifficultyLevel(distance, elevationGain);
+                String difficultyName = difficultyList.get(difficultyLevel);
+
                 list.add(new Hike(
                         Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
-                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)),
+                        difficultyName,
+                        difficultyLevel
 
                 ));
 
             }
-
-
-
             return list;
-
-
-
-
 
         } catch (Exception ex) {
             ex.printStackTrace();
