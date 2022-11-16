@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mhike.m_hike.HikeDetails;
+import com.mhike.m_hike.activities.HikeDetailsActivity;
 import com.mhike.m_hike.activities.AddObservationActivity;
 import com.mhike.m_hike.activities.EditHikeActivity;
 import com.mhike.m_hike.R;
@@ -100,7 +100,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
                 break;
 
             case SEARCH_HIKE:
-                activityToOpen =  HikeDetails.class;
+                activityToOpen =  HikeDetailsActivity.class;
                 break;
             default:
                 Helper.showActivityFormErrorMessage();

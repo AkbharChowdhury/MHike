@@ -12,11 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mhike.m_hike.HikeDetails;
+import com.mhike.m_hike.activities.HikeDetailsActivity;
 import com.mhike.m_hike.R;
-import com.mhike.m_hike.activities.AddObservationActivity;
-import com.mhike.m_hike.activities.EditHikeActivity;
-import com.mhike.m_hike.activities.ViewHikeObservationActivity;
 import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.utilities.Helper;
 
@@ -78,7 +75,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     private Intent hikeIntent(int position){
 
-        Intent intent = new Intent(context, HikeDetails.class);
+        Intent intent = new Intent(context, HikeDetailsActivity.class);
         intent.putExtra("hikeID", String.valueOf(hikeList.get(position).getHikeID()));
         return intent;
 

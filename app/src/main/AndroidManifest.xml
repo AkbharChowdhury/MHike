@@ -43,7 +43,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".HikeDetails"
+            android:name=".activities.HikeDetailsActivity"
             android:parentActivityName=".activities.SearchHikeActivity"
             android:exported="false">
             <meta-data
