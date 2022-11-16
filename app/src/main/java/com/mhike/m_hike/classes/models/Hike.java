@@ -229,6 +229,15 @@ public final class Hike {
         this.difficultyID = difficultyID;
 
 
+    }
+
+
+    public Hike(int id, String name, String description, String hikeDate){
+        hikeID = id;
+        hikeName = name;
+        this.description = description;
+        this.hikeDate = hikeDate;
+
 
     }
 

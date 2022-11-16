@@ -13,19 +13,19 @@ import android.os.Bundle;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.enums.ActivityForm;
+import com.mhike.m_hike.classes.models.Observation;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.adapters.ObservationAdapter;
 import com.mhike.m_hike.classes.tables.ObservationTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewHikeObservationActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Context context;
-    private ArrayList<String> observationID;
-    private ArrayList<String> observation;
-    private ArrayList<String> observationDate;
-    private ArrayList<String> observationTime;
+    private ArrayList<Observation> observationList;
 
 
     @Override
@@ -34,68 +34,62 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_observation);
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
-
-        observationID = new ArrayList<>();
-        observation = new ArrayList<>();
-        observationDate = new ArrayList<>();
-        observationTime = new ArrayList<>();
-
-
+        observationList = (ArrayList<Observation>) getHikeListData();
 
         RecyclerView recyclerView = findViewById(R.id.observation_recyclerview);
         ObservationAdapter adapter = new ObservationAdapter(
+                observationList,
                 ViewHikeObservationActivity.this,
                 context,
-                observationID,
-                observation,
-                observationDate,
-                observationTime
+                ActivityForm.HIKE_RECYCLER
         );
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        showObservationList();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
     }
 
     @SuppressLint("Range")
-    private void showObservationList() {
-
-        if (!getIntent().hasExtra("hikeID")) {
-            Helper.longToastMessage(context, "error hike id not found");
-            return;
-        }
-
+    private List<Observation> getHikeListData() {
+        List<Observation> list = new ArrayList<>();
         String hikeID = getIntent().getStringExtra("hikeID");
         String userID = String.valueOf(getUserID());
-
         setTitle("Observation details for " + db.getHikeNameListByID(hikeID));
 
         try (Cursor cursor = db.getObservationList(userID, hikeID)) {
 
             if (cursor.getCount() == 0) {
-                Helper.longToastMessage(context, "No observations found");
-                return;
+                Helper.longToastMessage(context, getString(R.string.no_hikes));
+                return list;
             }
 
             while (cursor.moveToNext()) {
-                observationID.add(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_ID)));
-                observation.add(cursor.getString(cursor.getColumnIndex(ObservationTable.OBSERVATION_TITLE)));
-                observationDate.add(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_DATE)));
-                observationTime.add(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_TIME)));
+                list.add(new Observation(
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_ID))),
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_HIKE_ID))),
+                        cursor.getString(cursor.getColumnIndex(ObservationTable.OBSERVATION_TITLE)),
+                        cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_DATE)),
+                        cursor.getString(cursor.getColumnIndex(ObservationTable.COLUMN_TIME)),
+                        true
+                ));
 
             }
-
+            return list;
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return list;
+
+
     }
 
-    private int getUserID(){
+    private int getUserID() {
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
         return preferences.getInt(AccountPreferences.USERID, 0);
     }
-
 
 
 }

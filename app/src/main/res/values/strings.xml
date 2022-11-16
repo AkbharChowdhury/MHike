@@ -98,6 +98,7 @@
     <string name="observation_date">observation date</string>
     <string name="search">Search</string>
     <string name="hike_details">Hike details</string>
+    <string name="objHikes">My observation hikes</string>
 
 
     <string-array name="parking_array">

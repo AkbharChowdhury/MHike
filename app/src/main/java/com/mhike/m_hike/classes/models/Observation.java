@@ -99,6 +99,15 @@ public class Observation {
     }
 
     private AutoCompleteTextView txtHikeID;
+    private int observationID;
+
+    public int getObservationID() {
+        return observationID;
+    }
+
+    public void setObservationID(int observationID) {
+        this.observationID = observationID;
+    }
 
     private int hikeID;
     private String observation;
@@ -110,9 +119,15 @@ public class Observation {
     public  Observation(){
 
     }
+    private boolean view;
 
+    public Observation(int observationID, int hikeID, String observation, String observationDate, String observationTime, boolean view){
+        this.observationID = observationID;
+        this.hikeID = hikeID;
+        this.observation = observation;
+        this.observationDate = observationDate;
+        this.observationTime = observationTime;
+        this.view = view;
 
-
-
-
+    }
 }

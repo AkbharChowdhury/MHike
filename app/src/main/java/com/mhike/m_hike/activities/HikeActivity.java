@@ -17,23 +17,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.adapters.HikeAdapter;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.tables.HikeTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HikeActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Context context;
     private final Activity CURRENT_ACTIVITY = HikeActivity.this;
-
-    private ArrayList<String> hikeName;
-    private ArrayList<String> hikeDescription;
-    private ArrayList<String> hikeDate;
-    private ArrayList<String> hikeID;
-
+    private ArrayList<Hike> hikeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +45,18 @@ public class HikeActivity extends AppCompatActivity {
 
         db = DatabaseHelper.getInstance(context);
 
-        hikeID = new ArrayList<>();
-        hikeName = new ArrayList<>();
-        hikeDescription = new ArrayList<>();
-        hikeDate = new ArrayList<>();
+        hikeList = (ArrayList<Hike>) getHikeListData();
+
 
         RecyclerView recyclerView = findViewById(R.id.hike_recyclerview);
         HikeAdapter adapter = new HikeAdapter(
+                hikeList,
                 HikeActivity.this,
                 context,
-                ActivityForm.HIKE_RECYCLER,
-                hikeID,
-                hikeName,
-                hikeDescription,
-                hikeDate);
+                ActivityForm.HIKE_RECYCLER
+                );
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        showHikeList();
     }
 
 
@@ -80,28 +73,34 @@ public class HikeActivity extends AppCompatActivity {
 
 
 
-
     @SuppressLint("Range")
-    private void showHikeList() {
+    private List<Hike> getHikeListData() {
+        List<Hike> list = new ArrayList<>();
+
 
         try (Cursor cursor = db.getHikeList(String.valueOf(getUserID()))) {
 
             if (cursor.getCount() == 0) {
                 Helper.longToastMessage(context, getString(R.string.no_hikes));
-                return;
+                return list;
             }
 
             while (cursor.moveToNext()) {
-                hikeID.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID)));
-                hikeName.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
-                hikeDescription.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
-                hikeDate.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
-            }
+                list.add(new Hike(
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))
 
+                ));
+
+            }
+            return list;
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return list;
 
 
     }

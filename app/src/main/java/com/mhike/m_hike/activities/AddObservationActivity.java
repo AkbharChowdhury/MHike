@@ -64,16 +64,12 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
     public void popTimePicker()
     {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
-        {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                 hour = selectedHour;
-                 minute = selectedMinute;
-                 dbHikeTime = String.format(Locale.getDefault(), "%02d:%02d",hour, minute);
-                 txtHikeTime.setText(Helper.formatTime(dbHikeTime));
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
+             hour = selectedHour;
+             minute = selectedMinute;
+             dbHikeTime = String.format(Locale.getDefault(), "%02d:%02d",hour, minute);
+             txtHikeTime.setText(Helper.formatTime(dbHikeTime));
 
-            }
         };
         // link: https://github.com/codeWithCal/TimePickerAndroidStudio/blob/master/app/src/main/java/codewithcal/au/timerpickertutorial/MainActivity.java
 
@@ -100,8 +96,6 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context);
 
-
-
         txtObservationDate.setText(Helper.formatDate(CURRENT_DATE));
         setDateAndTimeFields();
         setupAdapter();
@@ -113,7 +107,6 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
     private void addObservations() {
         Observation observation = new Observation(txtHikeName, txtObservation, txtComments, txtObservationDate, txtHikeTime);
-//        int hikeID = db.getColumnID(HikeTable.TABLE_NAME, HikeTable.COLUMN_Hike_NAME, HikeTable.COLUMN_ID, txtHikeName.getText().toString());
         int hikeID = db.getHikeIDByName(txtHikeName.getText().toString());
 
         observation.setHikeID(hikeID);
@@ -128,8 +121,6 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         if(form.validateObservationForm(observation)){
             db.addObservation(observationList);
                 Helper.longToastMessage(context, "Observation added");
-
-//            Helper.longToastMessage(context, "done");
         }
     }
 
@@ -154,9 +145,6 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
             }
             return false;
         });
-
-
-
 
         txtHikeTime.setOnTouchListener((view, motionEvent) -> {
 

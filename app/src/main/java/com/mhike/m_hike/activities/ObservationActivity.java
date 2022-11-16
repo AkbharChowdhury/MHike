@@ -17,53 +17,45 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.adapters.HikeAdapter;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.tables.HikeTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ObservationActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Context context;
-
-    private ArrayList<String> hikeName;
-    private ArrayList<String> hikeDescription;
-    private ArrayList<String> hikeDate;
-    private ArrayList<String> hikeID;
     private final Activity CURRENT_ACTIVITY = ObservationActivity.this;
-
+    private ArrayList<Hike> hikeList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observation);
-        setTitle("My observation hikes");
+        setTitle(getString(R.string.objHikes));
         context = getApplicationContext();
         checkMessage();
         FloatingActionButton btnObservation = findViewById(R.id.btn_add_observation);
         btnObservation.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, AddObservationActivity.class));
         db = DatabaseHelper.getInstance(context);
-
-        hikeID = new ArrayList<>();
-        hikeName = new ArrayList<>();
-        hikeDescription = new ArrayList<>();
-        hikeDate = new ArrayList<>();
+        hikeList = (ArrayList<Hike>) showHikeObservationList();
 
         RecyclerView recyclerView = findViewById(R.id.observation_recyclerview);
+
         HikeAdapter adapter = new HikeAdapter(
+                hikeList,
                 ObservationActivity.this,
                 context,
-                ActivityForm.OBSERVATION_RECYCLER,
-                hikeID,
-                hikeName,
-                hikeDescription,
-                hikeDate);
+                ActivityForm.OBSERVATION_RECYCLER
+        );
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        showHikeObservationList();
 
 
     }
@@ -78,40 +70,37 @@ public class ObservationActivity extends AppCompatActivity {
     }
 
 
-    private void checkHikeUpdatedMsg() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getBoolean("hikeAdded")) {
-            Helper.longToastMessage(context, getString(R.string.hike_update_msg));
-            extras.remove("successRegister");
-
-        }
-    }
-
-
     @SuppressLint("Range")
-    private void showHikeObservationList() {
+    private List<Hike> showHikeObservationList() {
+        List<Hike> list = new ArrayList<>();
+
         try (Cursor cursor = db.getHikeListObservation(String.valueOf(getUserID()))) {
 
             if (cursor.getCount() == 0) {
-                Helper.longToastMessage(context,getString(R.string.no_hikes_observation));
-                return;
+                Helper.longToastMessage(context, getString(R.string.no_hikes));
+                return list;
             }
 
             while (cursor.moveToNext()) {
-                hikeID.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID)));
-                hikeName.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
-                hikeDescription.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
-                hikeDate.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
-            }
 
+                list.add(new Hike(
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))
+
+                ));
+
+            }
+            return list;
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return list;
 
 
     }
-
 
     // refresh the activity
     @Override

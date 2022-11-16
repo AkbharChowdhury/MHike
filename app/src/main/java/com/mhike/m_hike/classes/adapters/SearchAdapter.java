@@ -26,8 +26,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     private Activity activity;
     private Context context;
 
-
-
     // creating a constructor for our variables.
     public SearchAdapter(ArrayList<Hike> hikeList, Context context, Activity activity) {
         this.hikeList = hikeList;
@@ -75,7 +73,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         // returning the size of array list.
         return hikeList.size();
     }
-
 
     private Intent hikeIntent(int position){
 

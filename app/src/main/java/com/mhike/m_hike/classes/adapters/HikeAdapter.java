@@ -17,6 +17,7 @@ import com.mhike.m_hike.activities.AddObservationActivity;
 import com.mhike.m_hike.activities.EditHikeActivity;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.activities.ViewHikeObservationActivity;
+import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 
@@ -24,36 +25,15 @@ import java.util.ArrayList;
 
 public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> {
     private Context context;
-    private ArrayList hikeName;
-    private ArrayList hikeDescription;
-    private ArrayList hikeDate;
-    private ArrayList hikeID;
+    private ArrayList<Hike> hikeList;
     private Activity activity;
-//    private boolean isHikeForms;
     private final ActivityForm activityForm;
 
-
-    public HikeAdapter(
-            Activity activity,
-            Context context,
-//            boolean isHikeForms,
-            ActivityForm activityForm,
-
-
-            ArrayList hikeID,
-                       ArrayList hikeName,
-                       ArrayList hikeDescription,
-                       ArrayList hikeDate) {
+    public HikeAdapter(ArrayList<Hike> hikeList, Activity activity, Context context, ActivityForm activityForm){
         this.activity = activity;
         this.context = context;
-//        this.isHikeForms = isHikeForms;
         this.activityForm = activityForm;
-
-
-        this.hikeID = hikeID;
-        this.hikeName = hikeName;
-        this.hikeDescription = hikeDescription;
-        this.hikeDate = hikeDate;
+        this.hikeList = hikeList;
     }
 
     @NonNull
@@ -69,19 +49,19 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.hikeID.setText(String.valueOf(hikeID.get(position)));
-        holder.hikeName.setText(String.valueOf(hikeName.get(position)));
-        holder.hikeDescription.setText(String.valueOf(hikeDescription.get(position)));
-        holder.hikeDate.setText(Helper.formatDateShort(String.valueOf(hikeDate.get(position))));
+        Hike hike = hikeList.get(position);
+        // Note: the hike ID MUST be in String format to set the next
+        holder.hikeID.setText(String.valueOf(hike.getHikeID()));
+        holder.hikeName.setText(hike.getHikeName());
+        holder.hikeDescription.setText(hike.getDescription());
+        holder.hikeDate.setText(Helper.formatDate(hike.getHikeDate()));
         holder.mainLayout.setOnClickListener(view -> activity.startActivityForResult(hikeIntent(position), 1));
-
-
 
     }
 
     @Override
     public int getItemCount() {
-        return hikeID.size();
+        return hikeList.size();
     }
 
     private Intent hikeIntent(int position){
@@ -106,7 +86,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.MyViewHolder> 
         }
 
             Intent intent = new Intent(context, activityToOpen);
-            intent.putExtra("hikeID", String.valueOf(hikeID.get(position)));
+            intent.putExtra("hikeID", String.valueOf(hikeList.get(position).getHikeID()));
             return intent;
 
 

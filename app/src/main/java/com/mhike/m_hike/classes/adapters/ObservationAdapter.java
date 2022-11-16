@@ -14,71 +14,52 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.classes.enums.ActivityForm;
+import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.models.Observation;
 import com.mhike.m_hike.utilities.Helper;
 
 import java.util.ArrayList;
 
 public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.MyViewHolder> {
+
     private Context context;
-    private ArrayList observation;
-    private ArrayList observationDate;
-    private ArrayList observationTime;
-
-    private ArrayList observationID;
-
-
+    private ArrayList<Observation> observationList;
     private Activity activity;
+    private final ActivityForm activityForm;
 
-    public ObservationAdapter(
-            Activity activity,
-            Context context,
-            ArrayList observationID,
-            ArrayList observation,
-            ArrayList observationDate,
-            ArrayList observationTime
 
-    ) {
+    public ObservationAdapter(ArrayList<Observation> observationList, Activity activity, Context context, ActivityForm activityForm){
         this.activity = activity;
         this.context = context;
-        this.observationID = observationID;
-        this.observation = observation;
-        this.observationDate = observationDate;
-        this.observationTime = observationTime;
-
+        this.activityForm = activityForm;
+        this.observationList = observationList;
     }
+
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.observation_row, parent, false);
         return new MyViewHolder(view);
-
-
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.observationID.setText(String.valueOf(observationID.get(position)));
-        holder.observation.setText(String.valueOf(observation.get(position)));
-        holder.observationDate.setText(Helper.formatDateShort(String.valueOf(observationDate.get(position))));
-        holder.observationTime.setText("  " + Helper.formatTime(String.valueOf(observationTime.get(position))));
 
-
-//        holder.mainLayoutObservation.setOnClickListener(view -> activity.startActivityForResult(ObservationIntent(position), 1));
-
+        Observation observation = observationList.get(position);
+        // Note: the hike ID MUST be in String format to set the next
+        holder.observationID.setText(String.valueOf(observation.getObservationID()));
+        holder.observation.setText(observation.getObservation());
+        holder.observationDate.setText(Helper.formatDateShort(observation.getObservationDate()));
+        holder.observationTime.setText(" "+Helper.formatTime(observation.getObservationTime()));
     }
 
     @Override
     public int getItemCount() {
-        return observationID.size();
+        return observationList.size();
     }
-//
-//    private Intent ObservationIntent(int position){
-//        Intent intent = new Intent(context, ViewHikeObservationActivity.class);
-//        intent.putExtra("observationID", String.valueOf(observationID.get(position)));
-//        return intent;
-//    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mainLayoutObservation;
