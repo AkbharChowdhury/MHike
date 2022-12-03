@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.HikeJson;
 
@@ -20,7 +21,7 @@ public final class User {
     private String email;
     private String password;
     private List<HikeJson> detailList;
-    private int userID;
+    private int userId;
 
     public String getFirstname() {
         return firstname;
@@ -115,9 +116,22 @@ public final class User {
     }
 
 
-    public User(int userID,List<HikeJson> userHikes) {
-        this.detailList = userHikes;
-        this.userID = userID;
+    public int getUserId() {
+        return userId;
+    }
 
+    public List<HikeJson> getDetailList() {
+        return detailList;
+    }
+
+    public User( List<HikeJson> userHikes, int userId) {
+        this.userId = userId;
+        this.detailList = userHikes;
+
+    }
+    public String getJsonHike(){
+        return
+                "{\"userId\": \"" + userId  + "\", "
+                        + "\"detailList\":" + new Gson().toJson(detailList) + "}";
     }
 }

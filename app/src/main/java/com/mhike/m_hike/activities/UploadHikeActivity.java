@@ -10,6 +10,11 @@ import android.util.Log;
 import android.webkit.WebView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.HikeJson;
@@ -21,6 +26,7 @@ import com.mhike.m_hike.classes.tables.ParkingTable;
 import com.mhike.m_hike.utilities.Helper;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,7 +53,7 @@ public class UploadHikeActivity extends AppCompatActivity {
         browser = (WebView) findViewById(R.id.browser);
 
         String HikeJSONData = getJsonData();
-        Log.d("JsonString", HikeJSONData);
+        Log.d("JsonStringNew", HikeJSONData);
         uploadUserHikeDetails();
 
     }
@@ -56,8 +62,34 @@ public class UploadHikeActivity extends AppCompatActivity {
 
         try {
             List<HikeJson> detailList = getSelectedUserHikeData();
-            User userHikeDetails = new User(User.getUserID(getApplicationContext()), detailList);
-            return new Gson().toJson(userHikeDetails);
+            User user = new User(detailList, User.getUserID(getApplicationContext()));
+            return user.getJsonHike();
+//            String json = new Gson().toJson(detailList);
+
+//            String remove = Helper.removeFirstAndLastCharacter(userHikeDetails.getDetailList().toString());
+//            Log.d("DATA_Apple",json);
+//            return
+//                    "{\"userId\": \"" + User.getUserID(getApplicationContext()) + "\", "
+//                    + "\"detailList\":" + json + "}";
+//            return res
+
+
+//            Log.d("responseData",jsonOutput);
+
+
+
+
+
+//            {"userId":"wm123",
+//                    "detailList":[
+//                {"name":"Snowdon","date":"20/11/2022"},
+//                {"name":"Trosley Country Park","date":"05/12/2022"}]}
+
+//            Gson gson = new GsonBuilder().registerTypeAdapter(UserHikeJsonSerializer.class, new UserHikeJsonSerializer()).create();
+//            return gson.toJson(gson);
+
+
+//            return remove;
 
         } catch (Exception ex) {
             Log.d("HikeJSONUploadError", "there was an error converting json data");
@@ -123,4 +155,8 @@ public class UploadHikeActivity extends AppCompatActivity {
         }
         return list;
     }
+
+
+
+
 }
