@@ -17,37 +17,26 @@ public final class Hike {
         this.hikeID = hikeID;
     }
 
-    @SerializedName("hikeDate")
     private String hikeDate;
 
-    @SerializedName("hikeName")
     private String hikeName;
 
-    @SerializedName("description")
     private String description;
 
-    @SerializedName("location")
     private String location;
 
-    @SerializedName("distance")
     private double distance;
 
-    @SerializedName("duration")
     private double duration;
 
-    @SerializedName("parkingID")
     private int parkingID;
 
-    @SerializedName("elevationGain")
     private double elevationGain;
 
-    @SerializedName("high")
     private double high;
 
-    @SerializedName("difficultyID")
     private int difficultyID;
 
-    @SerializedName("difficultyLevel")
     private String difficultyLevel;
 
     public String getDifficultyLevel() {

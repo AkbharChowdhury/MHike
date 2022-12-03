@@ -80,6 +80,8 @@
     <string name="observation_add_success">Observation added</string>
 
     <string name="no_hikes">No hikes Found.. Try adding one</string>
+    <string name="no_hikes_web_service">There are no hikes to upload</string>
+
     <string name="no_hikes_observation">No observations yet…trying adding one</string>
 
 
