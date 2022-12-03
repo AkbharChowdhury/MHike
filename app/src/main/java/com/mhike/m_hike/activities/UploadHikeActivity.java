@@ -8,13 +8,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.HikeJson;
@@ -26,7 +19,6 @@ import com.mhike.m_hike.classes.tables.ParkingTable;
 import com.mhike.m_hike.utilities.Helper;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -51,8 +43,7 @@ public class UploadHikeActivity extends AppCompatActivity {
         Helper.getIntentMessage(context, getIntent().getExtras());
         db = DatabaseHelper.getInstance(context);
         browser = (WebView) findViewById(R.id.browser);
-        String HikeJSONData = getJsonData();
-        Log.d("JsonStringNew", HikeJSONData);
+        Log.d("HikeJsonData", getJsonData());
         uploadUserHikeDetails();
 
     }
@@ -64,8 +55,7 @@ public class UploadHikeActivity extends AppCompatActivity {
             User user = new User(detailList, User.getUserID(getApplicationContext()));
             return user.getJsonHike();
         } catch (Exception ex) {
-            Log.d("HikeJSONUploadError", "there was an error converting json data");
-            Log.d("HikeJSONUploadErrorMsg", ex.getMessage());
+            Log.d("HikeJSONUploadError", "there was an error converting json data" + ex.getMessage());
             Helper.longToastMessage(context, ex.getMessage());
 
         }
@@ -127,6 +117,6 @@ public class UploadHikeActivity extends AppCompatActivity {
         }
         return list;
     }
-    
+
 
 }

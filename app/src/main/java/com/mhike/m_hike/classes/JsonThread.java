@@ -1,5 +1,7 @@
 package com.mhike.m_hike.classes;
 
+import android.annotation.SuppressLint;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mhike.m_hike.activities.UploadHikeActivity;
@@ -35,12 +37,7 @@ public class JsonThread implements Runnable {
 
     @Override
     public void run() {
-        String response = "";
-        if (prepareConnection()) {
-            response = postJson();
-        } else {
-            response = "Error preparing the connection";
-        }
+        String response = prepareConnection() ? postJson() : "Error preparing the connection";
         showResult(response);
     }
 
@@ -76,20 +73,16 @@ public class JsonThread implements Runnable {
                 response = "Error contacting server: " + responseCode;
             }
         } catch (Exception e) {
-            response = "Error executing code";
+            response = "Error executing code: " + e.getMessage();
         }
         return response;
     }
 
-
     private void showResult(String response) {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String page = generatePage(response);
-                ((UploadHikeActivity) activity).getBrowser().loadData(page,
-                        "text/html", "UTF-8");
-            }
+        activity.runOnUiThread(() -> {
+            String page = generatePage(response);
+            ((UploadHikeActivity) activity).getBrowser().loadData(page,
+                    "text/html", "UTF-8");
         });
     }
 
@@ -113,7 +106,7 @@ public class JsonThread implements Runnable {
 
     public static void trustAllHosts() {
         // Create a trust manager that does not validate certificate chains
-        TrustManager[] trustAllCerts = new TrustManager[]{
+        @SuppressLint("CustomX509TrustManager") TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                         return new java.security.cert.X509Certificate[]{};
