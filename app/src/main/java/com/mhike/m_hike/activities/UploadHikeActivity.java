@@ -24,6 +24,7 @@ import com.mhike.m_hike.classes.HikeJson;
 import com.mhike.m_hike.classes.JsonThread;
 import com.mhike.m_hike.classes.models.Hike;
 import com.mhike.m_hike.classes.models.User;
+import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.utilities.Helper;
 
@@ -126,7 +127,6 @@ public class UploadHikeActivity extends AppCompatActivity {
             Employee employee = new Employee("John", 30, "john@gmail.com", address, family);
 
 
-
             List<Hike> hikeListData = getHikeListData();
 //            String json = gson.toJson(family);
 
@@ -148,18 +148,19 @@ public class UploadHikeActivity extends AppCompatActivity {
 //        ));
 
             String hikeJson = gson.toJson(userHikes);
-            Helper.longToastMessage(context, hikeJson);
+            Helper.longToastMessage(context, String.valueOf(hikeJson));
+
+            Log.d("MyData", String.valueOf(hikeJson));
 
 //            Helper.longToastMessage(context, json);
 
 //            String json3 = gson.toJson();
 
 
-
 //            Log.d("data", json3);
 //
 //            Helper.longToastMessage(context, json3);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             Log.d("HikeJSONUploadError", "there was an error converting json data");
             Log.d("HikeJSONUploadErrorMsg", ex.getMessage());
             Helper.longToastMessage(context, ex.getMessage());
@@ -196,7 +197,6 @@ public class UploadHikeActivity extends AppCompatActivity {
     }
 
 
-
     @SuppressLint("Range")
     private List<Hike> getHikeListData() {
         List<Hike> list = new ArrayList<>();
@@ -231,7 +231,6 @@ public class UploadHikeActivity extends AppCompatActivity {
     }
 
 
-
     @SuppressLint("Range")
     private List<HikeJson> getData() {
         List<HikeJson> list = new ArrayList<>();
@@ -246,12 +245,16 @@ public class UploadHikeActivity extends AppCompatActivity {
             }
 
             while (cursor.moveToNext()) {
-                list.add(new HikeJson(
-                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
-                        Helper.formatDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION))),
-                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)),
-                        "hard"
+                int difficultyID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID)));
 
+                        String difficultyStr = db.getColumnName(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_ID, String.valueOf(difficultyID), DifficultyTable.COLUMN_TYPE);
+
+                list.add(new HikeJson(
+
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)),
+                        difficultyStr
 
 
                 ));
