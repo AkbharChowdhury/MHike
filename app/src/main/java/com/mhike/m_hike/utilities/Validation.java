@@ -20,9 +20,11 @@ public final class Validation {
     private DatabaseHelper db;
     private static final int minDistance = 2;
     private boolean setAdditionalCheck = false;
+    private boolean validateHikeExists = true;
 
-
-
+    public void setValidateHikeExists(boolean validateHikeExists) {
+        this.validateHikeExists = validateHikeExists;
+    }
 
     public Validation(Context context) {
         this.context = context;
@@ -35,6 +37,9 @@ public final class Validation {
 
 
     }
+
+
+
 
     private boolean isValidEmail(TextInputLayout textField) {
         // https://www.youtube.com/watch?v=veOZTvAdzJ8
@@ -244,10 +249,14 @@ public final class Validation {
             setError(textField, getRequiredFieldError(fieldName));
             return false;
         }
-        if (db.columnExists(hikeName, HikeTable.COLUMN_Hike_NAME, HikeTable.TABLE_NAME)) {
-            setError(textField, getDuplicateHikeNameError());
-            return false;
+        if (this.validateHikeExists){
+            if (db.columnExists(hikeName, HikeTable.COLUMN_Hike_NAME, HikeTable.TABLE_NAME)) {
+                setError(textField, getDuplicateHikeNameError());
+                return false;
+            }
+
         }
+
 
         textField.setError(null);
         return true;

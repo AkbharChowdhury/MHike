@@ -56,7 +56,13 @@
     <string name="difficulty">Difficulty</string>
     <string name="example_text">example text</string>
     <string name="register_success">thank you for creating an account with us</string>
-    <string name="hike_added_success">Hike has been added</string>
+    <string name="hike_added_success">Hike successfully added</string>
+    <string name="hike_updated_success">Hike updated</string>
+    <string name="hike_deleted_success">Hike Deleted</string>
+    <string name="hike_update_error">There was an error updating hike details</string>
+
+
+
 
     <string name="duration_minutes">Duration (mins)</string>
     <string name="hike_date">Hike Date</string>
@@ -99,6 +105,9 @@
     <string name="search">Search</string>
     <string name="hike_details">Hike details</string>
     <string name="objHikes">My observation hikes</string>
+
+    <string name="login_required">You must be logged in!</string>
+
 
 
     <string-array name="parking_array">

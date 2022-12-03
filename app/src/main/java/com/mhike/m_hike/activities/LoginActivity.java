@@ -19,13 +19,14 @@ import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.utilities.Validation;
 
 public class LoginActivity extends AppCompatActivity {
+    private final Activity CURRENT_ACTIVITY = LoginActivity.this;
     private Context context;
+    private DatabaseHelper db;
+
     private TextInputLayout txtEmail;
     private TextInputLayout txtPassword;
-    private DatabaseHelper db;
     private Validation form;
     private TextView lblLoginError;
-    private final Activity currentActivity = LoginActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setTitle(R.string.btn_login);
         context = getApplicationContext();
-        checkRegisterMsg();
+        Helper.getIntentMessage(context, getIntent().getExtras());
         form = new Validation(context);
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
@@ -41,29 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(view -> handleLogin());
         db = DatabaseHelper.getInstance(context);
         handleRegisterLink();
-        loginRequiredMsg();
         lblLoginError = findViewById(R.id.lbl_login_error);
         lblLoginError.setVisibility(View.INVISIBLE);
-
-
-    }
-
-    private void checkRegisterMsg() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getBoolean("successRegister")) {
-            Helper.longToastMessage(context, getString(R.string.register_success));
-            extras.remove("successRegister");
-
-        }
-    }
-
-    private void loginRequiredMsg() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getBoolean("loginRequired")) {
-            Helper.longToastMessage(context, "you must be logged in!");
-            extras.remove("loginRequired");
-
-        }
     }
 
 
@@ -90,13 +70,13 @@ public class LoginActivity extends AppCompatActivity {
     private void configUserDetails() {
         int userID = db.getUserID();
         AccountPreferences.setLoginShredPref(context, userID);
-        Helper.goToPage(currentActivity, MainActivity.class);
+        Helper.goToPage(CURRENT_ACTIVITY, MainActivity.class);
 
     }
 
     private void handleRegisterLink() {
         TextView registerLink = findViewById(R.id.btn_register_link);
-        registerLink.setOnClickListener(view -> Helper.goToPage(currentActivity, RegisterActivity.class));
+        registerLink.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, RegisterActivity.class));
     }
 
 

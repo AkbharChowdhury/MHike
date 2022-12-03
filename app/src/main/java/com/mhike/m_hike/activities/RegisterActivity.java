@@ -2,6 +2,7 @@ package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +17,14 @@ import com.mhike.m_hike.utilities.Validation;
 
 
 public class RegisterActivity extends AppCompatActivity {
+    private final Activity CURRENT_ACTIVITY = RegisterActivity.this;
+    private Context context;
+    private DatabaseHelper db;
+
     private TextInputLayout txtFirstName;
     private TextInputLayout txtLastName;
     private TextInputLayout txtEmail;
     private TextInputLayout txtPassword;
-    Context context;
-    DatabaseHelper db;
     Validation form;
 
 
@@ -34,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context, db);
 
-       findTextFields();
+        findTextFields();
 
         Button btnRegister = findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(view -> handleRegister());
@@ -66,13 +69,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void handleRegister() {
+        Helper.SetRedirectMessage(CURRENT_ACTIVITY, LoginActivity.class, getString(R.string.register_success));
         User user = new User(txtFirstName, txtLastName, txtEmail, txtPassword);
 
         // if the form is valid and user email is unique store their details in the database
         if (form.validateRegisterForm(user)) {
             if (db.registerUser(getUserDetails())) {
-                homePage();
-                return;
+                Helper.SetRedirectMessage(CURRENT_ACTIVITY, LoginActivity.class, getString(R.string.register_success));
             }
 
             Helper.longToastMessage(context, getString(R.string.insertion_error));
@@ -80,20 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void homePage() {
-        resetForm();
-        Intent registerIntent = new Intent(context, LoginActivity.class);
-        registerIntent.putExtra("successRegister", true);
-        startActivity(registerIntent);
-
-    }
-
-    private void resetForm() {
-        txtFirstName.getEditText().setText("");
-        txtLastName.getEditText().setText("");
-        txtEmail.getEditText().setText("");
-        txtPassword.getEditText().setText("");
-    }
 
     @Override
     protected void onDestroy() {

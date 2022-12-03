@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class EditHikeActivity extends AppCompatActivity implements IDatePicker, IDifficulty {
+    private final Activity CURRENT_ACTIVITY = EditHikeActivity.this;
 
     private DatabaseHelper db;
     private Context context;
@@ -51,6 +53,8 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
     private TextInputLayout txtHigh;
     private TextView lblDifficulty;
     private List<String> difficultyList;
+    private List<String> parkingList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,9 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context, db);
+        form.setValidateHikeExists(false);
         difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
+        parkingList = db.populateDropdown(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_TYPE);
 
 
         findTextFields();
@@ -141,12 +147,14 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
             int userID = preferences.getInt(AccountPreferences.USERID, 0);
 
             if (db.updateHike(getHikeDetails(), getIntent().getStringExtra("hikeID"), userID)) {
-                Helper.toastMessage(context, "Hike updated successfully");
+                Helper.SetRedirectMessage(CURRENT_ACTIVITY, HikeActivity.class, getString(R.string.hike_updated_success));
                 return;
             }
-            Helper.toastMessage(context, "could not update hike");
+            Helper.toastMessage(context, getString(R.string.hike_update_error));
         }
     }
+
+
 
 
     private void getIntentAndSetData() {
@@ -171,7 +179,15 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
                 txtDistance.getEditText().setText(String.valueOf(hike.getDistance()));
                 txtDuration.getEditText().setText(String.valueOf(hike.getDuration()));
                 String parkingStr = db.getColumnName(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_ID, String.valueOf(hike.getParkingID()), ParkingTable.COLUMN_TYPE);
-                txtParking.setText(parkingStr);
+                txtParking.setText(txtParking.getAdapter().getItem(hike.getParkingID() == 1? 0: 1).toString(), false);
+
+//                txtParking.setText(parkingStr);
+//                txtParking.set
+                // change filtering for the adapter so all items can be visible in drop-down menu
+
+//                txtParking.setText(txtParking.getAdapter().getItem().toString());
+//                txtParking.setListSelection(1);
+
                 txtElevationGain.getEditText().setText(String.valueOf(hike.getElevationGain()));
                 txtHigh.getEditText().setText(String.valueOf(hike.getHigh()));
                 String difficultyStr = db.getColumnName(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_ID, String.valueOf(hike.getDifficultyID()), DifficultyTable.COLUMN_TYPE);

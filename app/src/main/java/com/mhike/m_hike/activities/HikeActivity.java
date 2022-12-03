@@ -28,18 +28,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HikeActivity extends AppCompatActivity {
-    private DatabaseHelper db;
-    private Context context;
     private final Activity CURRENT_ACTIVITY = HikeActivity.this;
+    private Context context;
+    private DatabaseHelper db;
+
     private ArrayList<Hike> hikeList;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike);
-        checkMessage();
         setTitle(getString(R.string.nav_hikes));
         context = getApplicationContext();
+        Helper.getIntentMessage(context, getIntent().getExtras());
+
         FloatingActionButton btnAddHike = findViewById(R.id.btn_add_hike);
         btnAddHike.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, AddHikeActivity.class));
 
@@ -60,16 +65,6 @@ public class HikeActivity extends AppCompatActivity {
     }
 
 
-    private void checkMessage() {
-        Bundle extras = getIntent().getExtras();
-        String key = Helper.TOAST_MESSAGE;
-        if (extras != null && extras.getBoolean(key)) {
-            Helper.longToastMessage(context, extras.getString(key));
-            extras.clear();
-
-        }
-
-    }
 
 
 

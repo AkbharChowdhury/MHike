@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,8 +33,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class AddHikeActivity extends AppCompatActivity implements IDatePicker, IDifficulty {
+    private final Activity CURRENT_ACTIVITY = AddHikeActivity.this;
     private DatabaseHelper db;
     private Context context;
+
     private Validation form;
     private final String CURRENT_DATE = Helper.getCurrentDate().toString();
     private String dbHikeDate = CURRENT_DATE;
@@ -59,7 +62,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context, db);
         difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
-        CheckIsUserLoggedIn();
+        checkIsUserLoggedIn();
 
         setTitle(getString(R.string.add_hike_title));
 
@@ -76,14 +79,12 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
 
 
 
-    private void CheckIsUserLoggedIn() {
+    private void checkIsUserLoggedIn() {
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
         int userID = preferences.getInt(AccountPreferences.USERID, 0);
         if (userID == 0) {
-            // redirect to login page if user is not logged in
-            Intent intent = new Intent(context, LoginActivity.class);
-            intent.putExtra("loginRequired", true);
-            startActivity(intent);
+            Helper.SetRedirectMessage(CURRENT_ACTIVITY, LoginActivity.class, getString(R.string.login_required));
+
         }
     }
 
@@ -158,7 +159,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
             int userID = preferences.getInt(AccountPreferences.USERID, 0);
 
             if (db.addHike(getHikeDetails(), userID)) {
-                hikePage();
+                Helper.SetRedirectMessage(CURRENT_ACTIVITY, HikeActivity.class, getString(R.string.hike_added_success));
                 return;
             }
 
@@ -199,10 +200,5 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
 
     }
 
-    private void hikePage() {
-        Intent registerIntent = new Intent(context, HikeActivity.class);
-        registerIntent.putExtra(Helper.TOAST_MESSAGE, getString(R.string.hike_added_success));
-        startActivity(registerIntent);
 
-    }
 }

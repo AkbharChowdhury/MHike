@@ -1,11 +1,7 @@
 package com.mhike.m_hike.utilities;
 
-import static android.content.Intent.getIntent;
-
 import android.app.Activity;
-import android.app.DirectAction;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -19,10 +15,13 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ValueRange;
+
 import android.content.Intent;
 
 public final class Helper {
     public static final String TOAST_MESSAGE = "message";
+    private static final String INTENT_MESSAGE = "message";
+
 
     private Helper() {
     }
@@ -50,7 +49,7 @@ public final class Helper {
 
     }
 
-    public static LocalDate getCurrentDate(){
+    public static LocalDate getCurrentDate() {
         return LocalDate.now();
 
     }
@@ -92,6 +91,20 @@ public final class Helper {
 
     }
 
+    public static void SetRedirectMessage(Activity currentActivity, Class<? extends Activity> activityPageToOpen, String message) {
+        Intent intent = new Intent(currentActivity, activityPageToOpen);
+        intent.putExtra(INTENT_MESSAGE, message);
+        currentActivity.startActivity(intent);
+    }
+    public static void getIntentMessage(Context context, Bundle extras){
+        if (extras != null && extras.getString(Helper.INTENT_MESSAGE) !=null){
+            Helper.longToastMessage(context, extras.getString(Helper.INTENT_MESSAGE));
+            extras.clear();
+        }
+
+    }
+
+
 
     public static String formatDateShort(String date) {
         String[] dateSplit = date.split("-");
@@ -102,16 +115,16 @@ public final class Helper {
         String fullDay = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(selectedDate);
         return fullDay;
     }
-    private static double calcElevationPerMile(double distance, double elevationGain){
-        return elevationGain/  (distance /2 ) ;
+
+    private static double calcElevationPerMile(double distance, double elevationGain) {
+        return elevationGain / (distance / 2);
 
     }
 
 
-
-    public static int getDifficultyLevel(double distance, double elevationGain){
-        double total =  calcElevationPerMile(distance, elevationGain);
-        long result = (long)total;
+    public static int getDifficultyLevel(double distance, double elevationGain) {
+        double total = calcElevationPerMile(distance, elevationGain);
+        long result = (long) total;
         if (ValueRange.of(200, 400).isValidIntValue(result)) {
             return 0; // Easy
         }
@@ -129,9 +142,9 @@ public final class Helper {
     }
 
 
-    public static int getDifficultyLevel2(double distance, double elevationGain){
-        double total =  calcElevationPerMile(distance, elevationGain);
-        long result = (long)total;
+    public static int getDifficultyLevel2(double distance, double elevationGain) {
+        double total = calcElevationPerMile(distance, elevationGain);
+        long result = (long) total;
         if (ValueRange.of(200, 400).isValidIntValue(result)) {
             return 0; // Easy
         }
@@ -148,7 +161,7 @@ public final class Helper {
 
     }
 
-    public static int getDifficultyColour(int difficultyLevel, Context c){
+    public static int getDifficultyColour(int difficultyLevel, Context c) {
         switch (difficultyLevel) {
             case 0:
                 return c.getColor(R.color.green);
@@ -161,13 +174,6 @@ public final class Helper {
 
         }
     }
-
-
-
-
-
-
-
 
 
 }
