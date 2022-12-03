@@ -4,6 +4,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.annotations.SerializedName;
 
 public final class Hike {
     private int hikeID;
@@ -16,16 +17,37 @@ public final class Hike {
         this.hikeID = hikeID;
     }
 
+    @SerializedName("hikeDate")
     private String hikeDate;
+
+    @SerializedName("hikeName")
     private String hikeName;
+
+    @SerializedName("description")
     private String description;
+
+    @SerializedName("location")
     private String location;
+
+    @SerializedName("distance")
     private double distance;
+
+    @SerializedName("duration")
     private double duration;
+
+    @SerializedName("parkingID")
     private int parkingID;
+
+    @SerializedName("elevationGain")
     private double elevationGain;
+
+    @SerializedName("high")
     private double high;
+
+    @SerializedName("difficultyID")
     private int difficultyID;
+
+    @SerializedName("difficultyLevel")
     private String difficultyLevel;
 
     public String getDifficultyLevel() {
@@ -220,7 +242,8 @@ public final class Hike {
         this.txtHigh = txtHigh;
         this.lblDifficulty = lblDifficulty;
     }
-    public Hike(int id, String name, String description, String hikeDate, String difficultyLevel, int difficultyID){
+
+    public Hike(int id, String name, String description, String hikeDate, String difficultyLevel, int difficultyID) {
         hikeID = id;
         hikeName = name;
         this.description = description;
@@ -232,7 +255,7 @@ public final class Hike {
     }
 
 
-    public Hike(int id, String name, String description, String hikeDate){
+    public Hike(int id, String name, String description, String hikeDate) {
         hikeID = id;
         hikeName = name;
         this.description = description;
@@ -242,7 +265,7 @@ public final class Hike {
     }
 
 
-    public Hike(){
+    public Hike() {
 
     }
 

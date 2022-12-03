@@ -18,6 +18,7 @@ import com.mhike.m_hike.classes.models.User;
 public class MainActivity extends AppCompatActivity {
     private final Activity CURRENT_ACTIVITY = MainActivity.this;
     private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         Helper.capitalise(user.getFirstname()), Helper.capitalise(user.getLastname())
                 ));
 
-        Helper.longToastMessage(context, String.valueOf(User.getUserID(context)));
-
-
         buttonCards();
-
-
-
 
 
     }
@@ -63,24 +58,18 @@ public class MainActivity extends AppCompatActivity {
         sightsCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, ObservationActivity.class));
         searchCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, SearchHikeActivity.class));
         uploadCard.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, UploadHikeActivity.class));
-
         logoutCard.setOnClickListener(view -> logout());
 
 
     }
 
     private void logout() {
-        SharedPreferences sharedPreferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(AccountPreferences.USERID, 0);
-        editor.apply();
-        // redirect to login page
+        User.logout(getApplicationContext());
         Helper.goToPage(CURRENT_ACTIVITY, LoginActivity.class);
     }
 
 
     private void CheckIsUserLoggedIn() {
-                //getUserID();
         int userID = User.getUserID(getApplicationContext());
         if (userID == 0) {
             Helper.goToPage(CURRENT_ACTIVITY, LoginActivity.class);

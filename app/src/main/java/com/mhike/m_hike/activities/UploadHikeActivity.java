@@ -58,6 +58,47 @@ public class UploadHikeActivity extends AppCompatActivity {
         browser = (WebView) findViewById(R.id.webkit);
 
         Gson gson = new Gson();
+        List<Hike> hikes = new ArrayList<>();
+//        hikes.add(new Hike(
+//                1,
+//                "Snowdon",
+//                "snow down description",
+//               "2022-11-12"
+//
+//        ));
+//        hikes.add(new Hike(
+//                2,
+//                "Trosley Country Park",
+//                "Trosley Country Park description",
+//                "2022-11-15"
+//
+//        ));
+        List<Hike> hikeListData = getHikeListData();
+
+//        StringBuilder s = new StringBuilder();
+//
+//
+//
+//        for (Hike hike : hikeListData){
+//            s.append("Hike name ").append(hike.getHikeName()).append("\n");
+//            s.append("Hike date ").append(hike.getHikeDate()).append("\n");
+//
+//
+//        }
+
+//        Helper.longToastMessage(context,s.toString());
+        try {
+            String json = gson.toJson(hikeListData);
+        } catch (Exception ex){
+             ex.printStackTrace();
+            Log.d("HikeJSONUploadError","there was an error converting json data");
+            Log.d("HikeJSONUploadErrorMsg",ex.getMessage());
+
+            Helper.longToastMessage(context,ex.getMessage());
+        }
+//        String hikeJson = gson.toJson(hikes);
+//        Log.d("HIKES", String.valueOf(hikes.));
+//        String json = gson.toJson();
 //        String hikeListJson = gson.toJson(getHikeListData());
 //        Log.d("Hike details", hikeListJson);
 //        Helper.longToastMessage(context,hikeListJson);
@@ -84,10 +125,6 @@ public class UploadHikeActivity extends AppCompatActivity {
     }
 
 
-    private int getUserID(){
-        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        return preferences.getInt(AccountPreferences.USERID, 0);
-    }
 
     @SuppressLint("Range")
     private List<Hike> getHikeListData() {

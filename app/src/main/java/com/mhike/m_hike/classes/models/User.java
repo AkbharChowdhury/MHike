@@ -102,4 +102,10 @@ public final class User {
         SharedPreferences preferences = context.getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, context.MODE_PRIVATE);
         return preferences.getInt(AccountPreferences.USERID, 0);
     }
+    public static void logout(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(AccountPreferences.USERID, 0);
+        editor.apply();
+    }
 }
