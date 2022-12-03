@@ -5,7 +5,10 @@ import android.content.SharedPreferences;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.classes.AccountPreferences;
-import android.content.SharedPreferences;
+import com.mhike.m_hike.classes.HikeJson;
+
+
+import java.util.List;
 
 public final class User {
     private TextInputLayout txtFirstName;
@@ -16,6 +19,8 @@ public final class User {
     private String lastname;
     private String email;
     private String password;
+    private List<HikeJson> detailList;
+    private int userID;
 
     public String getFirstname() {
         return firstname;
@@ -107,5 +112,12 @@ public final class User {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(AccountPreferences.USERID, 0);
         editor.apply();
+    }
+
+
+    public User(int userID,List<HikeJson> userHikes) {
+        this.detailList = userHikes;
+        this.userID = userID;
+
     }
 }
