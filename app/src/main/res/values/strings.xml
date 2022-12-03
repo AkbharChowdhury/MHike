@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">M-Hike</string>
 
+    <string name="web_service_url">https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw</string>
+    <string name="json">{\"eventName\":\"mens 100 metres\", \"resultList\":[{\"medalColour\":\"bronze\",\"athleteName\":\"gatlin\"},{\"medalColour\":\"silver\",\"athleteName\":\"blake\"},{\"medalColour\":\"gold\",\"athleteName\":\"bolt\"}]} </string>
+
     <string name="nav_home">Home</string>
     <string name="nav_hikes">Hikes</string>
     <string name="nav_sights">Sights</string>
@@ -64,7 +67,6 @@
     <string name="hike_added_error">There was an error adding hike</string>
 
 
-
     <string name="duration_minutes">Duration (mins)</string>
     <string name="hike_date">Hike Date</string>
     <string name="hike_name">Hike Name</string>
@@ -112,8 +114,6 @@
     <string name="login_required">You must be logged in!</string>
     <string name="hike_observation_title">Observation details for %s</string>
     <string name="time_label">Select Time</string>
-
-
 
 
     <string name="time_format_database">%02d:%02d</string>
