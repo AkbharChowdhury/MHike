@@ -16,6 +16,7 @@ import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.models.Observation;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.adapters.ObservationAdapter;
 import com.mhike.m_hike.classes.tables.ObservationTable;
@@ -57,10 +58,12 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
     private List<Observation> getHikeListData() {
         List<Observation> list = new ArrayList<>();
         String hikeID = getIntent().getStringExtra("hikeID");
-        String userID = String.valueOf(getUserID());
+        int userID = User.getUserID(getApplicationContext());
+
+        String userIDStr = String.valueOf(userID);
         setTitle(getString(R.string.hike_observation_title, db.getHikeNameListByID(hikeID) ));
 
-        try (Cursor cursor = db.getObservationList(userID, hikeID)) {
+        try (Cursor cursor = db.getObservationList(userIDStr, hikeID)) {
 
             if (cursor.getCount() == 0) {
                 Helper.longToastMessage(context, getString(R.string.no_hikes));
@@ -88,10 +91,7 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
 
     }
 
-    private int getUserID() {
-        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        return preferences.getInt(AccountPreferences.USERID, 0);
-    }
+
 
 
 }

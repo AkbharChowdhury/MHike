@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.utilities.DatePickerFragment;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.models.Observation;
@@ -136,8 +137,9 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
 
     private void setupAdapter() {
+        int userID = User.getUserID(getApplicationContext());
         txtHikeName.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item,
-                db.getUserHikes(String.valueOf(getUserID())
+                db.getUserHikes(String.valueOf(userID)
         )));
 
     }
@@ -180,8 +182,5 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
     }
 
-    private int getUserID() {
-        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        return preferences.getInt(AccountPreferences.USERID, 0);
-    }
+
 }

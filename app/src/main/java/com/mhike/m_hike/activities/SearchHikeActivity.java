@@ -21,6 +21,7 @@ import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.adapters.SearchAdapter;
 import com.mhike.m_hike.classes.enums.ActivityForm;
 import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.utilities.Helper;
@@ -141,8 +142,9 @@ public class SearchHikeActivity extends AppCompatActivity {
         List<Hike> list = new ArrayList<>();
         List<String> difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
 
+        int userID = User.getUserID(getApplicationContext());
 
-        try (Cursor cursor = db.getHikeList(String.valueOf(getUserID()))) {
+        try (Cursor cursor = db.getHikeList(String.valueOf(userID))) {
 
             if (cursor.getCount() == 0) {
                 Helper.longToastMessage(context, getString(R.string.no_hikes));
@@ -176,10 +178,5 @@ public class SearchHikeActivity extends AppCompatActivity {
         return list;
 
 
-    }
-
-    private int getUserID() {
-        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        return preferences.getInt(AccountPreferences.USERID, 0);
     }
 }

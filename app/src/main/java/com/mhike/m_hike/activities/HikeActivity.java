@@ -18,6 +18,7 @@ import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.adapters.HikeAdapter;
@@ -33,9 +34,6 @@ public class HikeActivity extends AppCompatActivity {
     private DatabaseHelper db;
 
     private ArrayList<Hike> hikeList;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +69,11 @@ public class HikeActivity extends AppCompatActivity {
     @SuppressLint("Range")
     private List<Hike> getHikeListData() {
         List<Hike> list = new ArrayList<>();
+        int userID = User.getUserID(getApplicationContext());
 
 
-        try (Cursor cursor = db.getHikeList(String.valueOf(getUserID()))) {
+
+        try (Cursor cursor = db.getHikeList(String.valueOf(userID))) {
 
             if (cursor.getCount() == 0) {
                 Helper.longToastMessage(context, getString(R.string.no_hikes));
@@ -111,9 +111,5 @@ public class HikeActivity extends AppCompatActivity {
         }
     }
 
-    private int getUserID(){
-        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        return preferences.getInt(AccountPreferences.USERID, 0);
-    }
 
 }

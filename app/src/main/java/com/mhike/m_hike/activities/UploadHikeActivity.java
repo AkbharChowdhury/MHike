@@ -2,14 +2,24 @@ package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 
+//import com.google.gson.Gson;
+import com.google.gson.Gson;
 import com.mhike.m_hike.R;
+import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.JsonThread;
+import com.mhike.m_hike.classes.models.Hike;
+import com.mhike.m_hike.classes.models.User;
+import com.mhike.m_hike.classes.tables.HikeTable;
 import com.mhike.m_hike.utilities.Helper;
 
 import java.io.IOException;
@@ -17,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -44,6 +56,15 @@ public class UploadHikeActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(context);
 
         browser = (WebView) findViewById(R.id.webkit);
+
+        Gson gson = new Gson();
+//        String hikeListJson = gson.toJson(getHikeListData());
+//        Log.d("Hike details", hikeListJson);
+//        Helper.longToastMessage(context,hikeListJson);
+//        uploadUserHikeDetails();
+    }
+
+    private void uploadUserHikeDetails() {
         try {
             URL pageURL = new URL(getString(R.string.web_service_url));
             JsonThread.trustAllHosts();
@@ -60,5 +81,44 @@ public class UploadHikeActivity extends AppCompatActivity {
             e.printStackTrace();
 
         }
+    }
+
+
+    private int getUserID(){
+        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+        return preferences.getInt(AccountPreferences.USERID, 0);
+    }
+
+    @SuppressLint("Range")
+    private List<Hike> getHikeListData() {
+        List<Hike> list = new ArrayList<>();
+        int userID = User.getUserID(getApplicationContext());
+
+
+        try (Cursor cursor = db.getHikeList(String.valueOf(userID))) {
+
+            if (cursor.getCount() == 0) {
+                Helper.longToastMessage(context, getString(R.string.no_hikes));
+                return list;
+            }
+
+            while (cursor.moveToNext()) {
+                list.add(new Hike(
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))
+
+                ));
+
+            }
+            return list;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return list;
+
+
     }
 }

@@ -17,18 +17,20 @@ import com.mhike.m_hike.classes.models.User;
 
 public class MainActivity extends AppCompatActivity {
     private final Activity CURRENT_ACTIVITY = MainActivity.this;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Context context = getApplicationContext();
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
-
         CheckIsUserLoggedIn();
+
+
+        DatabaseHelper db = DatabaseHelper.getInstance(context);
         setTitle(getString(R.string.nav_home));
         TextView user_dashboard = findViewById(R.id.lbl_user_dashboard);
 
-        User user = db.getUserFirstAndLastName(String.valueOf(getUserID()));
+        User user = db.getUserFirstAndLastName(String.valueOf(User.getUserID(context)));
         user_dashboard.setText(getString(R.string.full_name));
 
 
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 String.format(getString(R.string.full_name),
                         Helper.capitalise(user.getFirstname()), Helper.capitalise(user.getLastname())
                 ));
+
+        Helper.longToastMessage(context, String.valueOf(User.getUserID(context)));
 
 
         buttonCards();
@@ -76,18 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void CheckIsUserLoggedIn() {
-        int userID = getUserID();
+                //getUserID();
+        int userID = User.getUserID(getApplicationContext());
         if (userID == 0) {
             Helper.goToPage(CURRENT_ACTIVITY, LoginActivity.class);
 
         }
     }
-
-
-    private int getUserID(){
-        SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-        return preferences.getInt(AccountPreferences.USERID, 0);
-    }
-
 
 }

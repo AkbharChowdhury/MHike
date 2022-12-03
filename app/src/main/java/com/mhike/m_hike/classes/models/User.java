@@ -1,6 +1,11 @@
 package com.mhike.m_hike.classes.models;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.android.material.textfield.TextInputLayout;
+import com.mhike.m_hike.classes.AccountPreferences;
+import android.content.SharedPreferences;
 
 public final class User {
     private TextInputLayout txtFirstName;
@@ -92,5 +97,9 @@ public final class User {
     public User(TextInputLayout txtEmail, TextInputLayout txtPassword) {
         this.txtEmail = txtEmail;
         this.txtPassword = txtPassword;
+    }
+    public static int getUserID(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, context.MODE_PRIVATE);
+        return preferences.getInt(AccountPreferences.USERID, 0);
     }
 }
