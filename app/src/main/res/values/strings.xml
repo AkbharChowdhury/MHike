@@ -61,6 +61,7 @@
     <string name="hike_deleted_success">Hike Deleted</string>
     <string name="hike_update_error">There was an error updating hike details</string>
 
+    <string name="hike_added_error">There was an error adding hike</string>
 
 
 
@@ -85,7 +86,7 @@
     <string name="hike_update_failed">Could not update hike</string>
     <string name="username_dashboard">Tom Smith</string>
     <string name="observation_title">Sights</string>
-    <string name="get_user_first_last_name">%s %s</string>
+    <string name="full_name">%s %s</string>
     <string name="delete_hike">Delete Hike</string>
     <string name="hike_subtitle_msg">You cannot undo this</string>
     <string name="hike_title_confirm">Are you sure you want to delete Hike?</string>
@@ -107,7 +108,7 @@
     <string name="objHikes">My observation hikes</string>
 
     <string name="login_required">You must be logged in!</string>
-
+    <string name="hike_observation_title">Observation details for %s</string>
 
 
     <string-array name="parking_array">

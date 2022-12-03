@@ -92,7 +92,8 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_observation);
         context = getApplicationContext();
-        setTitle("Add Observation");
+        Helper.getIntentMessage(context, getIntent().getExtras());
+        setTitle(getString(R.string.add_observation));
 
         findTextFields();
 

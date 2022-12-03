@@ -44,9 +44,11 @@ public class SearchHikeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_search_hike);
         setTitle(R.string.search_hike);
         context = getApplicationContext();
+        Helper.getIntentMessage(context, getIntent().getExtras());
+
         db = DatabaseHelper.getInstance(context);
         // initializing our variables.
         searchRecyclerView = findViewById(R.id.search_recycler);

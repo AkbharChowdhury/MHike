@@ -62,6 +62,8 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
         setContentView(R.layout.activity_edit_hike);
         setTitle(getString(R.string.edit_hike_title));
         context = getApplicationContext();
+        Helper.getIntentMessage(context, getIntent().getExtras());
+
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context, db);
         form.setValidateHikeExists(false);

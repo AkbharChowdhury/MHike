@@ -29,6 +29,8 @@ public class HikeDetailsActivity extends AppCompatActivity {
         setTitle(getString(R.string.hike_details));
         context = getApplicationContext();
         db = DatabaseHelper.getInstance(context);
+        Helper.getIntentMessage(context, getIntent().getExtras());
+
         getIntentAndSetData();
     }
 

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewHikeObservationActivity extends AppCompatActivity {
+    private final Activity CURRENT_ACTIVITY = ViewHikeObservationActivity.this;
     private DatabaseHelper db;
     private Context context;
     private ArrayList<Observation> observationList;
@@ -56,7 +58,7 @@ public class ViewHikeObservationActivity extends AppCompatActivity {
         List<Observation> list = new ArrayList<>();
         String hikeID = getIntent().getStringExtra("hikeID");
         String userID = String.valueOf(getUserID());
-        setTitle("Observation details for " + db.getHikeNameListByID(hikeID));
+        setTitle(getString(R.string.hike_observation_title, db.getHikeNameListByID(hikeID) ));
 
         try (Cursor cursor = db.getObservationList(userID, hikeID)) {
 

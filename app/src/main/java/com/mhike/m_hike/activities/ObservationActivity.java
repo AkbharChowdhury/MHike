@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObservationActivity extends AppCompatActivity {
+    private final Activity CURRENT_ACTIVITY = ObservationActivity.this;
     private DatabaseHelper db;
     private Context context;
-    private final Activity CURRENT_ACTIVITY = ObservationActivity.this;
     private ArrayList<Hike> hikeList;
 
 

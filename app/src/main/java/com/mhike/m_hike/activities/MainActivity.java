@@ -29,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
         TextView user_dashboard = findViewById(R.id.lbl_user_dashboard);
 
         User user = db.getUserFirstAndLastName(String.valueOf(getUserID()));
-        user_dashboard.setText(getString(R.string.get_user_first_last_name));
+        user_dashboard.setText(getString(R.string.full_name));
 
 
         user_dashboard.setText(
-                String.format(getString(R.string.get_user_first_last_name),
+                String.format(getString(R.string.full_name),
                         Helper.capitalise(user.getFirstname()), Helper.capitalise(user.getLastname())
                 ));
 

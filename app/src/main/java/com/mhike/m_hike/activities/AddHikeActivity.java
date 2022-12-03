@@ -59,6 +59,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hike);
         context = getApplicationContext();
+        Helper.getIntentMessage(context, getIntent().getExtras());
         db = DatabaseHelper.getInstance(context);
         form = new Validation(context, db);
         difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
@@ -163,7 +164,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
                 return;
             }
 
-            Helper.longToastMessage(context, "There was an error adding hike");
+            Helper.longToastMessage(context, getString(R.string.hike_added_error));
         }
 
     }
@@ -189,14 +190,14 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
     @Override
     public void showDifficultyLevel() {
         // calculate the difficulty based on the elevation and high
-        if (form.isValidElevation(txtElevationGain) && form.isValidDistance(txtDistance)) {
-            double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
-            double distance = Double.parseDouble(Helper.trimStr(txtDistance));
-            int difficultyLevel = Helper.getDifficultyLevel(distance, elevationGain);
-            String difficultyName = difficultyList.get(difficultyLevel);
-            lblDifficulty.setTextColor(Helper.getDifficultyColour(difficultyLevel, context));
-            lblDifficulty.setText(difficultyName);
-        }
+//        if (form.isValidElevation(txtElevationGain) && form.isValidDistance(txtDistance)) {
+//            double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
+//            double distance = Double.parseDouble(Helper.trimStr(txtDistance));
+//            int difficultyLevel = Helper.getDifficultyLevel(distance, elevationGain);
+//            String difficultyName = difficultyList.get(difficultyLevel);
+//            lblDifficulty.setTextColor(Helper.getDifficultyColour(difficultyLevel, context));
+//            lblDifficulty.setText(difficultyName);
+//        }
 
     }
 
