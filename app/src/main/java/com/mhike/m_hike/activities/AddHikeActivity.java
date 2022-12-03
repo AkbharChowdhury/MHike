@@ -153,6 +153,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
 
     private void handleHike() {
         Hike hike = new Hike(txtHikeDate, txtHikeName, txtDescription, txtLocation, txtDistance, txtDuration, txtParking, txtElevationGain, txtHigh, lblDifficulty);
+        form.disableFormValidation = false;// show error messages
 
         if (form.validateHikeForm(hike)) {
 
@@ -189,15 +190,20 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
 
     @Override
     public void showDifficultyLevel() {
+
+        form.isValidElevation(txtElevationGain);
         // calculate the difficulty based on the elevation and high
-//        if (form.isValidElevation(txtElevationGain) && form.isValidDistance(txtDistance)) {
-//            double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
-//            double distance = Double.parseDouble(Helper.trimStr(txtDistance));
-//            int difficultyLevel = Helper.getDifficultyLevel(distance, elevationGain);
-//            String difficultyName = difficultyList.get(difficultyLevel);
-//            lblDifficulty.setTextColor(Helper.getDifficultyColour(difficultyLevel, context));
-//            lblDifficulty.setText(difficultyName);
-//        }
+
+        form.disableFormValidation = true; // hide error messages
+        if (form.isValidElevation(txtElevationGain) && form.isValidDistance(txtDistance)) {
+            double elevationGain = Double.parseDouble(Helper.trimStr(txtElevationGain));
+            double distance = Double.parseDouble(Helper.trimStr(txtDistance));
+            int difficultyLevel = Helper.getDifficultyLevel(distance, elevationGain);
+            String difficultyName = difficultyList.get(difficultyLevel);
+            lblDifficulty.setTextColor(Helper.getDifficultyColour(difficultyLevel, context));
+            lblDifficulty.setText(difficultyName);
+        }
+
 
     }
 

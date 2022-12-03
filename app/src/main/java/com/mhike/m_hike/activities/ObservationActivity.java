@@ -40,7 +40,7 @@ public class ObservationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_observation);
         setTitle(getString(R.string.objHikes));
         context = getApplicationContext();
-        checkMessage();
+        Helper.getIntentMessage(context, getIntent().getExtras());
         FloatingActionButton btnObservation = findViewById(R.id.btn_add_observation);
         btnObservation.setOnClickListener(view -> Helper.goToPage(CURRENT_ACTIVITY, AddObservationActivity.class));
         db = DatabaseHelper.getInstance(context);
@@ -60,14 +60,7 @@ public class ObservationActivity extends AppCompatActivity {
 
     }
 
-    private void checkMessage() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getBoolean("message")) {
-            Helper.longToastMessage(context, getString(R.string.hike_deleted_confirm));
-            extras.remove("message");
 
-        }
-    }
 
 
     @SuppressLint("Range")

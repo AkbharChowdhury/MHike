@@ -75,6 +75,8 @@
     <string name="elevation_gain">Elevation Gain (ft)</string>
     <string name="high_ft">High (ft)</string>
     <string name="add_observation">Add Observation</string>
+    <string name="observation_add_success">Observation added</string>
+
     <string name="no_hikes">No hikes Found.. Try adding one</string>
     <string name="no_hikes_observation">No observations yet…trying adding one</string>
 
@@ -109,6 +111,12 @@
 
     <string name="login_required">You must be logged in!</string>
     <string name="hike_observation_title">Observation details for %s</string>
+    <string name="time_label">Select Time</string>
+
+
+
+
+    <string name="time_format_database">%02d:%02d</string>
 
 
     <string-array name="parking_array">

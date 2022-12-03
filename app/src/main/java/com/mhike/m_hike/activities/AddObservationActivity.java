@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.TimePicker;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -52,8 +53,9 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
     private TextInputLayout txtObservation;
     private TextInputLayout txtComments;
     private AutoCompleteTextView txtHikeTime;
-    int minute, hour;
 
+    int hour = LocalDateTime.now().getHour();
+    int minute = LocalDateTime.now().getMinute();
 
 
     private void findTextFields() {
@@ -63,28 +65,24 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         txtHikeTime = findViewById(R.id.txtHikeTime);
         txtHikeName = findViewById(R.id.txtHikeName);
 
+
     }
 
-    public void popTimePicker()
-    {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
-             hour = selectedHour;
-             minute = selectedMinute;
-             dbHikeTime = String.format(Locale.getDefault(), "%02d:%02d",hour, minute);
-             txtHikeTime.setText(Helper.formatTime(dbHikeTime));
+    public void popTimePicker() {
 
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
+            hour = selectedHour;
+            minute = selectedMinute;
+            setTime();
         };
+
         // link: https://github.com/codeWithCal/TimePickerAndroidStudio/blob/master/app/src/main/java/codewithcal/au/timerpickertutorial/MainActivity.java
 
-         int style = AlertDialog.THEME_HOLO_DARK;
-
+        int style = AlertDialog.THEME_HOLO_DARK;
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, false);
-
-        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.setTitle(getString(R.string.time_label));
         timePickerDialog.show();
     }
-
-
 
 
     @Override
@@ -106,7 +104,14 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         Button btnAddObservation = findViewById(R.id.btn_add_obj);
         btnAddObservation.setOnClickListener(view -> addObservations());
 
+        setTime();
 
+
+    }
+
+    private void setTime() {
+        dbHikeTime = String.format(Locale.getDefault(), getString(R.string.time_format_database), hour, minute);
+        txtHikeTime.setText(Helper.formatTime(dbHikeTime));
     }
 
     private void addObservations() {
@@ -122,21 +127,18 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
         List<Observation> observationList = new ArrayList<>();
         observationList.add(observation);
 
-        if(form.validateObservationForm(observation)){
+        if (form.validateObservationForm(observation)) {
             db.addObservation(observationList);
-                Helper.longToastMessage(context, "Observation added");
+            Helper.SetRedirectMessage(CURRENT_ACTIVITY, ObservationActivity.class, getString(R.string.observation_add_success));
+
         }
     }
 
 
-
     private void setupAdapter() {
-        String userID = String.valueOf(getUserID());
-
-
         txtHikeName.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.list_item,
-                db.getUserHikes(userID)
-                ));
+                db.getUserHikes(String.valueOf(getUserID())
+        )));
 
     }
 
@@ -158,11 +160,12 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
             return false;
         });
     }
+
     @Override
     public void showDatePickerDialog() {
 
 
-        DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.ADD_OBSERVATION,  9309403);
+        DialogFragment datePicker = new DatePickerFragment(false, ActivityForm.ADD_OBSERVATION, 9309403);
 
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
@@ -177,7 +180,7 @@ public class AddObservationActivity extends AppCompatActivity implements IDatePi
 
     }
 
-    private int getUserID(){
+    private int getUserID() {
         SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
         return preferences.getInt(AccountPreferences.USERID, 0);
     }

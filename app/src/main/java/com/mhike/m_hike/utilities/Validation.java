@@ -22,6 +22,8 @@ public final class Validation {
     private boolean setAdditionalCheck = false;
     private boolean validateHikeExists = true;
 
+    public boolean disableFormValidation = false;
+
     public void setValidateHikeExists(boolean validateHikeExists) {
         this.validateHikeExists = validateHikeExists;
     }
@@ -267,11 +269,15 @@ public final class Validation {
 
         String fieldName = Helper.capitalise(HikeTable.COLUMN_DISTANCE);
         if (distanceStr.isEmpty()) {
-            setError(textField, getRequiredFieldError(fieldName));
+            if(!disableFormValidation) {
+                setError(textField, getRequiredFieldError(fieldName));
+            }
             return false;
         }
         if (Double.parseDouble(distanceStr) < minDistance) {
-            setError(textField, getDistanceFieldError(fieldName, minDistance));
+            if (!disableFormValidation) {
+                setError(textField, getDistanceFieldError(fieldName, minDistance));
+            }
             return false;
 
         }
@@ -311,11 +317,16 @@ public final class Validation {
 
 
         if (elevationGainStr.isEmpty()) {
-            setError(textField, getRequiredFieldError(fieldName));
+//            Helper.longToastMessage(context, String.valueOf(disableValidation));
+            if(!disableFormValidation) {
+                setError(textField, getRequiredFieldError(fieldName));
+            }
             return false;
         }
         if (Double.parseDouble(elevationGainStr) < minElevationGain) {
-            setError(textField, getElevationFieldError(fieldName, minElevationGain));
+            if(!disableFormValidation) {
+                setError(textField, getElevationFieldError(fieldName, minElevationGain));
+            }
             return false;
 
         }
