@@ -51,7 +51,6 @@ public class UploadHikeActivity extends AppCompatActivity {
         Helper.getIntentMessage(context, getIntent().getExtras());
         db = DatabaseHelper.getInstance(context);
         browser = (WebView) findViewById(R.id.browser);
-
         String HikeJSONData = getJsonData();
         Log.d("JsonStringNew", HikeJSONData);
         uploadUserHikeDetails();
@@ -64,33 +63,6 @@ public class UploadHikeActivity extends AppCompatActivity {
             List<HikeJson> detailList = getSelectedUserHikeData();
             User user = new User(detailList, User.getUserID(getApplicationContext()));
             return user.getJsonHike();
-//            String json = new Gson().toJson(detailList);
-
-//            String remove = Helper.removeFirstAndLastCharacter(userHikeDetails.getDetailList().toString());
-//            Log.d("DATA_Apple",json);
-//            return
-//                    "{\"userId\": \"" + User.getUserID(getApplicationContext()) + "\", "
-//                    + "\"detailList\":" + json + "}";
-//            return res
-
-
-//            Log.d("responseData",jsonOutput);
-
-
-
-
-
-//            {"userId":"wm123",
-//                    "detailList":[
-//                {"name":"Snowdon","date":"20/11/2022"},
-//                {"name":"Trosley Country Park","date":"05/12/2022"}]}
-
-//            Gson gson = new GsonBuilder().registerTypeAdapter(UserHikeJsonSerializer.class, new UserHikeJsonSerializer()).create();
-//            return gson.toJson(gson);
-
-
-//            return remove;
-
         } catch (Exception ex) {
             Log.d("HikeJSONUploadError", "there was an error converting json data");
             Log.d("HikeJSONUploadErrorMsg", ex.getMessage());
@@ -155,8 +127,6 @@ public class UploadHikeActivity extends AppCompatActivity {
         }
         return list;
     }
-
-
-
+    
 
 }
