@@ -20,13 +20,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.HomeActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.UploadHikeActivity"
             android:exported="false"
             android:parentActivityName=".activities.MainActivity">
@@ -34,13 +27,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".Home"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".activities.SearchHikeActivity"
             android:exported="false"

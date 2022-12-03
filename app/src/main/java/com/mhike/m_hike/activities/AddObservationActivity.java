@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddObservationActivity extends AppCompatActivity implements IDatePicker {
+    private final Activity CURRENT_ACTIVITY = AddObservationActivity.this;
+
     private DatabaseHelper db;
     private Context context;
     private Validation form;

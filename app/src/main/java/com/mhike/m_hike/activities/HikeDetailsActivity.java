@@ -2,6 +2,7 @@ package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import com.mhike.m_hike.utilities.Helper;
 import java.util.List;
 
 public class HikeDetailsActivity extends AppCompatActivity {
+    private final Activity CURRENT_ACTIVITY = HikeDetailsActivity.this;
+
     private DatabaseHelper db;
     private Context context;
 
