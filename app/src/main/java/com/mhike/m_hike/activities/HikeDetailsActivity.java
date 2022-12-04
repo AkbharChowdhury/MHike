@@ -2,7 +2,6 @@ package com.mhike.m_hike.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import com.mhike.m_hike.utilities.Helper;
 import java.util.List;
 
 public class HikeDetailsActivity extends AppCompatActivity {
-    private final Activity CURRENT_ACTIVITY = HikeDetailsActivity.this;
 
     private DatabaseHelper db;
     private Context context;
@@ -55,6 +53,8 @@ public class HikeDetailsActivity extends AppCompatActivity {
             TextView parking = findViewById(R.id.parking);
             TextView elevationGain = findViewById(R.id.elevationGain);
             TextView difficulty = findViewById(R.id.difficulty);
+            TextView high = findViewById(R.id.high);
+
             List<String> difficultyList = db.populateDropdown(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_TYPE);
 
             for (Hike hike : hikeList) {
@@ -67,12 +67,7 @@ public class HikeDetailsActivity extends AppCompatActivity {
                 String parkingStr = db.getColumnName(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_ID, String.valueOf(hike.getParkingID()), ParkingTable.COLUMN_TYPE);
                 parking.setText(parkingStr);
                 elevationGain.setText(String.valueOf(hike.getElevationGain()));
-
-
-
-                String difficultyStr = db.getColumnName(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_ID, String.valueOf(hike.getDifficultyID()), DifficultyTable.COLUMN_TYPE);
-//                difficulty.setText(difficultyStr);
-
+                high.setText(String.valueOf(hike.getHigh()));
 
                 double distance = hike.getDistance();
                 int difficultyLevel = Helper.getDifficultyLevel(distance, hike.getElevationGain());
