@@ -35,7 +35,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/description"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/muted"
+
+
+    />
+
+
+    <TextView
+        android:id="@+id/sLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="location: "
+        android:textStyle="bold"
         android:textColor="@color/black"
 
         />
@@ -45,27 +57,83 @@
         android:id="@+id/locationLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="location"
+        android:text="London"
         android:textColor="@color/black"
 
         />
+    <TextView
+        android:id="@+id/sDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duration: "
+        android:textStyle="bold"
+        android:textColor="@color/black"
 
+        />
 
     <TextView
         android:id="@+id/duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="duration"
+        android:text="502"
         android:textColor="@color/black"
+
 
         />
 
 
+
+
+
+    <TextView
+        android:id="@+id/sDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance: "
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
+        />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        android:textColor="@color/black"
+
+
+        />
+
+    <TextView
+        android:id="@+id/sParking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parking: "
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
+        />
     <TextView
         android:id="@+id/parking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:text="No"
+
+
+        />
+
+
+
+    <TextView
+        android:id="@+id/sElevationGain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elevation Gain: "
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
 
         />
 
@@ -75,6 +143,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:text="100"
+
+
+        />
+
+
+    <TextView
+        android:id="@+id/sHigh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High: "
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
 
         />
 
@@ -84,6 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:text="50"
 
         />
 

@@ -49,6 +49,8 @@ public class HikeDetailsActivity extends AppCompatActivity {
             TextView description = findViewById(R.id.hikeDescriptionLbl);
             TextView date = findViewById(R.id.lblHikeDateView);
             TextView location = findViewById(R.id.locationLbl);
+            TextView tvDistance = findViewById(R.id.distance);
+
             TextView duration = findViewById(R.id.duration);
             TextView parking = findViewById(R.id.parking);
             TextView elevationGain = findViewById(R.id.elevationGain);
@@ -60,6 +62,7 @@ public class HikeDetailsActivity extends AppCompatActivity {
                 description.setText(hike.getDescription());
                 date.setText(Helper.formatDate(hike.getHikeDate()));
                 location.setText(hike.getLocation());
+                tvDistance.setText(String.valueOf(hike.getDistance()));
                 duration.setText(String.valueOf(hike.getDuration()));
                 String parkingStr = db.getColumnName(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_ID, String.valueOf(hike.getParkingID()), ParkingTable.COLUMN_TYPE);
                 parking.setText(parkingStr);
