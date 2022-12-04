@@ -69,16 +69,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void handleRegister() {
-        Helper.SetRedirectMessage(CURRENT_ACTIVITY, LoginActivity.class, getString(R.string.register_success));
         User user = new User(txtFirstName, txtLastName, txtEmail, txtPassword);
 
         // if the form is valid and user email is unique store their details in the database
         if (form.validateRegisterForm(user)) {
             if (db.registerUser(getUserDetails())) {
                 Helper.SetRedirectMessage(CURRENT_ACTIVITY, LoginActivity.class, getString(R.string.register_success));
+                return;
             }
-
             Helper.longToastMessage(context, getString(R.string.insertion_error));
+
         }
 
     }
