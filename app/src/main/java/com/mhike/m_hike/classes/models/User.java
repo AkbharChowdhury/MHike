@@ -124,7 +124,7 @@ public final class User {
         return detailList;
     }
 
-    public User( List<HikeJson> userHikes, int userId) {
+    public User(List<HikeJson> userHikes, int userId) {
         this.userId = userId;
         this.detailList = userHikes;
 

@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
+
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.HikeJson;
@@ -94,18 +95,22 @@ public class UploadHikeActivity extends AppCompatActivity {
                 int difficultyID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DIFFICULTY_ID)));
                 int parkingID = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_PARKING_ID)));
 
-                String difficultyStr = db.getColumnName(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_ID, String.valueOf(difficultyID), DifficultyTable.COLUMN_TYPE);
-                String parkingStr = db.getColumnName(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_ID, String.valueOf(parkingID), ParkingTable.COLUMN_TYPE);
-                double elevationGain = Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ELEVATION_GAIN)));
+                String difficulty = db.getColumnName(DifficultyTable.TABLE_NAME, DifficultyTable.COLUMN_ID, String.valueOf(difficultyID), DifficultyTable.COLUMN_TYPE);
+                String parking = db.getColumnName(ParkingTable.TABLE_NAME, ParkingTable.COLUMN_ID, String.valueOf(parkingID), ParkingTable.COLUMN_TYPE);
+
+
                 list.add(new HikeJson(
+                        Helper.formatDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
-                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
-                        difficultyStr,
-                        parkingStr,
-                        elevationGain,
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_LOCATION)),
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DISTANCE))),
-                        Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIGH)))
+                        Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DURATION))),
+                        parking,
+                        Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ELEVATION_GAIN))),
+                        Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIGH))),
+                        difficulty
+
 
                 ));
 

@@ -2,47 +2,28 @@ package com.mhike.m_hike.classes;
 
 public class HikeJson {
 
-    private String name;
     private String date;
+    private String name;
     private String description;
-    private String difficulty;
-    private String parking;
-    private double elevationGain;
+    private String location;
     private double distance;
     private double duration;
+    private String parking;
+    private double elevationGain;
     private double high;
+    private String difficulty;
 
 
-
-
-
-    public HikeJson(String name,
-                    String date,
-                    String description,
-                    String difficulty,
-                    String parking,
-                    double elevationGain,
-                    double distance,
-                    double high
-
-
-
-    )
-                     {
-        this.name = name;
+    public HikeJson(String date, String name, String description, String location, double distance, double duration, String parking, double elevationGain, double high, String difficulty) {
         this.date = date;
+        this.name = name;
         this.description = description;
-        this.difficulty = difficulty;
+        this.location = location;
+        this.distance = distance;
+        this.duration = duration;
         this.parking = parking;
         this.elevationGain = elevationGain;
-           this.distance = distance;
-                         this.duration = duration;
-                         this.high = high;
-
-
-
-
-
-                     }
-
+        this.high = high;
+        this.difficulty = difficulty;
+    }
 }

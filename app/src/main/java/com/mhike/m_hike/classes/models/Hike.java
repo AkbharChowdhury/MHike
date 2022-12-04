@@ -18,7 +18,7 @@ public final class Hike {
     }
 
     private String hikeDate;
-
+    @SerializedName("name")
     private String hikeName;
 
     private String description;
@@ -38,6 +38,17 @@ public final class Hike {
     private int difficultyID;
 
     private String difficultyLevel;
+    private String parking;
+
+    public String getParking() {
+        return parking;
+    }
+
+    public void setParking(String parking) {
+        this.parking = parking;
+    }
+
+
 
     public String getDifficultyLevel() {
         return difficultyLevel;
