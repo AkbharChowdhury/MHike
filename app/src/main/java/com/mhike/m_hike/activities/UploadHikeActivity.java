@@ -43,7 +43,7 @@ public class UploadHikeActivity extends AppCompatActivity {
         context = getApplicationContext();
         Helper.getIntentMessage(context, getIntent().getExtras());
         db = DatabaseHelper.getInstance(context);
-        browser = (WebView) findViewById(R.id.browser);
+        browser = findViewById(R.id.browser);
         Log.d("HikeJsonData", getJsonData());
         uploadUserHikeDetails();
 
