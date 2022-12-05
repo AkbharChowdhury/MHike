@@ -18,7 +18,6 @@ import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
 import com.mhike.m_hike.classes.models.Hike;
-import com.mhike.m_hike.classes.tables.DifficultyTable;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.adapters.HikeAdapter;
 import com.mhike.m_hike.classes.enums.ActivityForm;
@@ -78,7 +77,7 @@ public class ObservationActivity extends AppCompatActivity {
 
                 list.add(new Hike(
                         Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))),
-                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_NAME)),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))
 

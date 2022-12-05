@@ -38,6 +38,7 @@ public final class Validation {
         this.db = db;
 
 
+
     }
 
 
@@ -245,14 +246,14 @@ public final class Validation {
     private boolean isValidHikeName(TextInputLayout textField) {
         // https://www.youtube.com/watch?v=veOZTvAdzJ8
         String hikeName = Helper.trimStr(textField);
-        String fieldName = Helper.capitalise(HikeTable.COLUMN_Hike_NAME);
+        String fieldName = Helper.capitalise(HikeTable.COLUMN_HIKE_NAME);
 
         if (hikeName.isEmpty()) {
             setError(textField, getRequiredFieldError(fieldName));
             return false;
         }
         if (this.validateHikeExists){
-            if (db.columnExists(hikeName, HikeTable.COLUMN_Hike_NAME, HikeTable.TABLE_NAME)) {
+            if (db.userHikeNameExists(hikeName, String.valueOf(User.getUserID(context)))) {
                 setError(textField, getDuplicateHikeNameError());
                 return false;
             }
@@ -387,6 +388,7 @@ public final class Validation {
 
     public boolean validateHikeForm(Hike hike) {
 
+
         AutoCompleteTextView txtHikeDate = hike.getTxtHikeDate();
         TextInputLayout txtHikeName = hike.getTxtHikeName();
         TextInputLayout txtLocation = hike.getTxtLocation();
@@ -423,7 +425,7 @@ public final class Validation {
         AutoCompleteTextView txtTime = observation.getTxtTime();
         TextInputLayout txtObservation = observation.getTxtObservation();
         return !(
-                !isValidDropdown(txtHikeNameID, HikeTable.COLUMN_Hike_NAME) |
+                !isValidDropdown(txtHikeNameID, HikeTable.COLUMN_HIKE_NAME) |
                         !isValidDropdown(txtDate, ObservationTable.COLUMN_DATE) |
                         !isValidDropdown(txtTime, ObservationTable.COLUMN_TIME) |
                         !isEmpty(txtObservation, ObservationTable.OBSERVATION_TITLE)

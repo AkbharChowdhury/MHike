@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         handleRegisterLink();
         lblLoginError = findViewById(R.id.lbl_login_error);
         lblLoginError.setVisibility(View.INVISIBLE);
+
     }
 
 

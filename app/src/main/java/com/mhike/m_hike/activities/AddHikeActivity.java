@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.utilities.DatePickerFragment;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.models.Hike;
@@ -77,7 +78,6 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
         txtElevationGain.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> showDifficultyLevel());
 
     }
-
 
 
     private void checkIsUserLoggedIn() {
@@ -157,8 +157,7 @@ public class AddHikeActivity extends AppCompatActivity implements IDatePicker, I
 
         if (form.validateHikeForm(hike)) {
 
-            SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-            int userID = preferences.getInt(AccountPreferences.USERID, 0);
+            int userID = User.getUserID(getApplicationContext());
 
             if (db.addHike(getHikeDetails(), userID)) {
                 Helper.SetRedirectMessage(CURRENT_ACTIVITY, HikeActivity.class, getString(R.string.hike_added_success));

@@ -101,7 +101,7 @@ public class UploadHikeActivity extends AppCompatActivity {
 
                 list.add(new HikeJson(
                         Helper.formatDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE))),
-                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)),
+                        cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_NAME)),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)),
                         cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_LOCATION)),
                         Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DISTANCE))),

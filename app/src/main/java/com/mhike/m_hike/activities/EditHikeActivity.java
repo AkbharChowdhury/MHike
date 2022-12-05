@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mhike.m_hike.R;
 import com.mhike.m_hike.classes.AccountPreferences;
 import com.mhike.m_hike.classes.DatabaseHelper;
+import com.mhike.m_hike.classes.models.User;
 import com.mhike.m_hike.utilities.DatePickerFragment;
 import com.mhike.m_hike.utilities.Helper;
 import com.mhike.m_hike.classes.models.Hike;
@@ -145,8 +146,9 @@ public class EditHikeActivity extends AppCompatActivity implements IDatePicker, 
 
         if (form.validateHikeForm(hike)) {
 
-            SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
-            int userID = preferences.getInt(AccountPreferences.USERID, 0);
+//            SharedPreferences preferences = getSharedPreferences(AccountPreferences.LOGIN_SHARED_PREF, MODE_PRIVATE);
+//            int userID = preferences.getInt(AccountPreferences.USERID, 0);
+            int userID = User.getUserID(getApplicationContext());
 
             if (db.updateHike(getHikeDetails(), getIntent().getStringExtra("hikeID"), userID)) {
                 Helper.SetRedirectMessage(CURRENT_ACTIVITY, HikeActivity.class, getString(R.string.hike_updated_success));

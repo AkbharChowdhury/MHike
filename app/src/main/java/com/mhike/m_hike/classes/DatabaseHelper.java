@@ -164,7 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + HikeTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + HikeTable.COLUMN_USER_ID + " INTEGER NOT NULL,"
                 + HikeTable.COLUMN_HIKE_DATE + " TEXT NOT NULL,"
-                + HikeTable.COLUMN_Hike_NAME + " TEXT NOT NULL,"
+                + HikeTable.COLUMN_HIKE_NAME + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_DESCRIPTION + " TEXT,"
                 + HikeTable.COLUMN_LOCATION + " TEXT NOT NULL,"
                 + HikeTable.COLUMN_DISTANCE + " NUMERIC NOT NULL,"
@@ -220,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean columnExists(String fieldValue, String column, String table) {
         String[] columns = {column};
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String selection = column + " LIKE ?";
         String[] selectionArgs = { fieldValue };
         // select the email field and compare it to the entered email
@@ -255,6 +255,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
 
             }
+            return cursor.getCount() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+
+    @SuppressLint("Range")
+    public boolean userHikeNameExists(String hikeName, String userID) {
+        // array of columns to fetch
+        String[] columns = {HikeTable.COLUMN_HIKE_NAME, UserTable.COLUMN_ID};
+        SQLiteDatabase db = getReadableDatabase();
+        // selection criteria
+        String selection = HikeTable.COLUMN_HIKE_NAME + " LIKE ?" + " AND " + UserTable.COLUMN_ID + " = ?";
+        // selection arguments
+        String[] selectionArgs = {hikeName, userID};
+
+        try (Cursor cursor = db.query(HikeTable.TABLE_NAME, columns, selection, selectionArgs, null, null, null)) {
+
+
             return cursor.getCount() > 0;
 
         } catch (Exception e) {
@@ -332,7 +356,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(HikeTable.COLUMN_USER_ID, userID);
         cv.put(HikeTable.COLUMN_HIKE_DATE, hike.getHikeDate());
-        cv.put(HikeTable.COLUMN_Hike_NAME, hike.getHikeName());
+        cv.put(HikeTable.COLUMN_HIKE_NAME, hike.getHikeName());
         cv.put(HikeTable.COLUMN_DESCRIPTION, hike.getDescription());
         cv.put(HikeTable.COLUMN_LOCATION, hike.getLocation());
         cv.put(HikeTable.COLUMN_DISTANCE, hike.getDistance());
@@ -406,13 +430,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<String> list = new ArrayList<>();
 
         String selectQuery =
-             "SELECT " + HikeTable.COLUMN_Hike_NAME + " FROM " + HikeTable.TABLE_NAME + " WHERE " + HikeTable.COLUMN_USER_ID + " =?";
+             "SELECT " + HikeTable.COLUMN_HIKE_NAME + " FROM " + HikeTable.TABLE_NAME + " WHERE " + HikeTable.COLUMN_USER_ID + " =?";
         SQLiteDatabase db = this.getReadableDatabase();
 
         try (Cursor cursor = db.rawQuery(selectQuery, new String[]{userID}, null)) {
             if (cursor.moveToFirst()) {
                 do {
-                    list.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME))); // get the type field
+                    list.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_NAME))); // get the type field
                 } while (cursor.moveToNext());
             }
 
@@ -430,13 +454,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<String> list = new ArrayList<>();
 
         String selectQuery =
-                "SELECT " + HikeTable.COLUMN_Hike_NAME + " FROM " + HikeTable.TABLE_NAME + " WHERE " + HikeTable.COLUMN_ID +"=?";
+                "SELECT " + HikeTable.COLUMN_HIKE_NAME + " FROM " + HikeTable.TABLE_NAME + " WHERE " + HikeTable.COLUMN_ID +"=?";
         SQLiteDatabase db = this.getReadableDatabase();
 
         try (Cursor cursor = db.rawQuery(selectQuery, new String[]{hikeID}, null)) {
             if (cursor.moveToFirst()) {
                 do {
-                    list.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME))); // get the type field
+                    list.add(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_NAME))); // get the type field
                 } while (cursor.moveToNext());
             }
 
@@ -497,7 +521,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Hike hike = new Hike();
             hike.setHikeID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_ID))));
             hike.setHikeDate(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_DATE)));
-            hike.setHikeName(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_Hike_NAME)));
+            hike.setHikeName(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_HIKE_NAME)));
             hike.setDescription(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DESCRIPTION)));
             hike.setLocation(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_LOCATION)));
             hike.setDistance(Double.parseDouble(cursor.getString(cursor.getColumnIndex(HikeTable.COLUMN_DISTANCE))));
@@ -519,7 +543,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public  int  getHikeIDByName(String hikeName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_Hike_NAME + " =?", new String[]{hikeName});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + HikeTable.TABLE_NAME + " WHERE "+ HikeTable.COLUMN_HIKE_NAME + " =?", new String[]{hikeName});
 
         if (cursor.moveToLast()) {
            return cursor.getInt(cursor.getColumnIndex(ObservationTable.COLUMN_HIKE_ID));
@@ -583,7 +607,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(HikeTable.COLUMN_USER_ID, userID);
         cv.put(HikeTable.COLUMN_HIKE_DATE, hike.getHikeDate());
-        cv.put(HikeTable.COLUMN_Hike_NAME, hike.getHikeName());
+        cv.put(HikeTable.COLUMN_HIKE_NAME, hike.getHikeName());
         cv.put(HikeTable.COLUMN_DESCRIPTION, hike.getDescription());
         cv.put(HikeTable.COLUMN_LOCATION, hike.getLocation());
         cv.put(HikeTable.COLUMN_DISTANCE, hike.getDistance());
