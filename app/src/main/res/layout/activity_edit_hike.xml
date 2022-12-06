@@ -68,7 +68,6 @@
                 android:hint="@string/description"
                 android:inputType="textMultiLine"
                 android:lines="6"
-                android:maxLength="20"
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
