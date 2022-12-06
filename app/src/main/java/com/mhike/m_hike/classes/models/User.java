@@ -131,7 +131,7 @@ public final class User {
     }
     public String getJsonHike(){
         return
-                "{\"userId\": \"" + userId  + "\", "
+                "{\"userId\": \"" + "mc8852u"  + "\", "
                         + "\"detailList\":" + new Gson().toJson(detailList) + "}";
     }
 }
