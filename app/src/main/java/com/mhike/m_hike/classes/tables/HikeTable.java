@@ -4,9 +4,6 @@ package com.mhike.m_hike.classes.tables;
 public final class HikeTable {
     private HikeTable(){}
 
-
-
-
     public static final String TABLE_NAME = "Hike";
     public static final String COLUMN_ID = "hike_id";
     public static final String COLUMN_USER_ID = "user_id";

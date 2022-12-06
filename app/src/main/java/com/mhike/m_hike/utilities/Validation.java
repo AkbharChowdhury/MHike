@@ -38,14 +38,13 @@ public final class Validation {
         this.db = db;
 
 
-
     }
 
 
 
 
     private boolean isValidEmail(TextInputLayout textField) {
-        // https://www.youtube.com/watch?v=veOZTvAdzJ8
+
         String email = Helper.trimStr(textField);
         String fieldName = Helper.capitalise(UserTable.COLUMN_EMAIL);
 
@@ -119,7 +118,6 @@ public final class Validation {
 
 
     private boolean isValidFirstName(TextInputLayout textField) {
-        // https://www.youtube.com/watch?v=veOZTvAdzJ8
         String firstname = Helper.trimStr(textField);
         String fieldName = Helper.capitalise(UserTable.COLUMN_FIRSTNAME);
 
